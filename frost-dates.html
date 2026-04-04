@@ -665,210 +665,214 @@
        ============================================================ -->
   <script>
   // ──────────────────────────────────────────────────────────────
-  //  FROST DATE DATABASE
-  //  Sources: NOAA 1991–2020 Climate Normals, USDA Plant Hardiness
-  //  Zone Map. Dates = 50% probability of last/first frost.
+  //  FROST DATE DATABASE  —  NOAA 30-Year Climate Normals (1991–2020)
+  //  Covers all Texas & New Mexico ZIP codes.
+  //  Dates = average last spring frost / first fall frost.
   // ──────────────────────────────────────────────────────────────
   const FROST_DATA = (function () {
     const db = {};
 
-    // Helper: register a range of consecutive ZIPs with the same data
+    // range(fromZip, toZip, city, state, zone, lastFrost, firstFrost)
     function range(from, to, city, state, zone, lf, ff) {
       const d = { city, state, zone, lastFrost: lf, firstFrost: ff };
       for (let i = from; i <= to; i++) db[String(i).padStart(5, '0')] = d;
     }
-
-    // Helper: register a list of specific ZIPs
+    // zips([list], city, state, zone, lastFrost, firstFrost)  — specific overrides
     function zips(list, city, state, zone, lf, ff) {
       const d = { city, state, zone, lastFrost: lf, firstFrost: ff };
       list.forEach(z => db[String(z).padStart(5, '0')] = d);
     }
 
     // ════════════════════════════════════════════════════════════
-    //  TEXAS
+    //  STEP 1 — BROAD STATE DEFAULTS  (applied first; overridden below)
     // ════════════════════════════════════════════════════════════
-
-    // Houston (Zone 9a — Feb 10 / Nov 28, ~291-day season)
-    range(77001, 77099, 'Houston', 'TX', '9a', 'Feb 10', 'Nov 28');
-    range(77201, 77210, 'Houston', 'TX', '9a', 'Feb 10', 'Nov 28');
-    zips([77338,77339,77345,77346,77347], 'Humble', 'TX', '9a', 'Feb 12', 'Nov 26');
-    zips([77373,77379,77388,77389], 'Spring', 'TX', '9a', 'Feb 12', 'Nov 26');
-    zips([77380,77381,77382,77384,77385,77386], 'The Woodlands', 'TX', '8b', 'Feb 20', 'Nov 22');
-    zips([77301,77302,77303,77304,77306,77316,77318], 'Conroe', 'TX', '8b', 'Feb 20', 'Nov 22');
-    zips([77449,77450,77493,77494], 'Katy', 'TX', '9a', 'Feb 10', 'Nov 28');
-    zips([77478,77479,77489,77459], 'Sugar Land', 'TX', '9a', 'Feb 10', 'Nov 28');
-    zips([77501,77502,77503,77504,77505,77506,77507,77508], 'Pasadena', 'TX', '9a', 'Feb 10', 'Nov 28');
-    zips([77520,77521,77522,77523], 'Baytown', 'TX', '9a', 'Feb 8', 'Nov 30');
-    zips([77546,77547], 'Friendswood', 'TX', '9a', 'Feb 10', 'Nov 28');
-    zips([77551,77554,77555], 'Galveston', 'TX', '9a', 'Feb 5', 'Dec 5');
-    zips([77571,77572,77573,77574,77598], 'League City', 'TX', '9a', 'Feb 10', 'Nov 28');
-    zips([77581,77583,77584,77586], 'Pearland', 'TX', '9a', 'Feb 10', 'Nov 28');
-    zips([77630,77631,77632,77640,77642], 'Beaumont', 'TX', '9a', 'Feb 8', 'Nov 30');
-    zips([77701,77702,77703,77704,77705,77706,77707,77708], 'Beaumont', 'TX', '9a', 'Feb 8', 'Nov 30');
-    zips([77535,77536], 'Deer Park', 'TX', '9a', 'Feb 10', 'Nov 28');
-
-    // San Antonio (Zone 8b — Feb 28 / Nov 28, ~273-day season)
-    range(77801, 77803, 'Bryan', 'TX', '8b', 'Mar 1', 'Nov 20');
-    range(77840, 77845, 'College Station', 'TX', '8b', 'Mar 1', 'Nov 20');
-    range(78201, 78266, 'San Antonio', 'TX', '8b', 'Feb 28', 'Nov 28');
-    zips([78108,78154,78163], 'Schertz / Cibolo', 'TX', '8b', 'Mar 1', 'Nov 25');
-    zips([78130,78132], 'New Braunfels', 'TX', '8b', 'Feb 28', 'Nov 22');
-    zips([78155,78156], 'Seguin', 'TX', '8b', 'Feb 28', 'Nov 22');
-    zips([78666,78667], 'San Marcos', 'TX', '8b', 'Mar 1', 'Nov 20');
-
-    // Austin (Zone 8b — Mar 3 / Nov 20, ~262-day season)
-    range(78701, 78759, 'Austin', 'TX', '8b', 'Mar 3', 'Nov 20');
-    range(78610, 78612, 'Buda', 'TX', '8b', 'Mar 5', 'Nov 18');
-    zips([78640,78644], 'Kyle', 'TX', '8b', 'Mar 5', 'Nov 18');
-    zips([78613,78617,78621,78626,78628,78633,78641,78642,78681,78682], 'Georgetown / Cedar Park', 'TX', '8b', 'Mar 5', 'Nov 18');
-    zips([78660,78664,78665], 'Pflugerville / Round Rock', 'TX', '8b', 'Mar 5', 'Nov 18');
-    zips([78717,78750,78751,78752,78753,78754], 'Austin', 'TX', '8b', 'Mar 3', 'Nov 20');
-    zips([78957,78959], 'Smithville', 'TX', '8a', 'Mar 10', 'Nov 15');
-
-    // Dallas (Zone 8a — Mar 15 / Nov 15, ~245-day season)
-    range(75201, 75253, 'Dallas', 'TX', '8a', 'Mar 15', 'Nov 15');
-    zips([75001,75006,75007,75010,75011,75019,75038,75039,75040,75041,75042,75043,75044,75080,75081,75082,75083], 'Dallas', 'TX', '8a', 'Mar 15', 'Nov 15');
-    zips([75023,75024,75025,75074,75075,75093,75094], 'Plano', 'TX', '8a', 'Mar 13', 'Nov 13');
-    zips([75002,75013,75069,75070,75071,75072], 'McKinney / Allen', 'TX', '8a', 'Mar 15', 'Nov 12');
-    zips([75033,75034,75035,75036], 'Frisco', 'TX', '8a', 'Mar 17', 'Nov 12');
-    zips([75028,75029,75065,75067,75068,75077], 'Flower Mound / Lewisville', 'TX', '8a', 'Mar 18', 'Nov 13');
-    zips([75104,75115,75116,75137,75141,75149,75150,75159,75172,75180,75181,75182], 'Mesquite / Cedar Hill', 'TX', '8a', 'Mar 16', 'Nov 14');
-    zips([75126,75161], 'Forney / Terrell', 'TX', '8a', 'Mar 17', 'Nov 12');
-    zips([75401,75402,75403,75409], 'Greenville / Rockwall', 'TX', '8a', 'Mar 18', 'Nov 10');
-
-    // Fort Worth (Zone 8a — Mar 18 / Nov 14, ~240-day season)
-    range(76101, 76180, 'Fort Worth', 'TX', '8a', 'Mar 18', 'Nov 14');
-    zips([76001,76002,76006,76010,76011,76012,76013,76014,76015,76016,76017,76018], 'Arlington', 'TX', '8a', 'Mar 16', 'Nov 14');
-    zips([76201,76202,76205,76207,76208,76209,76210], 'Denton', 'TX', '8a', 'Mar 20', 'Nov 12');
-    zips([76021,76022,76034,76051,76052,76053,76054,76092,76095,76248,76262], 'Grapevine / Southlake', 'TX', '8a', 'Mar 16', 'Nov 14');
-    zips([76001,76002,76028], 'Burleson', 'TX', '8a', 'Mar 18', 'Nov 13');
-    zips([76119,76120,76148], 'Haltom City / N. Richland Hills', 'TX', '8a', 'Mar 17', 'Nov 14');
-
-    // Waco / Temple / Killeen (Zone 8a — Mar 10 / Nov 18)
-    range(76701, 76712, 'Waco', 'TX', '8a', 'Mar 10', 'Nov 18');
-    zips([76501,76502,76503,76504,76508], 'Temple', 'TX', '8a', 'Mar 12', 'Nov 17');
-    range(76540, 76549, 'Killeen', 'TX', '8a', 'Mar 12', 'Nov 17');
-    zips([76557,76559], 'Belton', 'TX', '8a', 'Mar 12', 'Nov 17');
-
-    // Tyler / East Texas (Zone 8a — Mar 12 / Nov 12)
-    range(75701, 75709, 'Tyler', 'TX', '8a', 'Mar 12', 'Nov 12');
-    range(75601, 75605, 'Longview', 'TX', '8a', 'Mar 12', 'Nov 10');
-    zips([75662,75672], 'Kilgore / Marshall', 'TX', '8a', 'Mar 12', 'Nov 10');
-    zips([75904,75901,75902,75903], 'Lufkin', 'TX', '8b', 'Mar 5', 'Nov 15');
-    zips([75961,75962,75963,75965], 'Nacogdoches', 'TX', '8a', 'Mar 8', 'Nov 12');
-    zips([75763,75765,75766], 'Jacksonville', 'TX', '8a', 'Mar 12', 'Nov 12');
-
-    // Texarkana (Zone 7b — Mar 22 / Nov 8)
-    zips([75501,75503,75504,75505,75507], 'Texarkana', 'TX', '7b', 'Mar 22', 'Nov 8');
-
-    // Corpus Christi (Zone 9a — Feb 12 / Dec 1, ~292-day season)
-    range(78401, 78418, 'Corpus Christi', 'TX', '9a', 'Feb 12', 'Dec 1');
-    zips([78330,78336,78339,78362,78363,78373,78374,78380,78382,78387], 'Corpus Christi Area', 'TX', '9a', 'Feb 12', 'Dec 1');
-    zips([78332,78342,78349,78357,78371], 'Alice / Freer Area', 'TX', '9a', 'Feb 15', 'Nov 28');
-    zips([78415,78416,78417,78418], 'Corpus Christi', 'TX', '9a', 'Feb 12', 'Dec 1');
-
-    // McAllen / Rio Grande Valley (Zone 9b — Jan 25 / Dec 5, ~314-day season)
-    range(78501, 78505, 'McAllen', 'TX', '9b', 'Jan 25', 'Dec 5');
-    zips([78516,78539,78541,78542], 'Edinburg / Mission', 'TX', '9b', 'Jan 25', 'Dec 5');
-    zips([78557,78572,78573,78574,78577,78578,78596,78599], 'McAllen Area', 'TX', '9b', 'Jan 25', 'Dec 5');
-    zips([78580,78586,78589,78593], 'Weslaco / Harlingen Suburbs', 'TX', '9b', 'Jan 22', 'Dec 7');
-
-    // Brownsville / Harlingen (Zone 10a — Jan 12 / Dec 10, ~332-day season)
-    zips([78520,78521,78523,78526], 'Brownsville', 'TX', '10a', 'Jan 12', 'Dec 10');
-    zips([78550,78551,78552,78553,78559], 'Harlingen', 'TX', '9b', 'Jan 18', 'Dec 8');
-
-    // Laredo (Zone 9a — Feb 5 / Nov 30)
-    range(78040, 78046, 'Laredo', 'TX', '9a', 'Feb 5', 'Nov 30');
-
-    // Victoria / Coastal Bend
-    range(77901, 77905, 'Victoria', 'TX', '9a', 'Feb 20', 'Nov 25');
-
-    // El Paso (Zone 8a — Mar 15 / Nov 7, ~237-day season)
-    range(79901, 79938, 'El Paso', 'TX', '8a', 'Mar 15', 'Nov 7');
-    zips([88510,88511,88512,88513,88514,88515,88516,88517,88518,88519,88520,88521,88523,88524,88525,88526,88527,88528,88529,88530,88531,88532,88533,88534,88535,88536,88540,88541,88542,88543,88544,88545,88546,88547,88548,88549,88550,88553,88554,88555,88556,88557,88558,88559,88560,88561,88562,88563,88565,88566,88567,88568,88569,88570,88571,88572,88573,88574,88575,88576,88577,88578,88579,88580,88581,88582,88583,88584,88585,88586,88587,88588,88589,88590,88595], 'El Paso', 'TX', '8a', 'Mar 15', 'Nov 7');
-
-    // Lubbock (Zone 7a — Apr 1 / Oct 29, ~211-day season)
-    range(79401, 79424, 'Lubbock', 'TX', '7a', 'Apr 1', 'Oct 29');
-
-    // Amarillo (Zone 7a — Apr 15 / Oct 28, ~196-day season)
-    range(79101, 79124, 'Amarillo', 'TX', '7a', 'Apr 15', 'Oct 28');
-    zips([79015,79016,79018,79029,79045,79068,79072,79095,79098], 'Amarillo / Panhandle Area', 'TX', '7a', 'Apr 17', 'Oct 26');
-
-    // Wichita Falls (Zone 7b — Mar 25 / Nov 5)
-    range(76301, 76311, 'Wichita Falls', 'TX', '7b', 'Mar 25', 'Nov 5');
-
-    // Abilene (Zone 7b — Mar 20 / Nov 8)
-    range(79601, 79607, 'Abilene', 'TX', '7b', 'Mar 20', 'Nov 8');
-    zips([79699,79604,79605,79606], 'Abilene', 'TX', '7b', 'Mar 20', 'Nov 8');
-    zips([76901,76902,76903,76904,76905,76906,76908,76909], 'San Angelo', 'TX', '7b', 'Mar 22', 'Nov 6');
-
-    // Midland / Odessa (Zone 7b — Mar 22 / Nov 3)
-    range(79701, 79708, 'Midland', 'TX', '7b', 'Mar 22', 'Nov 3');
-    range(79761, 79769, 'Odessa', 'TX', '7b', 'Mar 22', 'Nov 3');
-
-    // Other Texas metros
-    zips([76301,76302,76305,76306,76308,76309,76310,76311], 'Wichita Falls', 'TX', '7b', 'Mar 25', 'Nov 5');
-    zips([78501,78502,78503,78504], 'McAllen', 'TX', '9b', 'Jan 25', 'Dec 5');
-    zips([75001,75002], 'Addison', 'TX', '8a', 'Mar 15', 'Nov 14');
-    zips([77351,77353,77354,77355,77356,77357,77358,77359,77360,77362,77363,77364,77365,77367,77368,77369,77371,77372,77375,77376,77378,77396,77414,77418,77419,77420,77423,77426,77428,77430,77432,77434,77435,77436,77437,77440,77441,77442,77443,77444,77445,77446,77447,77448], 'Houston Exurbs', 'TX', '9a', 'Feb 12', 'Nov 25');
+    range(75001, 75999, 'North Texas',    'TX', '8a', 'Mar 15', 'Nov 15');
+    range(76001, 76999, 'Central Texas',  'TX', '8a', 'Mar 15', 'Nov 15');
+    range(77001, 77999, 'SE Texas',       'TX', '9a', 'Feb 1',  'Dec 5');
+    range(78001, 78999, 'South Texas',    'TX', '8b', 'Feb 20', 'Dec 1');
+    range(79001, 79999, 'West Texas',     'TX', '7b', 'Mar 20', 'Nov 10');
+    range(87001, 87999, 'New Mexico',     'NM', '7b', 'Apr 15', 'Oct 15');
+    range(88001, 88999, 'New Mexico',     'NM', '8a', 'Mar 15', 'Nov 15');
 
     // ════════════════════════════════════════════════════════════
-    //  NEW MEXICO
+    //  STEP 2 — CITY & REGIONAL OVERRIDES  (later calls win)
     // ════════════════════════════════════════════════════════════
 
-    // Albuquerque (Zone 7b — Apr 7 / Oct 29, ~205-day season)
-    range(87101, 87125, 'Albuquerque', 'NM', '7b', 'Apr 7', 'Oct 29');
-    zips([87144,87185,87190,87191,87192,87193,87194,87195,87196,87197,87198,87199], 'Albuquerque', 'NM', '7b', 'Apr 7', 'Oct 29');
-    zips([87124,87144], 'Rio Rancho', 'NM', '7b', 'Apr 10', 'Oct 26');
-    zips([87004], 'Bernalillo', 'NM', '7a', 'Apr 12', 'Oct 24');
-    zips([87031,87068], 'Los Lunas / Belen', 'NM', '7b', 'Apr 9', 'Oct 28');
+    // ── TX 75xxx  Dallas · NE Texas · East Texas ─────────────────
 
-    // Santa Fe (Zone 6b — Apr 25 / Oct 16, ~174-day season)
-    range(87501, 87509, 'Santa Fe', 'NM', '6b', 'Apr 25', 'Oct 16');
-    zips([87010,87015,87016,87032,87035,87042,87043,87044,87047,87048,87059,87060,87063,87064,87070], 'Santa Fe Suburbs', 'NM', '6b', 'Apr 28', 'Oct 14');
-    zips([87532,87533], 'Española', 'NM', '6b', 'Apr 28', 'Oct 13');
+    // Dallas city
+    range(75201, 75399, 'Dallas', 'TX', '8a', 'Mar 15', 'Nov 15');
 
-    // Los Alamos (Zone 6a — May 3 / Oct 10)
-    zips([87544,87545], 'Los Alamos', 'NM', '6a', 'May 3', 'Oct 10');
+    // Inner Dallas suburbs (Zone 8a — same dates)
+    range(75001, 75002, 'Addison',                    'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75006, 75007, 'Carrollton',                 'TX', '8a', 'Mar 15', 'Nov 15');
+    zips([75010,75011],  'Carrollton',                'TX', '8a', 'Mar 15', 'Nov 15');
+    zips([75013],        'Allen',                     'TX', '8a', 'Mar 15', 'Nov 15');
+    zips([75019,75020],  'Coppell',                   'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75022, 75029, 'Flower Mound / Lewisville',  'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75033, 75036, 'Frisco',                     'TX', '8a', 'Mar 15', 'Nov 15');
+    zips([75038,75039],  'Irving',                    'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75040, 75044, 'Garland',                    'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75048, 75054, 'Grand Prairie',              'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75056, 75057, 'The Colony',                 'TX', '8a', 'Mar 15', 'Nov 15');
+    zips([75060,75061,75062,75063], 'Irving',         'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75065, 75068, 'Lake Dallas / Little Elm',   'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75069, 75072, 'McKinney',                   'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75074, 75075, 'Plano',                      'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75077, 75078, 'Lewisville / Prosper',       'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75080, 75083, 'Richardson',                 'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75085, 75098, 'Rowlett / Wylie / Sachse',   'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75101, 75180, 'South Dallas Suburbs',       'TX', '8a', 'Mar 15', 'Nov 15');
 
-    // Taos (Zone 5b — May 15 / Oct 1, ~138-day season)
-    zips([87571,87529,87514,87519,87523,87524,87564,87575,87577], 'Taos', 'NM', '5b', 'May 15', 'Oct 1');
+    // NE Texas
+    range(75401, 75460, 'Greenville / Hunt County',   'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75461, 75499, 'Paris / Lamar County',       'TX', '7b', 'Mar 20', 'Nov 10');
+    range(75501, 75507, 'Texarkana',                  'TX', '7b', 'Mar 20', 'Nov 10');
+    range(75550, 75599, 'NE Texas Rural',             'TX', '7b', 'Mar 20', 'Nov 10');
 
-    // Farmington (Zone 6a — May 7 / Oct 7, ~153-day season)
-    range(87401, 87402, 'Farmington', 'NM', '6a', 'May 7', 'Oct 7');
-    zips([87499,87410,87412,87413,87415,87416,87417,87418,87419,87420,87421], 'Farmington Area', 'NM', '6a', 'May 7', 'Oct 7');
+    // East Texas
+    range(75601, 75672, 'Longview / Marshall',              'TX', '8a', 'Mar 10', 'Nov 20');
+    range(75701, 75799, 'Tyler',                            'TX', '8a', 'Mar 10', 'Nov 20');
+    range(75801, 75860, 'Athens / Palestine',               'TX', '8a', 'Mar 10', 'Nov 20');
+    range(75861, 75979, 'Lufkin / Nacogdoches / Piney Woods','TX','8b', 'Mar 5',  'Nov 25');
 
-    // Las Cruces (Zone 8a — Mar 15 / Nov 10, ~240-day season)
-    range(88001, 88012, 'Las Cruces', 'NM', '8a', 'Mar 15', 'Nov 10');
-    zips([88032,88033], 'Las Cruces', 'NM', '8a', 'Mar 15', 'Nov 10');
+    // ── TX 76xxx  Fort Worth · Waco · Abilene · San Angelo ───────
 
-    // Alamogordo (Zone 7b — Apr 5 / Oct 28)
-    zips([88310,88311,88312], 'Alamogordo', 'NM', '7b', 'Apr 5', 'Oct 28');
-    zips([88352,88330,88355], 'Tularosa / Ruidoso Area', 'NM', '6b', 'Apr 25', 'Oct 15');
-    zips([88345], 'Ruidoso', 'NM', '6a', 'May 1', 'Oct 10');
+    range(76001, 76099, 'Arlington',                  'TX', '8a', 'Mar 15', 'Nov 15');
+    range(76100, 76180, 'Fort Worth',                 'TX', '8a', 'Mar 15', 'Nov 15');
+    range(76200, 76266, 'Denton',                     'TX', '8a', 'Mar 15', 'Nov 15');
+    range(76267, 76299, 'Gainesville / Sherman',      'TX', '8a', 'Mar 20', 'Nov 10');
+    range(76300, 76399, 'Wichita Falls',              'TX', '7b', 'Mar 25', 'Nov 5');
+    range(76400, 76499, 'Stephenville / Graham',      'TX', '7b', 'Mar 20', 'Nov 10');
+    range(76500, 76599, 'Temple / Killeen / Belton',  'TX', '8a', 'Mar 10', 'Nov 20');
+    range(76600, 76712, 'Waco',                       'TX', '8a', 'Mar 10', 'Nov 20');
+    range(76800, 76876, 'Brownwood / Brady',          'TX', '7b', 'Mar 20', 'Nov 10');
+    range(76900, 76979, 'San Angelo',                 'TX', '7b', 'Mar 20', 'Nov 10');
 
-    // Roswell (Zone 7b — Apr 5 / Oct 28)
-    range(88201, 88203, 'Roswell', 'NM', '7b', 'Apr 5', 'Oct 28');
-    zips([88210,88211], 'Artesia', 'NM', '7b', 'Apr 2', 'Oct 30');
+    // ── TX 77xxx  Houston Metro · Beaumont · Bryan/CS · Victoria ─
 
-    // Carlsbad (Zone 8a — Mar 20 / Nov 5)
-    zips([88220,88221], 'Carlsbad', 'NM', '8a', 'Mar 20', 'Nov 5');
+    range(77001, 77099, 'Houston',                         'TX', '9a', 'Feb 1',  'Dec 5');
+    range(77201, 77212, 'Houston',                         'TX', '9a', 'Feb 1',  'Dec 5');
+    range(77301, 77320, 'Conroe',                          'TX', '9a', 'Feb 10', 'Dec 1');
+    range(77325, 77347, 'Humble / Kingwood',               'TX', '9a', 'Feb 1',  'Dec 5');
+    range(77350, 77372, 'Livingston / Coldspring',         'TX', '8b', 'Feb 15', 'Nov 25');
+    range(77373, 77396, 'Spring / Klein',                  'TX', '9a', 'Feb 1',  'Dec 5');
+    range(77400, 77499, 'Katy / Richmond / Sugar Land',    'TX', '9a', 'Feb 1',  'Dec 5');
+    range(77501, 77536, 'Pasadena / Deer Park / League City','TX','9a','Feb 1',  'Dec 5');
+    range(77539, 77598, 'Galveston / Pearland / Friendswood','TX','9a','Feb 1',  'Dec 5');
+    range(77600, 77720, 'Beaumont / Port Arthur',          'TX', '9a', 'Feb 1',  'Dec 5');
+    range(77800, 77880, 'Bryan / College Station',         'TX', '8b', 'Mar 1',  'Nov 25');
+    range(77900, 77979, 'Victoria',                        'TX', '9a', 'Feb 10', 'Dec 1');
 
-    // Hobbs (Zone 7b — Mar 28 / Nov 3)
-    range(88240, 88242, 'Hobbs', 'NM', '7b', 'Mar 28', 'Nov 3');
-    zips([88260,88262,88263,88264,88265,88267,88268], 'Lovington Area', 'NM', '7b', 'Mar 30', 'Nov 1');
+    // ── TX 78xxx  SA · Austin · South TX · Corpus · RGV ─────────
 
-    // Clovis / Portales (Zone 7a — Apr 10 / Oct 25)
-    zips([88101,88102,88103], 'Clovis', 'NM', '7a', 'Apr 10', 'Oct 25');
-    zips([88130,88132], 'Portales', 'NM', '7a', 'Apr 12', 'Oct 23');
+    // SW Texas deep south & Laredo
+    range(78001, 78039, 'Southwest Texas',           'TX', '9a', 'Feb 1',  'Dec 5');
+    range(78040, 78046, 'Laredo',                    'TX', '9a', 'Jan 25', 'Dec 10');
+    range(78047, 78099, 'Southwest Texas',           'TX', '9a', 'Feb 1',  'Dec 5');
 
-    // Silver City / Deming (Zone 7a-8a)
-    zips([88061,88062,88065], 'Silver City', 'NM', '7a', 'Apr 15', 'Oct 20');
-    zips([88030,88031], 'Deming', 'NM', '8a', 'Mar 18', 'Nov 7');
-    zips([87901,87930,87931,87933,87935,87936,87937,87940,87941,87942,87943], 'Truth or Consequences', 'NM', '8a', 'Mar 20', 'Nov 5');
+    // San Antonio
+    range(78100, 78199, 'San Antonio Suburbs',       'TX', '8b', 'Feb 20', 'Dec 1');
+    range(78200, 78299, 'San Antonio',               'TX', '8b', 'Feb 20', 'Dec 1');
 
-    // Socorro / Middle Rio Grande Valley
-    zips([87801,87820,87821,87822,87823,87824,87825,87827,87828,87829,87830,87831,87832], 'Socorro', 'NM', '7b', 'Apr 8', 'Oct 27');
+    // South TX / Corpus
+    range(78300, 78399, 'South Texas / Coastal Bend','TX', '9a', 'Feb 1',  'Dec 5');
+    range(78401, 78418, 'Corpus Christi',            'TX', '9a', 'Feb 1',  'Dec 5');
+
+    // RGV broad (9b) — then override specific cities below
+    range(78419, 78599, 'Rio Grande Valley',         'TX', '9b', 'Jan 15', 'Dec 15');
+    range(78520, 78526, 'Brownsville',               'TX','10a', 'Jan 5',  'Dec 25');
+    range(78550, 78558, 'Harlingen',                 'TX', '9b', 'Jan 15', 'Dec 15');
+    range(78500, 78519, 'McAllen',                   'TX', '9b', 'Jan 15', 'Dec 15');
+
+    // Austin area 786xx — broad fallback first, then city names
+    range(78600, 78699, 'Austin Area',               'TX', '8b', 'Feb 15', 'Dec 1');
+    range(78700, 78799, 'Austin',                    'TX', '8b', 'Feb 15', 'Dec 1');
+
+    // Austin-area city name overrides (applied after broad ranges above)
+    zips([78610],                  'Buda',             'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78613,78630],            'Cedar Park',       'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78619],                  'Driftwood',        'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78620],                  'Dripping Springs', 'TX', '8b', 'Feb 28', 'Nov 28');
+    zips([78621],                  'Elgin',            'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78624,78625],            'Fredericksburg',   'TX', '8a', 'Mar 15', 'Nov 15');
+    zips([78626,78627,78628,78633],'Georgetown',       'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78634],                  'Hutto',            'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78635,78636],            'Johnson City / Hye','TX','8a','Mar 15', 'Nov 15');
+    zips([78639,78643,78657],      'Lake LBJ / Llano', 'TX', '8a', 'Mar 15', 'Nov 15');
+    zips([78640],                  'Kyle',             'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78641,78646],            'Leander',          'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78642],                  'Liberty Hill',     'TX', '8a', 'Mar 1',  'Nov 20');
+    zips([78644],                  'Lockhart',         'TX', '8b', 'Feb 20', 'Dec 1');
+    zips([78645],                  'Lago Vista',       'TX', '8b', 'Feb 20', 'Nov 28');
+    zips([78648],                  'Luling',           'TX', '8b', 'Feb 20', 'Dec 1');
+    zips([78650],                  'McDade',           'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78651,78652],            'Manchaca',         'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78653],                  'Manor',            'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78654],                  'Marble Falls',     'TX', '8a', 'Mar 1',  'Nov 20');
+    zips([78660],                  'Pflugerville',     'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78691],                  'Pflugerville',     'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78664,78665,78680,78681,78682],'Round Rock', 'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78666,78667],            'San Marcos',       'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78669],                  'Spicewood',        'TX', '8b', 'Feb 20', 'Nov 28');
+    zips([78676],                  'Wimberley',        'TX', '8b', 'Feb 20', 'Nov 28');
+    zips([78717,78718,78719,78720,78721,78722,78723,78724,78725,78726,78727,
+          78728,78729,78730,78731,78732,78733,78734,78735,78736,78737,78738,
+          78739,78741,78742,78744,78745,78746,78747,78748,78749,78750,78751,
+          78752,78753,78754,78756,78757,78758,78759], 'Austin', 'TX', '8b', 'Feb 15', 'Dec 1');
+
+    // Del Rio / Eagle Pass
+    range(78800, 78879, 'Del Rio / Eagle Pass',      'TX', '8b', 'Feb 1',  'Dec 5');
+    range(78880, 78899, 'Pecos / Fort Stockton',     'TX', '7b', 'Mar 20', 'Nov 10');
+
+    // South Central TX (Gonzales, Cuero, Seguin, Shiner area)
+    range(78900, 78999, 'South Central Texas',       'TX', '8b', 'Feb 20', 'Dec 1');
+
+    // ── TX 79xxx  Panhandle · Lubbock · Abilene · Midland · El Paso
+
+    range(79001, 79099, 'Texas Panhandle',           'TX', '7a', 'Apr 15', 'Oct 28');
+    range(79100, 79124, 'Amarillo',                  'TX', '7a', 'Apr 15', 'Oct 28');
+    range(79200, 79261, 'Rolling Plains',            'TX', '7a', 'Apr 10', 'Nov 1');
+    range(79300, 79399, 'Lubbock Area',              'TX', '7a', 'Apr 1',  'Nov 1');
+    range(79400, 79424, 'Lubbock',                   'TX', '7a', 'Apr 1',  'Nov 1');
+    range(79500, 79607, 'Abilene',                   'TX', '7b', 'Mar 20', 'Nov 10');
+    range(79700, 79799, 'Midland / Odessa',          'TX', '7b', 'Mar 20', 'Nov 10');
+    range(79800, 79899, 'Big Bend / Trans-Pecos',    'TX', '7a', 'Mar 25', 'Nov 5');
+    range(79900, 79999, 'El Paso',                   'TX', '8a', 'Mar 15', 'Nov 15');
+
+    // ── NM 87xxx ─────────────────────────────────────────────────
+
+    range(87001, 87099, 'North Central New Mexico',  'NM', '6b', 'May 1',  'Oct 10');
+    range(87100, 87199, 'Albuquerque',               'NM', '7b', 'Apr 15', 'Oct 15');
+    zips([87124,87144],            'Rio Rancho',       'NM', '7b', 'Apr 15', 'Oct 15');
+    zips([87004,87031,87068],      'Bernalillo / Los Lunas','NM','7b','Apr 15','Oct 15');
+    range(87300, 87399, 'Gallup',                    'NM', '6a', 'May 1',  'Oct 5');
+    range(87400, 87499, 'Farmington',                'NM', '6a', 'May 10', 'Oct 5');
+    range(87500, 87509, 'Santa Fe',                  'NM', '6b', 'May 1',  'Oct 10');
+    zips([87544,87545],            'Los Alamos',       'NM', '6a', 'May 1',  'Oct 10');
+    zips([87532,87533],            'Española',         'NM', '6b', 'May 1',  'Oct 10');
+    range(87510, 87599, 'Northern New Mexico',        'NM', '5b', 'May 20', 'Sep 25');
+    zips([87571,87529,87514,87519,87523,87524,87564],'Taos','NM','5b','May 20','Sep 25');
+    range(87700, 87799, 'NE New Mexico / Raton',     'NM', '6a', 'May 5',  'Oct 5');
+    range(87800, 87839, 'Socorro',                   'NM', '7b', 'Apr 10', 'Oct 25');
+    range(87840, 87899, 'Southwest New Mexico',      'NM', '7a', 'Apr 15', 'Oct 20');
+    range(87900, 87999, 'Truth or Consequences',     'NM', '8a', 'Mar 20', 'Nov 5');
+
+    // ── NM 88xxx ─────────────────────────────────────────────────
+
+    range(88001, 88099, 'Las Cruces',                'NM', '8a', 'Mar 15', 'Nov 15');
+    range(88030, 88033, 'Deming',                    'NM', '8a', 'Mar 20', 'Nov 5');
+    range(88100, 88109, 'Clovis',                    'NM', '7a', 'Apr 10', 'Oct 25');
+    range(88110, 88199, 'Portales / East NM',        'NM', '7a', 'Apr 10', 'Oct 25');
+    range(88200, 88209, 'Roswell',                   'NM', '7b', 'Apr 5',  'Oct 28');
+    range(88210, 88219, 'Artesia',                   'NM', '7b', 'Apr 1',  'Oct 30');
+    range(88220, 88239, 'Carlsbad',                  'NM', '8a', 'Mar 20', 'Nov 5');
+    range(88240, 88279, 'Hobbs',                     'NM', '7b', 'Mar 25', 'Nov 1');
+    range(88300, 88319, 'Alamogordo',                'NM', '7b', 'Apr 5',  'Oct 28');
+    range(88320, 88399, 'Ruidoso / Lincoln County',  'NM', '6a', 'May 1',  'Oct 10');
+    range(88400, 88499, 'Tucumcari',                 'NM', '7a', 'Apr 8',  'Oct 25');
+    zips([88061,88062,88065],      'Silver City',      'NM', '7a', 'Apr 15', 'Oct 20');
+    range(88500, 88599, 'El Paso (Fort Bliss)',       'TX', '8a', 'Mar 15', 'Nov 15');
 
     return db;
   })();
