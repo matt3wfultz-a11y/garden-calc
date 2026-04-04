@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="GardenCalc — Free gardening tools including frost date calculator, seed starting schedule, companion planting guide, square foot planner, and mulch calculator." />
+  <title>GardenCalc — Smart Gardening Tools for Every Season</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Favicon placeholder -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" />
+
+  <!-- ============================================================
+       ADSENSE: Publisher Script
+       Replace ca-pub-XXXXXXXXXX with your Publisher ID
+       ============================================================ -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossorigin="anonymous"></script> -->
+</head>
+<body>
+
+  <!-- ============================================================
+       SITE HEADER — shared across all pages
+       ============================================================ -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+
+        <!-- Logo -->
+        <a href="index.html" class="site-logo" aria-label="GardenCalc Home">
+          <div class="logo-icon">🌿</div>
+          <span class="logo-text">Garden<span>Calc</span></span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="index.html" class="nav-link active">Home</a>
+          <a href="frost-dates.html" class="nav-link">Frost Date Calculator</a>
+          <a href="seed-starting-schedule.html" class="nav-link">Seed Starting Schedule</a>
+          <a href="companion-planting.html" class="nav-link">Companion Planting</a>
+          <a href="square-foot-planner.html" class="nav-link">Square Foot Planner</a>
+          <a href="mulch-calculator.html" class="nav-link">Mulch Calculator</a>
+          <a href="blog.html" class="nav-link">Blog</a>
+          <a href="about.html" class="nav-link nav-cta">About</a>
+        </nav>
+
+        <!-- Mobile hamburger -->
+        <button class="hamburger" aria-label="Toggle menu" onclick="toggleMobileNav()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Drawer -->
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="index.html" class="nav-link active">🏠 Home</a>
+      <a href="frost-dates.html" class="nav-link">❄️ Frost Date Calculator</a>
+      <a href="seed-starting-schedule.html" class="nav-link">🌱 Seed Starting Schedule</a>
+      <a href="companion-planting.html" class="nav-link">🤝 Companion Planting</a>
+      <a href="square-foot-planner.html" class="nav-link">📐 Square Foot Planner</a>
+      <a href="mulch-calculator.html" class="nav-link">🍂 Mulch Calculator</a>
+      <a href="blog.html" class="nav-link">📝 Blog</a>
+      <a href="about.html" class="nav-link">🌻 About Us</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ============================================================
+         HERO SECTION
+         ============================================================ -->
+    <section class="hero" aria-label="Hero">
+      <div class="container">
+        <div class="hero-inner">
+          <div class="hero-content">
+            <div class="hero-badge">🌿 Free Gardening Tools</div>
+            <h1>Grow Smarter with <em>GardenCalc</em></h1>
+            <p class="hero-desc">
+              Plan your garden with precision. From frost dates to companion planting,
+              our free calculators and tools take the guesswork out of every season.
+            </p>
+            <div class="hero-actions">
+              <a href="frost-dates.html" class="btn btn-lg hero-btn-primary">
+                ❄️ Find My Frost Dates
+              </a>
+              <a href="seed-starting-schedule.html" class="btn btn-lg hero-btn-secondary">
+                🌱 Build Seed Schedule
+              </a>
+            </div>
+            <div class="hero-stats">
+              <div>
+                <span class="hero-stat-number">6</span>
+                <span class="hero-stat-label">Free Tools</span>
+              </div>
+              <div>
+                <span class="hero-stat-number">500+</span>
+                <span class="hero-stat-label">Plant Varieties</span>
+              </div>
+              <div>
+                <span class="hero-stat-number">All</span>
+                <span class="hero-stat-label">USDA Zones</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-hidden="true">
+            <div class="hero-card-grid">
+              <div class="hero-mini-card featured">
+                <div class="hero-mini-icon">📅</div>
+                <div class="hero-mini-title">Last Frost: Apr 15 · First Frost: Oct 12</div>
+              </div>
+              <div class="hero-mini-card">
+                <div class="hero-mini-icon">❄️</div>
+                <div class="hero-mini-title">Frost Dates</div>
+              </div>
+              <div class="hero-mini-card">
+                <div class="hero-mini-icon">🌱</div>
+                <div class="hero-mini-title">Seed Start</div>
+              </div>
+              <div class="hero-mini-card">
+                <div class="hero-mini-icon">📐</div>
+                <div class="hero-mini-title">SqFt Plan</div>
+              </div>
+              <div class="hero-mini-card">
+                <div class="hero-mini-icon">🤝</div>
+                <div class="hero-mini-title">Companions</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ADSENSE SLOT 1: Leaderboard Banner (below hero)
+         Format: 728×90 desktop / responsive mobile
+         ============================================================ -->
+    <div class="ad-section ad-section--center" aria-hidden="true">
+      <!-- AdSense: Top Leaderboard — 728x90 (responsive) -->
+      <div class="ad-slot ad-slot--leaderboard" style="max-width:728px; width:100%;">
+        <!-- Replace with:
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+        <span class="ad-placeholder-label">Advertisement — 728×90</span>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         TOOLS GRID
+         ============================================================ -->
+    <section class="section" aria-labelledby="tools-heading">
+      <div class="container">
+        <div class="text-center">
+          <span class="section-label">Our Tools</span>
+          <h2 class="section-title" id="tools-heading">Everything Your Garden Needs</h2>
+          <p class="section-subtitle">
+            Six precision tools built for home gardeners, homesteaders, and market growers alike.
+          </p>
+        </div>
+
+        <div class="tools-grid">
+
+          <!-- Tool 1: Frost Date Calculator -->
+          <article class="tool-card">
+            <div class="tool-icon">❄️</div>
+            <h3>Frost Date Calculator</h3>
+            <p>
+              Enter your ZIP code to get your average last spring frost and first fall frost
+              dates, plus a safe planting window for your area.
+            </p>
+            <a href="frost-dates.html" class="tool-link">Frost Date Calculator</a>
+          </article>
+
+          <!-- Tool 2: Seed Starting Schedule -->
+          <article class="tool-card">
+            <div class="tool-icon">🌱</div>
+            <h3>Seed Starting Schedule</h3>
+            <p>
+              Build a custom week-by-week indoor seed starting calendar based on your
+              frost dates and the plants you want to grow.
+            </p>
+            <a href="seed-starting-schedule.html" class="tool-link">Seed Starting Schedule</a>
+          </article>
+
+          <!-- Tool 3: Companion Planting -->
+          <article class="tool-card">
+            <div class="tool-icon">🤝</div>
+            <h3>Companion Planting</h3>
+            <p>
+              Discover which plants thrive together and which to keep apart. Improve
+              yields, deter pests, and maximize your garden beds.
+            </p>
+            <a href="companion-planting.html" class="tool-link">Companion Planting</a>
+          </article>
+
+          <!-- Tool 4: Square Foot Planner -->
+          <article class="tool-card">
+            <div class="tool-icon">📐</div>
+            <h3>Square Foot Planner</h3>
+            <p>
+              Visually lay out your raised beds. Know exactly how many plants fit per
+              square foot so you never over-crowd again.
+            </p>
+            <a href="square-foot-planner.html" class="tool-link">Square Foot Planner</a>
+          </article>
+
+          <!-- Tool 5: Mulch Calculator -->
+          <article class="tool-card">
+            <div class="tool-icon">🍂</div>
+            <h3>Mulch Calculator</h3>
+            <p>
+              Enter your bed dimensions and desired depth to find out exactly how many
+              cubic yards or bags of mulch to order — no waste.
+            </p>
+            <a href="mulch-calculator.html" class="tool-link">Mulch Calculator</a>
+          </article>
+
+          <!-- Tool 6: Blog -->
+          <article class="tool-card">
+            <div class="tool-icon">📝</div>
+            <h3>Blog</h3>
+            <p>
+              Tips, guides, and seasonal advice from experienced gardeners.
+              Learn when to plant, how to amend soil, and more.
+            </p>
+            <a href="blog.html" class="tool-link">Blog</a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ADSENSE SLOT 2: Mid-Page Rectangle (between tools and features)
+         Format: 336×280 or 300×250 (responsive)
+         ============================================================ -->
+    <div class="ad-section ad-section--center" aria-hidden="true">
+      <!-- AdSense: Mid-Page Rectangle — 336×280 (responsive) -->
+      <div class="ad-slot ad-slot--rectangle">
+        <!-- Replace with:
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="rectangle"
+             data-full-width-responsive="false"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+        <span class="ad-placeholder-label">Advertisement — 336×280</span>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         SEASONS BANNER
+         ============================================================ -->
+    <div class="seasons-bar" aria-label="Current season planting tips">
+      <div class="container">
+        <h2>It's Spring — Time to Plant!</h2>
+        <p>Based on most zones in April, here's what you should be doing right now:</p>
+        <div class="season-chips">
+          <span class="season-chip active">🌡️ Check Frost Dates</span>
+          <span class="season-chip">🥬 Direct Sow Cool Crops</span>
+          <span class="season-chip">🍅 Start Tomatoes Indoors</span>
+          <span class="season-chip">🌿 Prepare Raised Beds</span>
+          <span class="season-chip">🪱 Amend with Compost</span>
+        </div>
+        <a href="frost-date-calculator.html" class="btn btn-lg" style="background:var(--white); color:var(--earth-mid);">
+          Find Your Planting Window →
+        </a>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         WHY GARDENCALC SECTION
+         ============================================================ -->
+    <section class="section section--alt" aria-labelledby="why-heading">
+      <div class="container">
+        <div class="text-center">
+          <span class="section-label">Why GardenCalc</span>
+          <h2 class="section-title" id="why-heading">Gardening Made Simple & Precise</h2>
+          <p class="section-subtitle">
+            No sign-up required. No fluff. Just the tools that help your garden thrive.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-item">
+            <div class="feature-icon">📍</div>
+            <div>
+              <h4>Location-Aware Calculations</h4>
+              <p>All frost date and planting tools use your ZIP code to pull accurate USDA zone and historical climate data.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📱</div>
+            <div>
+              <h4>Works on Any Device</h4>
+              <p>Check your seed schedule from your phone in the garden or plan beds on your laptop — fully responsive design.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🆓</div>
+            <div>
+              <h4>Completely Free</h4>
+              <p>Every tool on GardenCalc is 100% free with no account required. We believe great gardening info should be accessible to everyone.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🧮</div>
+            <div>
+              <h4>Data-Driven Accuracy</h4>
+              <p>Our calculators are built on NOAA climate normals and decades of agricultural extension research from land-grant universities.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🖨️</div>
+            <div>
+              <h4>Print-Friendly Results</h4>
+              <p>Every calculator output is formatted to print cleanly so you can post your seed schedule or frost dates in the potting shed.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🌎</div>
+            <div>
+              <h4>All USDA Hardiness Zones</h4>
+              <p>From Zone 3 in northern Minnesota to Zone 11 in Hawaii — GardenCalc covers every region in the continental US and beyond.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ADSENSE SLOT 3: In-Content Banner (between sections)
+         Format: 728×90 (responsive leaderboard)
+         ============================================================ -->
+    <div class="ad-section ad-section--center" aria-hidden="true">
+      <!-- AdSense: In-Content Leaderboard — 728×90 (responsive) -->
+      <div class="ad-slot ad-slot--leaderboard" style="max-width:728px; width:100%;">
+        <!-- Replace with:
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+        <span class="ad-placeholder-label">Advertisement — 728×90</span>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         TESTIMONIALS
+         ============================================================ -->
+    <section class="section" aria-labelledby="testimonials-heading">
+      <div class="container">
+        <div class="text-center">
+          <span class="section-label">Gardeners Love It</span>
+          <h2 class="section-title" id="testimonials-heading">What Growers Are Saying</h2>
+          <p class="section-subtitle">Real gardeners sharing how GardenCalc changed their season.</p>
+        </div>
+
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">
+              "The frost date calculator finally gave me the confidence to start seeds
+              at the right time. Last year was my best tomato harvest ever!"
+            </p>
+            <div class="testimonial-author">
+              <div class="author-avatar">👩‍🌾</div>
+              <div>
+                <div class="author-name">Margaret T.</div>
+                <div class="author-location">Portland, OR · Zone 8b</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">
+              "The square foot planner helped me fit way more into my 4×8 raised bed.
+              I love how visual it is — I use it every single spring."
+            </p>
+            <div class="testimonial-author">
+              <div class="author-avatar">👨‍🌾</div>
+              <div>
+                <div class="author-name">David K.</div>
+                <div class="author-location">Columbus, OH · Zone 6a</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">
+              "I printed my seed starting schedule and pinned it in my greenhouse.
+              Simple, clean, and actually correct for my zone. Thank you!"
+            </p>
+            <div class="testimonial-author">
+              <div class="author-avatar">🧑‍🌾</div>
+              <div>
+                <div class="author-name">Sandra R.</div>
+                <div class="author-location">Bozeman, MT · Zone 4b</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CTA BANNER
+         ============================================================ -->
+    <section class="cta-banner" aria-labelledby="cta-heading">
+      <div class="container">
+        <span class="section-label">Get Started</span>
+        <h2 id="cta-heading">Ready to Plan Your Best Garden Yet?</h2>
+        <p>Find your frost dates in seconds — no account, no email, just answers.</p>
+        <div class="cta-actions">
+          <a href="frost-date-calculator.html" class="btn btn-lg" style="background:var(--gold); color:var(--text-dark); border-color:var(--gold);">
+            ❄️ Check Frost Dates
+          </a>
+          <a href="seed-starting-schedule.html" class="btn btn-lg hero-btn-secondary">
+            🌱 Build Seed Schedule
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ADSENSE SLOT 4: Bottom Leaderboard (above footer)
+         Format: 728×90 (responsive)
+         ============================================================ -->
+    <div class="ad-section ad-section--center" aria-hidden="true">
+      <!-- AdSense: Bottom Leaderboard — 728×90 (responsive) -->
+      <div class="ad-slot ad-slot--leaderboard" style="max-width:728px; width:100%;">
+        <!-- Replace with:
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+        <span class="ad-placeholder-label">Advertisement — 728×90</span>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ============================================================
+       SITE FOOTER — shared across all pages
+       ============================================================ -->
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <a href="index.html" class="site-logo" style="margin-bottom:0;">
+            <div class="logo-icon">🌿</div>
+            <span class="logo-text">Garden<span>Calc</span></span>
+          </a>
+          <p class="footer-tagline">
+            Free, accurate gardening tools for every zone, every season.
+          </p>
+          <div class="footer-social">
+            <a href="#" class="social-btn" aria-label="Pinterest">📌</a>
+            <a href="#" class="social-btn" aria-label="Instagram">📷</a>
+            <a href="#" class="social-btn" aria-label="Facebook">👥</a>
+            <a href="#" class="social-btn" aria-label="YouTube">▶️</a>
+          </div>
+          <!-- Newsletter -->
+          <p style="font-size:0.8rem; color:rgba(255,255,255,0.5); margin-top:18px; margin-bottom:0;">Get seasonal planting reminders:</p>
+          <form class="newsletter-form" onsubmit="return false;">
+            <input class="newsletter-input" type="email" placeholder="your@email.com" aria-label="Email for newsletter" />
+            <button class="newsletter-btn" type="submit">Join</button>
+          </form>
+        </div>
+
+        <!-- Tools Column -->
+        <div class="footer-col">
+          <h5>Tools</h5>
+          <div class="footer-links">
+            <a href="frost-date-calculator.html">Frost Date Calculator</a>
+            <a href="seed-starting-schedule.html">Seed Starting Schedule</a>
+            <a href="companion-planting.html">Companion Planting</a>
+            <a href="square-foot-planner.html">Square Foot Planner</a>
+            <a href="mulch-calculator.html">Mulch Calculator</a>
+          </div>
+        </div>
+
+        <!-- Learn Column -->
+        <div class="footer-col">
+          <h5>Learn</h5>
+          <div class="footer-links">
+            <a href="blog.html">Blog</a>
+            <a href="blog.html#beginner">Beginner Guides</a>
+            <a href="blog.html#raised-beds">Raised Bed Gardening</a>
+            <a href="blog.html#composting">Composting</a>
+            <a href="blog.html#pest-control">Organic Pest Control</a>
+          </div>
+        </div>
+
+        <!-- Company Column -->
+        <div class="footer-col">
+          <h5>Company</h5>
+          <div class="footer-links">
+            <a href="about.html">About GardenCalc</a>
+            <a href="about.html#contact">Contact Us</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Use</a>
+            <a href="sitemap.html">Sitemap</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 GardenCalc. All rights reserved. For informational purposes only.</p>
+        <div class="footer-legal">
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="about.html#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile nav toggle script -->
+  <script>
+    function toggleMobileNav() {
+      const nav = document.getElementById('mobileNav');
+      nav.classList.toggle('open');
+    }
+    // Close mobile nav on link click
+    document.querySelectorAll('.mobile-nav .nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('mobileNav').classList.remove('open');
+      });
+    });
+    // Close on outside click
+    document.addEventListener('click', function(e) {
+      const nav = document.getElementById('mobileNav');
+      const hamburger = document.querySelector('.hamburger');
+      if (nav.classList.contains('open') && !nav.contains(e.target) && !hamburger.contains(e.target)) {
+        nav.classList.remove('open');
+      }
+    });
+  </script>
+
+</body>
+</html>
