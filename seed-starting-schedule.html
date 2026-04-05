@@ -162,7 +162,8 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 12px;
+      padding: 10px 12px;
+      min-height: 48px;
       background: var(--cream-dark);
       cursor: pointer;
       user-select: none;
@@ -174,13 +175,14 @@
     }
     .family-header:hover { background: var(--green-pale); }
     .family-arrow {
-      width: 13px;
-      height: 13px;
+      width: 14px;
+      height: 14px;
       stroke: var(--text-light);
+      fill: none;
       flex-shrink: 0;
-      transition: transform 0.2s;
+      transition: transform 0.22s ease;
     }
-    .family-group.collapsed .family-arrow { transform: rotate(-90deg); }
+    .family-group.collapsed .family-arrow { transform: rotate(180deg); }
     .family-name {
       font-size: 0.8rem;
       font-weight: 700;
@@ -917,29 +919,76 @@
 
   (function renderPlants() {
     const container = document.getElementById('plantGrid');
-    const ARROW_SVG = '<svg class="family-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>';
 
-    PLANT_GROUPS.forEach((group, gi) => {
+    PLANT_GROUPS.forEach(function(group) {
+      // Group wrapper — no 'collapsed' class, so all start expanded
       const groupEl = document.createElement('div');
       groupEl.className = 'family-group';
-      groupEl.dataset.gi = gi;
 
+      // ── Header button ──────────────────────────────────────────
       const header = document.createElement('button');
       header.type = 'button';
       header.className = 'family-header';
-      header.innerHTML = ARROW_SVG +
-        '<span class="family-name">' + group.family + ' <span style="font-weight:400;color:var(--text-light);">(' + group.common + ')</span></span>' +
-        '<span class="family-count"></span>';
-      header.addEventListener('click', () => groupEl.classList.toggle('collapsed'));
+      header.setAttribute('aria-expanded', 'true');
 
+      // Build arrow SVG via createElementNS so it renders in the
+      // correct SVG namespace regardless of the surrounding HTML context
+      const NS = 'http://www.w3.org/2000/svg';
+      const arrowSvg = document.createElementNS(NS, 'svg');
+      arrowSvg.setAttribute('class', 'family-arrow');
+      arrowSvg.setAttribute('viewBox', '0 0 24 24');
+      arrowSvg.setAttribute('fill', 'none');
+      arrowSvg.setAttribute('stroke', 'currentColor');
+      arrowSvg.setAttribute('stroke-width', '2.5');
+      arrowSvg.setAttribute('stroke-linecap', 'round');
+      arrowSvg.setAttribute('stroke-linejoin', 'round');
+      const poly = document.createElementNS(NS, 'polyline');
+      poly.setAttribute('points', '6 9 12 15 18 9');
+      arrowSvg.appendChild(poly);
+
+      // Family name + common name
+      const nameSpan = document.createElement('span');
+      nameSpan.className = 'family-name';
+      nameSpan.appendChild(document.createTextNode(group.family + ' '));
+      const commonSpan = document.createElement('span');
+      commonSpan.style.cssText = 'font-weight:400;color:var(--text-light);';
+      commonSpan.textContent = '(' + group.common + ')';
+      nameSpan.appendChild(commonSpan);
+
+      // Count badge
+      const countSpan = document.createElement('span');
+      countSpan.className = 'family-count';
+
+      header.appendChild(arrowSvg);
+      header.appendChild(nameSpan);
+      header.appendChild(countSpan);
+
+      // Toggle: use onclick + closest() — reliable across all browsers
+      header.onclick = function() {
+        const g = this.closest('.family-group');
+        const nowCollapsed = g.classList.toggle('collapsed');
+        this.setAttribute('aria-expanded', String(!nowCollapsed));
+      };
+
+      // ── Plant checkboxes ───────────────────────────────────────
       const plantsDiv = document.createElement('div');
       plantsDiv.className = 'family-plants';
 
-      group.plants.forEach(p => {
-        const id = 'plant_' + p._idx;
+      group.plants.forEach(function(p) {
         const label = document.createElement('label');
         label.className = 'plant-item';
-        label.innerHTML = '<input type="checkbox" id="' + id + '" value="' + p._idx + '" checked /><span>' + p.name + '</span>';
+
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.id = 'plant_' + p._idx;
+        cb.value = String(p._idx);
+        cb.checked = true;
+
+        const txt = document.createElement('span');
+        txt.textContent = p.name;
+
+        label.appendChild(cb);
+        label.appendChild(txt);
         plantsDiv.appendChild(label);
       });
 
@@ -947,8 +996,7 @@
       groupEl.appendChild(plantsDiv);
       container.appendChild(groupEl);
 
-      // Listen for changes to update count
-      plantsDiv.addEventListener('change', () => updateGroupCount(groupEl));
+      plantsDiv.addEventListener('change', function() { updateGroupCount(groupEl); });
       updateGroupCount(groupEl);
     });
   })();
