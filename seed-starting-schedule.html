@@ -1107,7 +1107,7 @@
     }
 
     const selected = [];
-    document.querySelectorAll('#plantGrid input[type="checkbox"]:checked').forEach(cb => {
+    document.querySelectorAll('#plantGrid .family-plants input[type="checkbox"]:checked').forEach(cb => {
       selected.push(ALL_PLANTS[parseInt(cb.value)]);
     });
     if (selected.length === 0) {
