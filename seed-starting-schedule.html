@@ -175,6 +175,13 @@
       transition: background 0.15s;
     }
     .family-header:hover { background: var(--green-pale); }
+    .family-select-cb {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      cursor: pointer;
+      accent-color: var(--green-mid);
+    }
     .family-arrow {
       width: 14px;
       height: 14px;
@@ -913,9 +920,15 @@
 
   // ── RENDER GROUPED PLANT CHECKLIST ───────────────────────────
   function updateGroupCount(groupEl) {
-    const total = groupEl.querySelectorAll('input[type="checkbox"]').length;
-    const checked = groupEl.querySelectorAll('input[type="checkbox"]:checked').length;
+    const boxes = groupEl.querySelectorAll('.family-plants input[type="checkbox"]');
+    const total = boxes.length;
+    const checked = groupEl.querySelectorAll('.family-plants input[type="checkbox"]:checked').length;
     groupEl.querySelector('.family-count').textContent = checked + ' of ' + total + ' selected';
+    const familyCb = groupEl.querySelector('.family-select-cb');
+    if (familyCb) {
+      familyCb.checked = checked === total;
+      familyCb.indeterminate = checked > 0 && checked < total;
+    }
   }
 
   (function renderPlants() {
@@ -960,7 +973,23 @@
       const countSpan = document.createElement('span');
       countSpan.className = 'family-count';
 
+      // Family-level select/deselect checkbox
+      const familyCb = document.createElement('input');
+      familyCb.type = 'checkbox';
+      familyCb.className = 'family-select-cb';
+      familyCb.checked = true;
+      familyCb.title = 'Select / deselect all in ' + group.family;
+      familyCb.onclick = function(e) {
+        e.stopPropagation(); // don't collapse/expand the group
+        var isChecked = this.checked;
+        plantsDiv.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
+          cb.checked = isChecked;
+        });
+        updateGroupCount(groupEl);
+      };
+
       header.appendChild(arrowSvg);
+      header.appendChild(familyCb);
       header.appendChild(nameSpan);
       header.appendChild(countSpan);
 
