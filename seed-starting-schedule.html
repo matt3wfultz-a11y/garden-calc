@@ -963,16 +963,18 @@
       header.appendChild(nameSpan);
       header.appendChild(countSpan);
 
-      // Toggle: use onclick + closest() — reliable across all browsers
-      header.onclick = function() {
-        const g = this.closest('.family-group');
-        const nowCollapsed = g.classList.toggle('collapsed');
-        this.setAttribute('aria-expanded', String(!nowCollapsed));
-      };
-
       // ── Plant checkboxes ───────────────────────────────────────
       const plantsDiv = document.createElement('div');
       plantsDiv.className = 'family-plants';
+      plantsDiv.style.display = 'grid'; // explicitly visible on load
+
+      // Toggle: directly set plantsDiv.style.display via closure
+      header.onclick = function() {
+        const isHidden = plantsDiv.style.display === 'none';
+        plantsDiv.style.display = isHidden ? 'grid' : 'none';
+        arrowSvg.style.transform = isHidden ? '' : 'rotate(180deg)';
+        this.setAttribute('aria-expanded', String(isHidden));
+      };
 
       group.plants.forEach(function(p) {
         const label = document.createElement('label');
