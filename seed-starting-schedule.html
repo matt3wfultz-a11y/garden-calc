@@ -1294,12 +1294,6 @@
       monthsRow.appendChild(lbl);
       mCur.setMonth(mCur.getMonth() + 1);
     }
-    // Frost snowflake marker on month row
-    const frostMark = document.createElement('div');
-    frostMark.className = 'gantt-frost-marker';
-    frostMark.style.left = pct(frostDate) + '%';
-    frostMark.textContent = '❄';
-    monthsRow.appendChild(frostMark);
     inner.appendChild(monthsRow);
 
     // Plant rows grouped by family
