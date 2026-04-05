@@ -15,6 +15,258 @@
        ============================================================ -->
   <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossorigin="anonymous"></script> -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* ── Calculator Layout ────────────────────────────────────── */
+    .calculator-section { padding: 40px 0 64px; }
+    .calc-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-bottom: 32px;
+    }
+    .calc-panel {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 32px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+    .calc-panel-title {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      color: var(--green-dark);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    /* ZIP field */
+    .zip-row { display: flex; gap: 10px; }
+    .zip-field {
+      flex: 1;
+      padding: 11px 14px;
+      border: 1.5px solid #ddd;
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .zip-field:focus { border-color: var(--green-mid); }
+    .zip-btn-sm {
+      padding: 11px 18px;
+      background: var(--green-mid);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .zip-btn-sm:hover { background: var(--green-dark); }
+    .zip-result-badge {
+      display: none;
+      margin-top: 10px;
+      padding: 8px 14px;
+      background: var(--green-pale);
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      color: var(--green-dark);
+      font-weight: 600;
+    }
+    .zip-error-msg {
+      display: none;
+      margin-top: 8px;
+      font-size: 0.83rem;
+      color: #c0392b;
+    }
+    /* Divider */
+    .or-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 22px 0;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .or-divider::before, .or-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e5e5e5;
+    }
+    /* Date input */
+    .date-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+    .date-field {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid #ddd;
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+      color: var(--text-dark);
+    }
+    .date-field:focus { border-color: var(--green-mid); }
+    /* Plant checklist */
+    .checklist-controls { display: flex; gap: 8px; margin-bottom: 18px; }
+    .ctrl-btn {
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1.5px solid var(--green-mid);
+      font-family: inherit;
+    }
+    .ctrl-btn--fill { background: var(--green-mid); color: var(--white); }
+    .ctrl-btn--fill:hover { background: var(--green-dark); border-color: var(--green-dark); }
+    .ctrl-btn--outline { background: transparent; color: var(--green-mid); }
+    .ctrl-btn--outline:hover { background: var(--green-pale); }
+    .plant-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 16px;
+    }
+    .plant-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s;
+      user-select: none;
+    }
+    .plant-item:hover { background: var(--green-pale); }
+    .plant-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--green-mid);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .plant-item span { font-size: 0.9rem; color: var(--text-dark); }
+    /* Build button */
+    .build-btn-wrap { text-align: center; margin: 8px 0 0; }
+    .build-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 52px;
+      background: var(--green-mid);
+      color: var(--white);
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.22s;
+      box-shadow: 0 4px 14px rgba(45,134,83,0.3);
+    }
+    .build-btn:hover {
+      background: var(--green-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(45,134,83,0.4);
+    }
+    /* Schedule output */
+    .schedule-output { display: none; margin-top: 52px; }
+    .schedule-output.visible { display: block; }
+    .schedule-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--green-pale);
+    }
+    .schedule-title { font-family: var(--font-display); font-size: 1.4rem; color: var(--green-dark); }
+    .schedule-meta { font-size: 0.85rem; color: var(--text-light); margin-top: 4px; }
+    .print-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 18px;
+      border: 1.5px solid var(--green-mid);
+      border-radius: 50px;
+      color: var(--green-mid);
+      font-size: 0.85rem;
+      font-weight: 600;
+      background: transparent;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .print-btn:hover { background: var(--green-pale); }
+    .schedule-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .schedule-table thead th {
+      background: var(--green-dark);
+      color: var(--white);
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .schedule-table thead th:first-child { border-radius: 8px 0 0 0; }
+    .schedule-table thead th:last-child  { border-radius: 0 8px 0 0; }
+    .schedule-table tbody tr { border-bottom: 1px solid rgba(0,0,0,0.05); }
+    .schedule-table tbody tr:hover { background: var(--green-pale); }
+    .schedule-table td { padding: 12px 16px; vertical-align: middle; }
+    .plant-name-cell { font-weight: 600; color: var(--text-dark); }
+    .cat-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 50px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .cat-badge--warm { background: #fde68a; color: #92400e; }
+    .cat-badge--cool { background: #bfdbfe; color: #1e40af; }
+    .date-cell { font-weight: 600; color: var(--green-dark); }
+    .direct-sow-cell { color: var(--text-light); font-style: italic; }
+    .note-cell { font-size: 0.82rem; color: var(--text-mid); }
+
+    @media (max-width: 768px) {
+      .calc-form-grid { grid-template-columns: 1fr; }
+      .schedule-table { font-size: 0.8rem; }
+      .schedule-table td, .schedule-table thead th { padding: 9px 10px; }
+      .note-cell { display: none; }
+    }
+    @media print {
+      .site-header, .site-footer, .ad-section, .build-btn-wrap,
+      .calc-form-grid, .print-btn, .or-divider { display: none !important; }
+      .schedule-output { display: block !important; }
+      .schedule-table tbody tr:hover { background: none; }
+    }
+  </style>
 </head>
 <body>
 
@@ -101,8 +353,113 @@
     </div>
 
     <!-- ============================================================
-         CALCULATOR GOES HERE
+         SEED STARTING CALCULATOR
          ============================================================ -->
+    <section class="calculator-section">
+      <div class="container">
+        <div class="calc-form-grid">
+
+          <!-- LEFT: Frost Date Input -->
+          <div class="calc-panel">
+            <div class="calc-panel-title">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green-mid)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="6.34" y2="7.66"/><line x1="12" y1="2" x2="17.66" y2="7.66"/><line x1="12" y1="22" x2="6.34" y2="16.34"/><line x1="12" y1="22" x2="17.66" y2="16.34"/></svg>
+              Your Last Frost Date
+            </div>
+
+            <label style="display:block; font-size:0.85rem; font-weight:600; color:var(--text-dark); margin-bottom:8px;">
+              Look up by ZIP code
+            </label>
+            <div class="zip-row">
+              <input
+                id="sssZip"
+                class="zip-field"
+                type="text"
+                inputmode="numeric"
+                maxlength="5"
+                placeholder="e.g. 78701"
+                aria-label="Enter ZIP code"
+                autocomplete="postal-code"
+              />
+              <button class="zip-btn-sm" type="button" onclick="lookupZip()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                Look Up
+              </button>
+            </div>
+            <div class="zip-result-badge" id="zipResultBadge"></div>
+            <div class="zip-error-msg" id="zipErrorMsg">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              ZIP not found. Try a nearby ZIP or enter the date manually below.
+            </div>
+
+            <div class="or-divider">or enter manually</div>
+
+            <label class="date-label" for="lastFrostDate">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--green-mid)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Last spring frost date
+            </label>
+            <input
+              id="lastFrostDate"
+              class="date-field"
+              type="date"
+              aria-label="Last frost date"
+            />
+          </div>
+
+          <!-- RIGHT: Plant Checklist -->
+          <div class="calc-panel">
+            <div class="calc-panel-title">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green-mid)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              Select Your Plants
+            </div>
+
+            <div class="checklist-controls">
+              <button class="ctrl-btn ctrl-btn--fill" type="button" onclick="selectAll()">Select All</button>
+              <button class="ctrl-btn ctrl-btn--outline" type="button" onclick="clearAll()">Clear All</button>
+            </div>
+
+            <div class="plant-grid" id="plantGrid">
+              <!-- populated by JS -->
+            </div>
+          </div>
+
+        </div><!-- /.calc-form-grid -->
+
+        <div class="build-btn-wrap">
+          <button class="build-btn" type="button" onclick="buildSchedule()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Build My Schedule
+          </button>
+        </div>
+
+        <!-- Output Table -->
+        <div class="schedule-output" id="scheduleOutput">
+          <div class="schedule-header">
+            <div>
+              <div class="schedule-title">Your Seed Starting Schedule</div>
+              <div class="schedule-meta" id="scheduleMeta"></div>
+            </div>
+            <button class="print-btn" onclick="window.print()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+              Print Schedule
+            </button>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="schedule-table">
+              <thead>
+                <tr>
+                  <th>Plant</th>
+                  <th>Start Indoors</th>
+                  <th>Transplant / Direct Sow</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody id="scheduleBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
 
     <!-- ============================================================
          ADSENSE SLOT 2: Mid-Page Rectangle
@@ -263,6 +620,337 @@
     });
   </script>
 
+  <script>
+  // ── FROST DATA (same dataset as frost-dates.html) ────────────
+  const FROST_DATA = (function () {
+    const db = {};
+    function range(from, to, city, state, zone, lf, ff) {
+      const d = { city, state, zone, lastFrost: lf, firstFrost: ff };
+      for (let i = from; i <= to; i++) db[String(i).padStart(5, '0')] = d;
+    }
+    function zips(list, city, state, zone, lf, ff) {
+      const d = { city, state, zone, lastFrost: lf, firstFrost: ff };
+      list.forEach(z => db[String(z).padStart(5, '0')] = d);
+    }
+    range(75001,75999,'North Texas','TX','8a','Mar 15','Nov 15');
+    range(76001,76999,'Central Texas','TX','8a','Mar 15','Nov 15');
+    range(77001,77999,'SE Texas','TX','9a','Feb 1','Dec 5');
+    range(78001,78999,'South Texas','TX','8b','Feb 20','Dec 1');
+    range(79001,79999,'West Texas','TX','7b','Mar 20','Nov 10');
+    range(87001,87999,'New Mexico','NM','7b','Apr 15','Oct 15');
+    range(88001,88999,'New Mexico','NM','8a','Mar 15','Nov 15');
+    range(75201,75399,'Dallas','TX','8a','Mar 15','Nov 15');
+    range(75001,75002,'Addison','TX','8a','Mar 15','Nov 15');
+    range(75006,75007,'Carrollton','TX','8a','Mar 15','Nov 15');
+    zips([75010,75011],'Carrollton','TX','8a','Mar 15','Nov 15');
+    zips([75013],'Allen','TX','8a','Mar 15','Nov 15');
+    zips([75019,75020],'Coppell','TX','8a','Mar 15','Nov 15');
+    range(75022,75029,'Flower Mound / Lewisville','TX','8a','Mar 15','Nov 15');
+    range(75033,75036,'Frisco','TX','8a','Mar 15','Nov 15');
+    zips([75038,75039],'Irving','TX','8a','Mar 15','Nov 15');
+    range(75040,75044,'Garland','TX','8a','Mar 15','Nov 15');
+    range(75048,75054,'Grand Prairie','TX','8a','Mar 15','Nov 15');
+    range(75056,75057,'The Colony','TX','8a','Mar 15','Nov 15');
+    zips([75060,75061,75062,75063],'Irving','TX','8a','Mar 15','Nov 15');
+    range(75065,75068,'Lake Dallas / Little Elm','TX','8a','Mar 15','Nov 15');
+    range(75069,75072,'McKinney','TX','8a','Mar 15','Nov 15');
+    range(75074,75075,'Plano','TX','8a','Mar 15','Nov 15');
+    range(75077,75078,'Lewisville / Prosper','TX','8a','Mar 15','Nov 15');
+    range(75080,75083,'Richardson','TX','8a','Mar 15','Nov 15');
+    range(75085,75098,'Rowlett / Wylie / Sachse','TX','8a','Mar 15','Nov 15');
+    range(75101,75180,'South Dallas Suburbs','TX','8a','Mar 15','Nov 15');
+    range(75401,75460,'Greenville / Hunt County','TX','8a','Mar 15','Nov 15');
+    range(75461,75499,'Paris / Lamar County','TX','7b','Mar 20','Nov 10');
+    range(75501,75507,'Texarkana','TX','7b','Mar 20','Nov 10');
+    range(75550,75599,'NE Texas Rural','TX','7b','Mar 20','Nov 10');
+    range(75601,75672,'Longview / Marshall','TX','8a','Mar 10','Nov 20');
+    range(75701,75799,'Tyler','TX','8a','Mar 10','Nov 20');
+    range(75801,75860,'Athens / Palestine','TX','8a','Mar 10','Nov 20');
+    range(75861,75979,'Lufkin / Nacogdoches / Piney Woods','TX','8b','Mar 5','Nov 25');
+    range(76001,76099,'Arlington','TX','8a','Mar 15','Nov 15');
+    range(76100,76180,'Fort Worth','TX','8a','Mar 15','Nov 15');
+    range(76200,76266,'Denton','TX','8a','Mar 15','Nov 15');
+    range(76267,76299,'Gainesville / Sherman','TX','8a','Mar 20','Nov 10');
+    range(76300,76399,'Wichita Falls','TX','7b','Mar 25','Nov 5');
+    range(76400,76499,'Stephenville / Graham','TX','7b','Mar 20','Nov 10');
+    range(76500,76599,'Temple / Killeen / Belton','TX','8a','Mar 10','Nov 20');
+    range(76600,76712,'Waco','TX','8a','Mar 10','Nov 20');
+    range(76800,76876,'Brownwood / Brady','TX','7b','Mar 20','Nov 10');
+    range(76900,76979,'San Angelo','TX','7b','Mar 20','Nov 10');
+    range(77001,77099,'Houston','TX','9a','Feb 1','Dec 5');
+    range(77201,77212,'Houston','TX','9a','Feb 1','Dec 5');
+    range(77301,77320,'Conroe','TX','9a','Feb 10','Dec 1');
+    range(77325,77347,'Humble / Kingwood','TX','9a','Feb 1','Dec 5');
+    range(77350,77372,'Livingston / Coldspring','TX','8b','Feb 15','Nov 25');
+    range(77373,77396,'Spring / Klein','TX','9a','Feb 1','Dec 5');
+    range(77400,77499,'Katy / Richmond / Sugar Land','TX','9a','Feb 1','Dec 5');
+    range(77501,77536,'Pasadena / Deer Park / League City','TX','9a','Feb 1','Dec 5');
+    range(77539,77598,'Galveston / Pearland / Friendswood','TX','9a','Feb 1','Dec 5');
+    range(77600,77720,'Beaumont / Port Arthur','TX','9a','Feb 1','Dec 5');
+    range(77800,77880,'Bryan / College Station','TX','8b','Mar 1','Nov 25');
+    range(77900,77979,'Victoria','TX','9a','Feb 10','Dec 1');
+    range(78001,78039,'Southwest Texas','TX','9a','Feb 1','Dec 5');
+    range(78040,78046,'Laredo','TX','9a','Jan 25','Dec 10');
+    range(78047,78099,'Southwest Texas','TX','9a','Feb 1','Dec 5');
+    range(78100,78199,'San Antonio Suburbs','TX','8b','Feb 20','Dec 1');
+    range(78200,78299,'San Antonio','TX','8b','Feb 20','Dec 1');
+    range(78300,78399,'South Texas / Coastal Bend','TX','9a','Feb 1','Dec 5');
+    range(78401,78418,'Corpus Christi','TX','9a','Feb 1','Dec 5');
+    range(78419,78599,'Rio Grande Valley','TX','9b','Jan 15','Dec 15');
+    range(78520,78526,'Brownsville','TX','10a','Jan 5','Dec 25');
+    range(78550,78558,'Harlingen','TX','9b','Jan 15','Dec 15');
+    range(78500,78519,'McAllen','TX','9b','Jan 15','Dec 15');
+    range(78600,78699,'Austin Area','TX','8b','Feb 15','Dec 1');
+    range(78700,78799,'Austin','TX','8b','Feb 15','Dec 1');
+    zips([78610],'Buda','TX','8b','Feb 15','Dec 1');
+    zips([78613,78630],'Cedar Park','TX','8b','Feb 15','Dec 1');
+    zips([78619],'Driftwood','TX','8b','Feb 15','Dec 1');
+    zips([78620],'Dripping Springs','TX','8b','Feb 28','Nov 28');
+    zips([78621],'Elgin','TX','8b','Feb 15','Dec 1');
+    zips([78624,78625],'Fredericksburg','TX','8a','Mar 15','Nov 15');
+    zips([78626,78627,78628,78633],'Georgetown','TX','8b','Feb 15','Dec 1');
+    zips([78634],'Hutto','TX','8b','Feb 15','Dec 1');
+    zips([78635,78636],'Johnson City / Hye','TX','8a','Mar 15','Nov 15');
+    zips([78639,78643,78657],'Lake LBJ / Llano','TX','8a','Mar 15','Nov 15');
+    zips([78640],'Kyle','TX','8b','Feb 15','Dec 1');
+    zips([78641,78646],'Leander','TX','8b','Feb 15','Dec 1');
+    zips([78642],'Liberty Hill','TX','8a','Mar 1','Nov 20');
+    zips([78644],'Lockhart','TX','8b','Feb 20','Dec 1');
+    zips([78645],'Lago Vista','TX','8b','Feb 20','Nov 28');
+    zips([78648],'Luling','TX','8b','Feb 20','Dec 1');
+    zips([78650],'McDade','TX','8b','Feb 15','Dec 1');
+    zips([78651,78652],'Manchaca','TX','8b','Feb 15','Dec 1');
+    zips([78653],'Manor','TX','8b','Feb 15','Dec 1');
+    zips([78654],'Marble Falls','TX','8a','Mar 1','Nov 20');
+    zips([78660],'Pflugerville','TX','8b','Feb 15','Dec 1');
+    zips([78691],'Pflugerville','TX','8b','Feb 15','Dec 1');
+    zips([78664,78665,78680,78681,78682],'Round Rock','TX','8b','Feb 15','Dec 1');
+    zips([78666,78667],'San Marcos','TX','8b','Feb 15','Dec 1');
+    zips([78669],'Spicewood','TX','8b','Feb 20','Nov 28');
+    zips([78676],'Wimberley','TX','8b','Feb 20','Nov 28');
+    zips([78717,78718,78719,78720,78721,78722,78723,78724,78725,78726,78727,
+          78728,78729,78730,78731,78732,78733,78734,78735,78736,78737,78738,
+          78739,78741,78742,78744,78745,78746,78747,78748,78749,78750,78751,
+          78752,78753,78754,78756,78757,78758,78759],'Austin','TX','8b','Feb 15','Dec 1');
+    range(78800,78879,'Del Rio / Eagle Pass','TX','8b','Feb 1','Dec 5');
+    range(78880,78899,'Pecos / Fort Stockton','TX','7b','Mar 20','Nov 10');
+    range(78900,78999,'South Central Texas','TX','8b','Feb 20','Dec 1');
+    range(79001,79099,'Texas Panhandle','TX','7a','Apr 15','Oct 28');
+    range(79100,79124,'Amarillo','TX','7a','Apr 15','Oct 28');
+    range(79200,79261,'Rolling Plains','TX','7a','Apr 10','Nov 1');
+    range(79300,79399,'Lubbock Area','TX','7a','Apr 1','Nov 1');
+    range(79400,79424,'Lubbock','TX','7a','Apr 1','Nov 1');
+    range(79500,79607,'Abilene','TX','7b','Mar 20','Nov 10');
+    range(79700,79799,'Midland / Odessa','TX','7b','Mar 20','Nov 10');
+    range(79800,79899,'Big Bend / Trans-Pecos','TX','7a','Mar 25','Nov 5');
+    range(79900,79999,'El Paso','TX','8a','Mar 15','Nov 15');
+    range(87001,87099,'North Central New Mexico','NM','6b','May 1','Oct 10');
+    range(87100,87199,'Albuquerque','NM','7b','Apr 15','Oct 15');
+    zips([87124,87144],'Rio Rancho','NM','7b','Apr 15','Oct 15');
+    zips([87004,87031,87068],'Bernalillo / Los Lunas','NM','7b','Apr 15','Oct 15');
+    range(87300,87399,'Gallup','NM','6a','May 1','Oct 5');
+    range(87400,87499,'Farmington','NM','6a','May 10','Oct 5');
+    range(87500,87509,'Santa Fe','NM','6b','May 1','Oct 10');
+    zips([87544,87545],'Los Alamos','NM','6a','May 1','Oct 10');
+    zips([87532,87533],'Española','NM','6b','May 1','Oct 10');
+    range(87510,87599,'Northern New Mexico','NM','5b','May 20','Sep 25');
+    zips([87571,87529,87514,87519,87523,87524,87564],'Taos','NM','5b','May 20','Sep 25');
+    range(87700,87799,'NE New Mexico / Raton','NM','6a','May 5','Oct 5');
+    range(87800,87839,'Socorro','NM','7b','Apr 10','Oct 25');
+    range(87840,87899,'Southwest New Mexico','NM','7a','Apr 15','Oct 20');
+    range(87900,87999,'Truth or Consequences','NM','8a','Mar 20','Nov 5');
+    range(88001,88099,'Las Cruces','NM','8a','Mar 15','Nov 15');
+    range(88030,88033,'Deming','NM','8a','Mar 20','Nov 5');
+    range(88100,88109,'Clovis','NM','7a','Apr 10','Oct 25');
+    range(88110,88199,'Portales / East NM','NM','7a','Apr 10','Oct 25');
+    range(88200,88209,'Roswell','NM','7b','Apr 5','Oct 28');
+    range(88210,88219,'Artesia','NM','7b','Apr 1','Oct 30');
+    range(88220,88239,'Carlsbad','NM','8a','Mar 20','Nov 5');
+    range(88240,88279,'Hobbs','NM','7b','Mar 25','Nov 1');
+    range(88300,88319,'Alamogordo','NM','7b','Apr 5','Oct 28');
+    range(88320,88399,'Ruidoso / Lincoln County','NM','6a','May 1','Oct 10');
+    range(88400,88499,'Tucumcari','NM','7a','Apr 8','Oct 25');
+    zips([88061,88062,88065],'Silver City','NM','7a','Apr 15','Oct 20');
+    range(88500,88599,'El Paso (Fort Bliss)','TX','8a','Mar 15','Nov 15');
+    return db;
+  })();
+
+  // ── PLANT DATABASE ────────────────────────────────────────────
+  // weeksBeforeFrost: negative = weeks before last frost to start indoors
+  // directSow: weeks offset from last frost for direct sowing (null = transplant only)
+  // warm: true = warm-season, false = cool-season
+  const PLANTS = [
+    { name:'Tomatoes',    warm:true,  weeksIndoor:-6,  weeksTransplant:0,  directSow:null, note:'Start 6–8 wks before last frost. Transplant after frost danger passes.' },
+    { name:'Peppers',     warm:true,  weeksIndoor:-8,  weeksTransplant:0,  directSow:null, note:'Start 8–10 wks indoors. Needs warm soil (65°F+) to transplant.' },
+    { name:'Eggplant',    warm:true,  weeksIndoor:-8,  weeksTransplant:0,  directSow:null, note:'Start 8 wks indoors. Loves heat — wait until soil is consistently warm.' },
+    { name:'Broccoli',    warm:false, weeksIndoor:-8,  weeksTransplant:-2, directSow:null, note:'Transplant 2 wks before last frost. Tolerates light frost.' },
+    { name:'Cauliflower', warm:false, weeksIndoor:-8,  weeksTransplant:-2, directSow:null, note:'Similar to broccoli. Plant in cool weather for best heads.' },
+    { name:'Cabbage',     warm:false, weeksIndoor:-8,  weeksTransplant:-2, directSow:null, note:'Start 8 wks indoors. Can transplant in early spring or fall.' },
+    { name:'Lettuce',     warm:false, weeksIndoor:-6,  weeksTransplant:-3, directSow:-4,   note:'Direct sow 4 wks before last frost or start indoors for earlier harvest.' },
+    { name:'Kale',        warm:false, weeksIndoor:-6,  weeksTransplant:-2, directSow:-2,   note:'Very frost tolerant. Can direct sow in early spring or start indoors.' },
+    { name:'Spinach',     warm:false, weeksIndoor:null, weeksTransplant:null, directSow:-6, note:'Direct sow outdoors 6 wks before last frost. Dislikes transplanting.' },
+    { name:'Squash',      warm:true,  weeksIndoor:-3,  weeksTransplant:1,  directSow:1,    note:'Start indoors 3 wks before transplant date or direct sow after frost.' },
+    { name:'Zucchini',    warm:true,  weeksIndoor:-3,  weeksTransplant:1,  directSow:1,    note:'Fast grower. Can direct sow after last frost for easiest results.' },
+    { name:'Cucumbers',   warm:true,  weeksIndoor:-3,  weeksTransplant:1,  directSow:1,    note:'Direct sow after soil warms to 60°F. Transplants poorly if rootbound.' },
+    { name:'Melons',      warm:true,  weeksIndoor:-3,  weeksTransplant:2,  directSow:2,    note:'Start indoors in short-season areas. Need long warm season.' },
+    { name:'Basil',       warm:true,  weeksIndoor:-4,  weeksTransplant:2,  directSow:2,    note:'Very frost sensitive. Do not transplant until nights stay above 50°F.' },
+    { name:'Parsley',     warm:false, weeksIndoor:-10, weeksTransplant:-1, directSow:null, note:'Slow to germinate. Start indoors 10–12 wks before last frost.' },
+    { name:'Cilantro',    warm:false, weeksIndoor:null, weeksTransplant:null, directSow:-3, note:'Best direct sown. Bolts in heat — sow early spring or fall.' },
+    { name:'Onions',      warm:false, weeksIndoor:-10, weeksTransplant:-4, directSow:null, note:'Start indoors 10–12 wks before transplant date for best bulbs.' },
+    { name:'Leeks',       warm:false, weeksIndoor:-12, weeksTransplant:-4, directSow:null, note:'Longest lead time — start 12 wks indoors for full-size leeks.' },
+    { name:'Celery',      warm:false, weeksIndoor:-10, weeksTransplant:0,  directSow:null, note:'Start 10 wks indoors. Needs consistent moisture and cool temps to thrive.' },
+    { name:'Pumpkins',    warm:true,  weeksIndoor:-3,  weeksTransplant:1,  directSow:1,    note:'Direct sow after last frost. Time planting so harvest falls before first frost.' },
+  ];
+
+  // ── RENDER PLANT CHECKLIST ────────────────────────────────────
+  (function renderPlants() {
+    const grid = document.getElementById('plantGrid');
+    PLANTS.forEach((p, i) => {
+      const id = 'plant_' + i;
+      const label = document.createElement('label');
+      label.className = 'plant-item';
+      label.innerHTML = `<input type="checkbox" id="${id}" value="${i}" checked /><span>${p.name}</span>`;
+      grid.appendChild(label);
+    });
+  })();
+
+  function selectAll() {
+    document.querySelectorAll('#plantGrid input[type="checkbox"]').forEach(cb => cb.checked = true);
+  }
+  function clearAll() {
+    document.querySelectorAll('#plantGrid input[type="checkbox"]').forEach(cb => cb.checked = false);
+  }
+
+  // ── ZIP LOOKUP ────────────────────────────────────────────────
+  function lookupZip() {
+    const raw = document.getElementById('sssZip').value.trim();
+    const badge = document.getElementById('zipResultBadge');
+    const errMsg = document.getElementById('zipErrorMsg');
+    badge.style.display = 'none';
+    errMsg.style.display = 'none';
+
+    if (!/^\d{5}$/.test(raw)) {
+      errMsg.style.display = 'block';
+      return;
+    }
+    const entry = FROST_DATA[raw];
+    if (!entry) {
+      errMsg.style.display = 'block';
+      return;
+    }
+
+    badge.textContent = entry.city + ', ' + entry.state + ' — Last Frost: ' + entry.lastFrost;
+    badge.style.display = 'block';
+
+    // Auto-populate date picker
+    const { month, day } = parseMonthDay(entry.lastFrost);
+    const year = new Date().getFullYear();
+    const dateStr = year + '-' + String(month + 1).padStart(2,'0') + '-' + String(day).padStart(2,'0');
+    document.getElementById('lastFrostDate').value = dateStr;
+  }
+
+  // Allow Enter key in ZIP field
+  document.getElementById('sssZip').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { e.preventDefault(); lookupZip(); }
+  });
+  document.getElementById('sssZip').addEventListener('input', function() {
+    this.value = this.value.replace(/\D/g,'').slice(0,5);
+  });
+
+  // ── DATE UTILITIES ────────────────────────────────────────────
+  const MONTH_IDX = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+  const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  function parseMonthDay(str) {
+    const [m, d] = str.split(' ');
+    return { month: MONTH_IDX[m], day: parseInt(d, 10) };
+  }
+
+  function addWeeks(dateObj, weeks) {
+    // dateObj: JS Date; returns "Mon D" string
+    const d = new Date(dateObj);
+    d.setDate(d.getDate() + Math.round(weeks * 7));
+    return MONTH_NAMES[d.getMonth()] + ' ' + d.getDate();
+  }
+
+  function formatDate(dateObj) {
+    return MONTH_NAMES[dateObj.getMonth()] + ' ' + dateObj.getDate();
+  }
+
+  // ── BUILD SCHEDULE ────────────────────────────────────────────
+  function buildSchedule() {
+    const frostInput = document.getElementById('lastFrostDate').value;
+    if (!frostInput) {
+      alert('Please enter your last frost date or look up your ZIP code first.');
+      return;
+    }
+
+    const selected = [];
+    document.querySelectorAll('#plantGrid input[type="checkbox"]:checked').forEach(cb => {
+      selected.push(PLANTS[parseInt(cb.value)]);
+    });
+    if (selected.length === 0) {
+      alert('Please select at least one plant.');
+      return;
+    }
+
+    const frostDate = new Date(frostInput + 'T12:00:00'); // avoid TZ shift
+
+    // Sort: cool-season first, then warm-season; within each group alphabetically
+    selected.sort((a, b) => {
+      if (a.warm !== b.warm) return a.warm ? 1 : -1;
+      return a.name.localeCompare(b.name);
+    });
+
+    const tbody = document.getElementById('scheduleBody');
+    tbody.innerHTML = '';
+
+    selected.forEach(p => {
+      const row = document.createElement('tr');
+
+      // Plant name + badge
+      const badge = `<span class="cat-badge ${p.warm ? 'cat-badge--warm' : 'cat-badge--cool'}">${p.warm ? 'Warm' : 'Cool'}</span>`;
+      const nameCell = `<td class="plant-name-cell">${p.name}${badge}</td>`;
+
+      // Start indoors date
+      let indoorCell;
+      if (p.weeksIndoor !== null) {
+        const d = addWeeks(frostDate, p.weeksIndoor);
+        indoorCell = `<td class="date-cell">${d}</td>`;
+      } else {
+        indoorCell = `<td class="direct-sow-cell">Direct sow only</td>`;
+      }
+
+      // Transplant / direct sow date
+      let outdoorCell;
+      if (p.weeksIndoor !== null && p.weeksTransplant !== null) {
+        const t = addWeeks(frostDate, p.weeksTransplant);
+        if (p.directSow !== null) {
+          const ds = addWeeks(frostDate, p.directSow);
+          outdoorCell = `<td class="date-cell">${t} <span style="font-weight:400;color:var(--text-light);font-size:0.8rem;">or direct sow ${ds}</span></td>`;
+        } else {
+          outdoorCell = `<td class="date-cell">${t}</td>`;
+        }
+      } else if (p.directSow !== null) {
+        const ds = addWeeks(frostDate, p.directSow);
+        outdoorCell = `<td class="date-cell">${ds}</td>`;
+      } else {
+        outdoorCell = `<td class="direct-sow-cell">—</td>`;
+      }
+
+      row.innerHTML = nameCell + indoorCell + outdoorCell + `<td class="note-cell">${p.note}</td>`;
+      tbody.appendChild(row);
+    });
+
+    // Meta line
+    const meta = document.getElementById('scheduleMeta');
+    meta.textContent = 'Last frost date: ' + formatDate(frostDate) + ' · ' + selected.length + ' plant' + (selected.length !== 1 ? 's' : '');
+
+    const output = document.getElementById('scheduleOutput');
+    output.classList.add('visible');
+    output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  </script>
   <script>lucide.createIcons();</script>
 </body>
 </html>
