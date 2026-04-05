@@ -360,14 +360,6 @@
       transform: translateX(-50%);
       top: 6px;
     }
-    .gantt-frost-marker {
-      position: absolute;
-      font-size: 0.7rem;
-      bottom: 3px;
-      transform: translateX(-50%);
-      pointer-events: none;
-      white-space: nowrap;
-    }
     .gantt-family-label {
       font-size: 0.68rem;
       font-weight: 700;
@@ -651,9 +643,7 @@
             </table>
           </div>
           <!-- Gantt chart rendered here by buildGantt() -->
-          <div class="gantt-wrap" id="ganttWrap">
-            <div class="gantt-title">Visual Calendar</div>
-          </div>
+          <div class="gantt-wrap" id="ganttWrap"></div>
         </div>
 
       </div>
@@ -678,6 +668,34 @@
         <span class="ad-placeholder-label">Advertisement — 336×280</span>
       </div>
     </div>
+
+    <!-- More Tools section — content between ad slots per AdSense policy -->
+    <section style="padding:48px 0 40px; background:var(--cream);">
+      <div class="container">
+        <h2 style="font-family:var(--font-display);font-size:1.35rem;color:var(--green-dark);margin-bottom:6px;">More GardenCalc Tools</h2>
+        <p style="font-size:0.9rem;color:var(--text-light);margin-bottom:24px;">Free, accurate gardening calculators built for Texas &amp; New Mexico.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;">
+          <a href="frost-dates.html" style="display:flex;align-items:flex-start;gap:14px;padding:20px;background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:12px;text-decoration:none;transition:box-shadow 0.18s;" onmouseover="this.style.boxShadow='0 4px 18px rgba(0,0,0,0.09)'" onmouseout="this.style.boxShadow=''">
+            <div style="width:40px;height:40px;background:var(--green-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <i data-lucide="snowflake" style="width:20px;height:20px;stroke:var(--green-mid);fill:none;"></i>
+            </div>
+            <div>
+              <div style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--green-dark);margin-bottom:4px;">Frost Date Calculator</div>
+              <div style="font-size:0.84rem;color:var(--text-mid);line-height:1.5;">Look up your last spring and first fall frost dates by ZIP code using 30-year NOAA data.</div>
+            </div>
+          </a>
+          <a href="index.html" style="display:flex;align-items:flex-start;gap:14px;padding:20px;background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:12px;text-decoration:none;transition:box-shadow 0.18s;" onmouseover="this.style.boxShadow='0 4px 18px rgba(0,0,0,0.09)'" onmouseout="this.style.boxShadow=''">
+            <div style="width:40px;height:40px;background:var(--green-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <i data-lucide="layout-grid" style="width:20px;height:20px;stroke:var(--green-mid);fill:none;"></i>
+            </div>
+            <div>
+              <div style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--green-dark);margin-bottom:4px;">All GardenCalc Tools</div>
+              <div style="font-size:0.84rem;color:var(--text-mid);line-height:1.5;">Explore the full suite of free gardening calculators designed for TX &amp; NM gardeners.</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
 
     <!-- ============================================================
          ADSENSE SLOT 3: Bottom Leaderboard (above footer)
@@ -1222,7 +1240,7 @@
   }
 
   function addWeeks(dateObj, weeks) {
-    // dateObj: JS Date; returns "Mon D" string
+    // dateObj: JS Date — returns "Mon D" formatted string
     const d = new Date(dateObj);
     d.setDate(d.getDate() + Math.round(weeks * 7));
     return MONTH_NAMES[d.getMonth()] + ' ' + d.getDate();
