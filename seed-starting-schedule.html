@@ -299,6 +299,16 @@
     .schedule-table thead th:last-child  { border-radius: 0 8px 0 0; }
     .schedule-table tbody tr { border-bottom: 1px solid rgba(0,0,0,0.05); }
     .schedule-table tbody tr:hover { background: var(--green-pale); }
+    .schedule-family-header td {
+      background: var(--cream-dark);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--green-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 8px 16px;
+    }
+    .schedule-family-header:hover { background: var(--cream-dark) !important; }
     .schedule-table td { padding: 12px 16px; vertical-align: middle; }
     .plant-name-cell { font-weight: 600; color: var(--text-dark); }
     .cat-badge {
@@ -916,7 +926,7 @@
 
   // Flat lookup array populated from groups (maintains group order)
   const ALL_PLANTS = [];
-  PLANT_GROUPS.forEach(g => g.plants.forEach(p => { p._idx = ALL_PLANTS.length; ALL_PLANTS.push(p); }));
+  PLANT_GROUPS.forEach(g => g.plants.forEach(p => { p._idx = ALL_PLANTS.length; p._family = g.family; p._common = g.common; ALL_PLANTS.push(p); }));
 
   // ── RENDER GROUPED PLANT CHECKLIST ───────────────────────────
   function updateGroupCount(groupEl) {
@@ -1117,50 +1127,62 @@
 
     const frostDate = new Date(frostInput + 'T12:00:00'); // avoid TZ shift
 
-    // Sort: cool-season first, then warm-season; within each group alphabetically
-    selected.sort((a, b) => {
-      if (a.warm !== b.warm) return a.warm ? 1 : -1;
-      return a.name.localeCompare(b.name);
-    });
+    // Build a Set of selected plant indices for fast lookup
+    const selectedSet = new Set(selected.map(p => p._idx));
 
     const tbody = document.getElementById('scheduleBody');
     tbody.innerHTML = '';
 
-    selected.forEach(p => {
-      const row = document.createElement('tr');
+    // Iterate groups in PLANT_GROUPS order; emit a family header row before each group
+    PLANT_GROUPS.forEach(g => {
+      const groupPlants = g.plants.filter(p => selectedSet.has(p._idx));
+      if (groupPlants.length === 0) return;
 
-      // Plant name + badge
-      const badge = `<span class="cat-badge ${p.warm ? 'cat-badge--warm' : 'cat-badge--cool'}">${p.warm ? 'Warm' : 'Cool'}</span>`;
-      const nameCell = `<td class="plant-name-cell">${p.name}${badge}</td>`;
+      // Family header row
+      const headerRow = document.createElement('tr');
+      headerRow.className = 'schedule-family-header';
+      headerRow.innerHTML = `<td colspan="4">${g.family} <span style="font-weight:400;color:var(--text-light);">(${g.common})</span></td>`;
+      tbody.appendChild(headerRow);
 
-      // Start indoors date
-      let indoorCell;
-      if (p.weeksIndoor !== null) {
-        const d = addWeeks(frostDate, p.weeksIndoor);
-        indoorCell = `<td class="date-cell">${d}</td>`;
-      } else {
-        indoorCell = `<td class="direct-sow-cell">Direct sow only</td>`;
-      }
+      // Plants alphabetically within the family
+      groupPlants.sort((a, b) => a.name.localeCompare(b.name));
 
-      // Transplant / direct sow date
-      let outdoorCell;
-      if (p.weeksIndoor !== null && p.weeksTransplant !== null) {
-        const t = addWeeks(frostDate, p.weeksTransplant);
-        if (p.directSow !== null) {
-          const ds = addWeeks(frostDate, p.directSow);
-          outdoorCell = `<td class="date-cell">${t} <span style="font-weight:400;color:var(--text-light);font-size:0.8rem;">or direct sow ${ds}</span></td>`;
+      groupPlants.forEach(p => {
+        const row = document.createElement('tr');
+
+        // Plant name + badge
+        const badge = `<span class="cat-badge ${p.warm ? 'cat-badge--warm' : 'cat-badge--cool'}">${p.warm ? 'Warm' : 'Cool'}</span>`;
+        const nameCell = `<td class="plant-name-cell">${p.name}${badge}</td>`;
+
+        // Start indoors date
+        let indoorCell;
+        if (p.weeksIndoor !== null) {
+          const d = addWeeks(frostDate, p.weeksIndoor);
+          indoorCell = `<td class="date-cell">${d}</td>`;
         } else {
-          outdoorCell = `<td class="date-cell">${t}</td>`;
+          indoorCell = `<td class="direct-sow-cell">Direct sow only</td>`;
         }
-      } else if (p.directSow !== null) {
-        const ds = addWeeks(frostDate, p.directSow);
-        outdoorCell = `<td class="date-cell">${ds}</td>`;
-      } else {
-        outdoorCell = `<td class="direct-sow-cell">—</td>`;
-      }
 
-      row.innerHTML = nameCell + indoorCell + outdoorCell + `<td class="note-cell">${p.note}</td>`;
-      tbody.appendChild(row);
+        // Transplant / direct sow date
+        let outdoorCell;
+        if (p.weeksIndoor !== null && p.weeksTransplant !== null) {
+          const t = addWeeks(frostDate, p.weeksTransplant);
+          if (p.directSow !== null) {
+            const ds = addWeeks(frostDate, p.directSow);
+            outdoorCell = `<td class="date-cell">${t} <span style="font-weight:400;color:var(--text-light);font-size:0.8rem;">or direct sow ${ds}</span></td>`;
+          } else {
+            outdoorCell = `<td class="date-cell">${t}</td>`;
+          }
+        } else if (p.directSow !== null) {
+          const ds = addWeeks(frostDate, p.directSow);
+          outdoorCell = `<td class="date-cell">${ds}</td>`;
+        } else {
+          outdoorCell = `<td class="direct-sow-cell">—</td>`;
+        }
+
+        row.innerHTML = nameCell + indoorCell + outdoorCell + `<td class="note-cell">${p.note}</td>`;
+        tbody.appendChild(row);
+      });
     });
 
     // Meta line
