@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="GardenCalc Seed Starting Schedule — Select your plants and enter your frost date to get a week-by-week indoor seed starting calendar." />
+  <title>Seed Starting Schedule — GardenCalc</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Favicon placeholder -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" />
+
+  <!-- ============================================================
+       ADSENSE: Publisher Script
+       Replace ca-pub-XXXXXXXXXX with your Publisher ID
+       ============================================================ -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossorigin="anonymous"></script> -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- ============================================================
+       SITE HEADER
+       ============================================================ -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+
+        <!-- Logo -->
+        <a href="index.html" class="site-logo" aria-label="GardenCalc Home">
+          <div class="logo-icon"><i data-lucide="leaf"></i></div>
+          <span class="logo-text">Garden<span>Calc</span></span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="frost-dates.html" class="nav-link">Frost Date Calculator</a>
+          <a href="seed-starting-schedule.html" class="nav-link active">Seed Starting Schedule</a>
+          <a href="companion-planting.html" class="nav-link">Companion Planting</a>
+          <a href="square-foot-planner.html" class="nav-link">Square Foot Planner</a>
+          <a href="mulch-calculator.html" class="nav-link">Mulch Calculator</a>
+          <a href="blog.html" class="nav-link">Blog</a>
+          <a href="about.html" class="nav-link nav-cta">About</a>
+        </nav>
+
+        <!-- Mobile hamburger -->
+        <button class="hamburger" aria-label="Toggle menu" onclick="toggleMobileNav()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Drawer -->
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="index.html" class="nav-link"><i data-lucide="home"></i> Home</a>
+      <a href="frost-dates.html" class="nav-link"><i data-lucide="snowflake"></i> Frost Date Calculator</a>
+      <a href="seed-starting-schedule.html" class="nav-link active"><i data-lucide="sprout"></i> Seed Starting Schedule</a>
+      <a href="companion-planting.html" class="nav-link"><i data-lucide="git-merge"></i> Companion Planting</a>
+      <a href="square-foot-planner.html" class="nav-link"><i data-lucide="layout-grid"></i> Square Foot Planner</a>
+      <a href="mulch-calculator.html" class="nav-link"><i data-lucide="wind"></i> Mulch Calculator</a>
+      <a href="blog.html" class="nav-link"><i data-lucide="book-open"></i> Blog</a>
+      <a href="about.html" class="nav-link"><i data-lucide="sun"></i> About Us</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ============================================================
+         PAGE HERO
+         ============================================================ -->
+    <section class="page-hero" aria-label="Seed Starting Schedule hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <span>›</span>
+          <span>Seed Starting Schedule</span>
+        </nav>
+        <h1>Build Your Seed Starting Schedule</h1>
+        <p>Select your plants and enter your frost date — we'll tell you exactly when to start every seed.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ADSENSE SLOT 1: Leaderboard Banner (below hero)
+         Format: 728×90 desktop / responsive mobile
+         ============================================================ -->
+    <div class="ad-section ad-section--center" aria-hidden="true">
+      <!-- AdSense: Top Leaderboard — 728×90 (responsive) -->
+      <div class="ad-slot ad-slot--leaderboard" style="max-width:728px; width:100%;">
+        <!-- Replace with:
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+        <span class="ad-placeholder-label">Advertisement — 728×90</span>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         CALCULATOR GOES HERE
+         ============================================================ -->
+
+    <!-- ============================================================
+         ADSENSE SLOT 2: Mid-Page Rectangle
+         Format: 336×280 or 300×250 (responsive)
+         ============================================================ -->
+    <div class="ad-section ad-section--center" aria-hidden="true">
+      <!-- AdSense: Mid-Page Rectangle — 336×280 (responsive) -->
+      <div class="ad-slot ad-slot--rectangle">
+        <!-- Replace with:
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="rectangle"
+             data-full-width-responsive="false"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+        <span class="ad-placeholder-label">Advertisement — 336×280</span>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         ADSENSE SLOT 3: In-Content Banner
+         Format: 728×90 (responsive leaderboard)
+         ============================================================ -->
+    <div class="ad-section ad-section--center" aria-hidden="true">
+      <!-- AdSense: In-Content Leaderboard — 728×90 (responsive) -->
+      <div class="ad-slot ad-slot--leaderboard" style="max-width:728px; width:100%;">
+        <!-- Replace with:
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+        <span class="ad-placeholder-label">Advertisement — 728×90</span>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         ADSENSE SLOT 4: Bottom Leaderboard (above footer)
+         Format: 728×90 (responsive)
+         ============================================================ -->
+    <div class="ad-section ad-section--center" aria-hidden="true">
+      <!-- AdSense: Bottom Leaderboard — 728×90 (responsive) -->
+      <div class="ad-slot ad-slot--leaderboard" style="max-width:728px; width:100%;">
+        <!-- Replace with:
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+        <span class="ad-placeholder-label">Advertisement — 728×90</span>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ============================================================
+       SITE FOOTER
+       ============================================================ -->
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <a href="index.html" class="site-logo" style="margin-bottom:0;">
+            <div class="logo-icon"><i data-lucide="leaf"></i></div>
+            <span class="logo-text">Garden<span>Calc</span></span>
+          </a>
+          <p class="footer-tagline">
+            Free, accurate gardening tools for every zone, every season.
+          </p>
+          <div class="footer-social">
+            <a href="#" class="social-link" aria-label="Pinterest">Pinterest</a>
+            <a href="#" class="social-link" aria-label="Instagram">Instagram</a>
+            <a href="#" class="social-link" aria-label="Facebook">Facebook</a>
+            <a href="#" class="social-link" aria-label="YouTube">YouTube</a>
+          </div>
+          <p style="font-size:0.8rem; color:rgba(255,255,255,0.5); margin-top:18px; margin-bottom:0;">Get seasonal planting reminders:</p>
+          <form class="newsletter-form" onsubmit="return false;">
+            <input class="newsletter-input" type="email" placeholder="your@email.com" aria-label="Email for newsletter" />
+            <button class="newsletter-btn" type="submit">Join</button>
+          </form>
+        </div>
+
+        <!-- Tools Column -->
+        <div class="footer-col">
+          <h5>Tools</h5>
+          <div class="footer-links">
+            <a href="frost-dates.html">Frost Date Calculator</a>
+            <a href="seed-starting-schedule.html">Seed Starting Schedule</a>
+            <a href="companion-planting.html">Companion Planting</a>
+            <a href="square-foot-planner.html">Square Foot Planner</a>
+            <a href="mulch-calculator.html">Mulch Calculator</a>
+          </div>
+        </div>
+
+        <!-- Learn Column -->
+        <div class="footer-col">
+          <h5>Learn</h5>
+          <div class="footer-links">
+            <a href="blog.html">Blog</a>
+            <a href="blog.html#beginner">Beginner Guides</a>
+            <a href="blog.html#raised-beds">Raised Bed Gardening</a>
+            <a href="blog.html#composting">Composting</a>
+            <a href="blog.html#pest-control">Organic Pest Control</a>
+          </div>
+        </div>
+
+        <!-- Company Column -->
+        <div class="footer-col">
+          <h5>Company</h5>
+          <div class="footer-links">
+            <a href="about.html">About GardenCalc</a>
+            <a href="about.html#contact">Contact Us</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Use</a>
+            <a href="sitemap.html">Sitemap</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 GardenCalc. All rights reserved. For informational purposes only.</p>
+        <div class="footer-legal">
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="about.html#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileNav() {
+      const nav = document.getElementById('mobileNav');
+      nav.classList.toggle('open');
+    }
+    document.querySelectorAll('.mobile-nav .nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('mobileNav').classList.remove('open');
+      });
+    });
+    document.addEventListener('click', function(e) {
+      const nav = document.getElementById('mobileNav');
+      const hamburger = document.querySelector('.hamburger');
+      if (nav.classList.contains('open') && !nav.contains(e.target) && !hamburger.contains(e.target)) {
+        nav.classList.remove('open');
+      }
+    });
+  </script>
+
+  <script>lucide.createIcons();</script>
+</body>
+</html>
