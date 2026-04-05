@@ -749,3 +749,90 @@ p  { color: var(--text-mid); }
   .cta-actions { flex-direction: column; align-items: center; }
   .ad-slot--leaderboard { min-height: 60px; }
 }
+
+/* ============================================================
+   LUCIDE ICON STYLES
+   ============================================================ */
+[data-lucide] {
+  width: 24px;
+  height: 24px;
+  stroke: var(--green-mid);
+  stroke-width: 2;
+  fill: none;
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+.logo-icon [data-lucide] {
+  width: 22px;
+  height: 22px;
+  stroke: var(--white);
+}
+.hero-badge [data-lucide] {
+  width: 16px;
+  height: 16px;
+  stroke: var(--green-light);
+}
+.hero-mini-icon [data-lucide] {
+  width: 30px;
+  height: 30px;
+  stroke: var(--white);
+}
+.hero-mini-card.featured .hero-mini-icon [data-lucide] {
+  stroke: var(--text-dark);
+}
+.btn [data-lucide] {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+}
+.tool-icon [data-lucide] {
+  width: 28px;
+  height: 28px;
+}
+.feature-icon [data-lucide] {
+  width: 26px;
+  height: 26px;
+}
+.season-chip [data-lucide] {
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+}
+.author-avatar [data-lucide],
+.team-avatar [data-lucide] {
+  width: 24px;
+  height: 24px;
+}
+.about-big-icon [data-lucide] {
+  width: 64px;
+  height: 64px;
+}
+.value-icon [data-lucide] {
+  width: 36px;
+  height: 36px;
+}
+.about-visual [data-lucide] {
+  width: 20px;
+  height: 20px;
+  stroke: var(--green-mid);
+}
+.frost-card-icon [data-lucide] {
+  width: 32px;
+  height: 32px;
+}
+.planting-item-icon [data-lucide] {
+  width: 24px;
+  height: 24px;
+}
+.social-link {
+  padding: 6px 12px;
+  background: rgba(255,255,255,0.1);
+  border-radius: var(--radius-sm);
+  color: rgba(255,255,255,0.7);
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: all var(--transition);
+  text-decoration: none;
+}
+.social-link:hover { background: var(--green-light); color: var(--white); }

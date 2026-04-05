@@ -225,6 +225,7 @@
       .result-location { flex-direction: column; align-items: flex-start; }
     }
   </style>
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
 
@@ -235,7 +236,7 @@
     <div class="container">
       <div class="header-inner">
         <a href="index.html" class="site-logo" aria-label="GardenCalc Home">
-          <div class="logo-icon">🌿</div>
+          <div class="logo-icon"><i data-lucide="leaf"></i></div>
           <span class="logo-text">Garden<span>Calc</span></span>
         </a>
         <nav class="site-nav" aria-label="Main navigation">
@@ -254,14 +255,14 @@
       </div>
     </div>
     <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
-      <a href="index.html" class="nav-link">🏠 Home</a>
-      <a href="frost-dates.html" class="nav-link active">❄️ Frost Date Calculator</a>
-      <a href="seed-starting-schedule.html" class="nav-link">🌱 Seed Starting Schedule</a>
-      <a href="companion-planting.html" class="nav-link">🤝 Companion Planting</a>
-      <a href="square-foot-planner.html" class="nav-link">📐 Square Foot Planner</a>
-      <a href="mulch-calculator.html" class="nav-link">🍂 Mulch Calculator</a>
-      <a href="blog.html" class="nav-link">📝 Blog</a>
-      <a href="about.html" class="nav-link">🌻 About Us</a>
+      <a href="index.html" class="nav-link"><i data-lucide="home"></i> Home</a>
+      <a href="frost-dates.html" class="nav-link active"><i data-lucide="snowflake"></i> Frost Date Calculator</a>
+      <a href="seed-starting-schedule.html" class="nav-link"><i data-lucide="sprout"></i> Seed Starting Schedule</a>
+      <a href="companion-planting.html" class="nav-link"><i data-lucide="git-merge"></i> Companion Planting</a>
+      <a href="square-foot-planner.html" class="nav-link"><i data-lucide="layout-grid"></i> Square Foot Planner</a>
+      <a href="mulch-calculator.html" class="nav-link"><i data-lucide="wind"></i> Mulch Calculator</a>
+      <a href="blog.html" class="nav-link"><i data-lucide="book-open"></i> Blog</a>
+      <a href="about.html" class="nav-link"><i data-lucide="sun"></i> About Us</a>
     </nav>
   </header>
 
@@ -275,7 +276,7 @@
         <nav class="breadcrumb" aria-label="Breadcrumb">
           <a href="index.html">Home</a><span>›</span><span>Frost Date Calculator</span>
         </nav>
-        <h1>❄️ Frost Date Calculator</h1>
+        <h1><i data-lucide="snowflake"></i> Frost Date Calculator</h1>
         <p>Enter your ZIP code to find your average last spring frost and first fall frost dates — plus your full growing season window.</p>
       </div>
     </section>
@@ -299,7 +300,7 @@
           <button class="zip-btn" type="submit">Find Dates →</button>
         </form>
         <div class="zip-error" id="zipError" role="alert">
-          ⚠️ <span id="zipErrorMsg">ZIP code not found. Try a nearby ZIP or check our coverage area below.</span>
+          <i data-lucide="alert-triangle"></i> <span id="zipErrorMsg">ZIP code not found. Try a nearby ZIP or check our coverage area below.</span>
         </div>
         <p class="zip-hint">Currently covers: Texas · New Mexico &nbsp;|&nbsp; More states coming soon</p>
       </div>
@@ -333,13 +334,13 @@
           <!-- Frost date cards -->
           <div class="frost-cards">
             <div class="frost-card frost-card--spring">
-              <div class="frost-card-icon">🌸</div>
+              <div class="frost-card-icon"><i data-lucide="flower"></i></div>
               <div class="frost-card-label">Average Last Spring Frost</div>
               <div class="frost-card-date" id="lastFrostDate">—</div>
               <div class="frost-card-sub">Safe to plant warm-season crops after this date</div>
             </div>
             <div class="frost-card frost-card--fall">
-              <div class="frost-card-icon">🍂</div>
+              <div class="frost-card-icon"><i data-lucide="wind"></i></div>
               <div class="frost-card-label">Average First Fall Frost</div>
               <div class="frost-card-date" id="firstFrostDate">—</div>
               <div class="frost-card-sub">Bring tender plants in or cover before this date</div>
@@ -362,22 +363,22 @@
             <div class="planting-dates-title">Key Planting Dates Derived from Your Frost Dates</div>
             <div class="planting-grid">
               <div class="planting-item">
-                <div class="planting-item-icon">🌡️</div>
+                <div class="planting-item-icon"><i data-lucide="thermometer"></i></div>
                 <div class="planting-item-date" id="startIndoors">—</div>
                 <div class="planting-item-label">Start tomatoes &amp; peppers indoors</div>
               </div>
               <div class="planting-item">
-                <div class="planting-item-icon">🥬</div>
+                <div class="planting-item-icon"><i data-lucide="leaf"></i></div>
                 <div class="planting-item-date" id="coolSeason">—</div>
                 <div class="planting-item-label">Direct sow cool-season crops</div>
               </div>
               <div class="planting-item">
-                <div class="planting-item-icon">🍅</div>
+                <div class="planting-item-icon"><i data-lucide="circle-dot"></i></div>
                 <div class="planting-item-date" id="transplantDate">—</div>
                 <div class="planting-item-label">Safe to transplant warm-season crops</div>
               </div>
               <div class="planting-item planting-item--fall">
-                <div class="planting-item-icon">🍁</div>
+                <div class="planting-item-icon"><i data-lucide="cloud-snow"></i></div>
                 <div class="planting-item-date" id="fallPlanting">—</div>
                 <div class="planting-item-label">Start fall cool-season crops</div>
               </div>
@@ -564,10 +565,10 @@
         <p>Now that you know your frost dates, use our Seed Starting Schedule to get a week-by-week calendar for every plant you want to grow.</p>
         <div class="cta-actions">
           <a href="seed-starting-schedule.html" class="btn btn-lg" style="background:var(--gold);color:var(--text-dark);border-color:var(--gold);">
-            🌱 Build My Seed Schedule
+            <i data-lucide="sprout"></i> Build My Seed Schedule
           </a>
           <a href="companion-planting.html" class="btn btn-lg hero-btn-secondary">
-            🤝 Companion Planting Guide
+            <i data-lucide="git-merge"></i> Companion Planting Guide
           </a>
         </div>
       </div>
@@ -602,15 +603,15 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="index.html" class="site-logo" style="margin-bottom:0;">
-            <div class="logo-icon">🌿</div>
+            <div class="logo-icon"><i data-lucide="leaf"></i></div>
             <span class="logo-text">Garden<span>Calc</span></span>
           </a>
           <p class="footer-tagline">Free, accurate gardening tools for every zone, every season.</p>
           <div class="footer-social">
-            <a href="#" class="social-btn" aria-label="Pinterest">📌</a>
-            <a href="#" class="social-btn" aria-label="Instagram">📷</a>
-            <a href="#" class="social-btn" aria-label="Facebook">👥</a>
-            <a href="#" class="social-btn" aria-label="YouTube">▶️</a>
+            <a href="#" class="social-link" aria-label="Pinterest">Pinterest</a>
+            <a href="#" class="social-link" aria-label="Instagram">Instagram</a>
+            <a href="#" class="social-link" aria-label="Facebook">Facebook</a>
+            <a href="#" class="social-link" aria-label="YouTube">YouTube</a>
           </div>
           <p style="font-size:0.8rem;color:rgba(255,255,255,0.5);margin-top:18px;margin-bottom:0;">Get seasonal planting reminders:</p>
           <form class="newsletter-form" onsubmit="return false;">
@@ -1037,5 +1038,6 @@
   }
   </script>
 
+  <script>lucide.createIcons();</script>
 </body>
 </html>
