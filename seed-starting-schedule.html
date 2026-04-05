@@ -626,10 +626,16 @@
               <div class="schedule-title">Your Seed Starting Schedule</div>
               <div class="schedule-meta" id="scheduleMeta"></div>
             </div>
-            <button class="print-btn" onclick="window.print()">
-              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-              Print Schedule
-            </button>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button class="print-btn" onclick="window.print()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                Print Schedule
+              </button>
+              <button class="print-btn" onclick="downloadICS()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Add to Calendar
+              </button>
+            </div>
           </div>
           <div style="overflow-x:auto;">
             <table class="schedule-table">
@@ -1372,6 +1378,85 @@
 
   function formatDate(dateObj) {
     return MONTH_NAMES[dateObj.getMonth()] + ' ' + dateObj.getDate();
+  }
+
+  // ── ADD TO CALENDAR (ICS download) ───────────────────────────
+  function downloadICS() {
+    const frostInput = document.getElementById('lastFrostDate').value;
+    if (!frostInput) {
+      alert('Please build your schedule first.');
+      return;
+    }
+    const frostDate = new Date(frostInput + 'T12:00:00');
+
+    function icsDate(d) {
+      return d.getFullYear() +
+        String(d.getMonth() + 1).padStart(2, '0') +
+        String(d.getDate()).padStart(2, '0');
+    }
+    function icsEnd(d) {
+      const next = new Date(d);
+      next.setDate(next.getDate() + 1);
+      return icsDate(next);
+    }
+    function uid(suffix) {
+      return Math.random().toString(36).slice(2, 10) + '-' + suffix + '@gardencalc';
+    }
+
+    const lines = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//GardenCalc//Seed Starting Schedule//EN',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+      'X-WR-CALNAME:Seed Starting Schedule'
+    ];
+
+    document.querySelectorAll('#plantGrid .family-plants input[type="checkbox"]:checked').forEach(function(cb) {
+      const p = ALL_PLANTS[parseInt(cb.value)];
+      if (!p) return;
+
+      if (p.weeksIndoor !== null) {
+        const d = addWeeksDate(frostDate, p.weeksIndoor);
+        lines.push('BEGIN:VEVENT',
+          'UID:' + uid('indoor-' + p._idx),
+          'DTSTART;VALUE=DATE:' + icsDate(d),
+          'DTEND;VALUE=DATE:'   + icsEnd(d),
+          'SUMMARY:Start Indoors \u2013 ' + p.name,
+          'DESCRIPTION:Start ' + p.name + ' seeds indoors today.',
+          'END:VEVENT');
+      }
+
+      if (p.weeksTransplant !== null) {
+        const d = addWeeksDate(frostDate, p.weeksTransplant);
+        lines.push('BEGIN:VEVENT',
+          'UID:' + uid('transplant-' + p._idx),
+          'DTSTART;VALUE=DATE:' + icsDate(d),
+          'DTEND;VALUE=DATE:'   + icsEnd(d),
+          'SUMMARY:Transplant Outdoors \u2013 ' + p.name,
+          'DESCRIPTION:Move ' + p.name + ' seedlings outdoors today.',
+          'END:VEVENT');
+      } else if (p.directSow !== null) {
+        const d = addWeeksDate(frostDate, p.directSow);
+        lines.push('BEGIN:VEVENT',
+          'UID:' + uid('directsow-' + p._idx),
+          'DTSTART;VALUE=DATE:' + icsDate(d),
+          'DTEND;VALUE=DATE:'   + icsEnd(d),
+          'SUMMARY:Direct Sow \u2013 ' + p.name,
+          'DESCRIPTION:Direct sow ' + p.name + ' in the garden today.',
+          'END:VEVENT');
+      }
+    });
+
+    lines.push('END:VCALENDAR');
+
+    const blob = new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = 'seed-starting-schedule.ics';
+    a.click();
+    URL.revokeObjectURL(url);
   }
 
   // ── BUILD SCHEDULE ────────────────────────────────────────────
