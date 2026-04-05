@@ -126,7 +126,7 @@
     }
     .date-field:focus { border-color: var(--green-mid); }
     /* Plant checklist */
-    .checklist-controls { display: flex; gap: 8px; margin-bottom: 18px; }
+    .checklist-controls { display: flex; gap: 8px; margin-bottom: 14px; }
     .ctrl-btn {
       padding: 6px 14px;
       border-radius: 50px;
@@ -141,11 +141,65 @@
     .ctrl-btn--fill:hover { background: var(--green-dark); border-color: var(--green-dark); }
     .ctrl-btn--outline { background: transparent; color: var(--green-mid); }
     .ctrl-btn--outline:hover { background: var(--green-pale); }
-    .plant-grid {
+    /* Family group checklist */
+    .plant-groups {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      max-height: 390px;
+      overflow-y: auto;
+      padding-right: 2px;
+    }
+    .plant-groups::-webkit-scrollbar { width: 5px; }
+    .plant-groups::-webkit-scrollbar-track { background: transparent; }
+    .plant-groups::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+    .family-group {
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .family-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: var(--cream-dark);
+      cursor: pointer;
+      user-select: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+      transition: background 0.15s;
+    }
+    .family-header:hover { background: var(--green-pale); }
+    .family-arrow {
+      width: 13px;
+      height: 13px;
+      stroke: var(--text-light);
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+    .family-group.collapsed .family-arrow { transform: rotate(-90deg); }
+    .family-name {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--green-dark);
+      flex: 1;
+    }
+    .family-count {
+      font-size: 0.7rem;
+      color: var(--text-light);
+      white-space: nowrap;
+    }
+    .family-plants {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 6px 16px;
+      gap: 1px 6px;
+      padding: 6px 10px 8px;
+      background: var(--white);
     }
+    .family-group.collapsed .family-plants { display: none; }
     .plant-item {
       display: flex;
       align-items: center;
@@ -417,7 +471,7 @@
               <button class="ctrl-btn ctrl-btn--outline" type="button" onclick="clearAll()">Clear All</button>
             </div>
 
-            <div class="plant-grid" id="plantGrid">
+            <div class="plant-groups" id="plantGrid">
               <!-- populated by JS -->
             </div>
           </div>
@@ -755,50 +809,157 @@
     return db;
   })();
 
-  // ── PLANT DATABASE ────────────────────────────────────────────
-  // weeksBeforeFrost: negative = weeks before last frost to start indoors
+  // ── PLANT DATABASE BY BOTANICAL FAMILY ───────────────────────
+  // weeksIndoor: weeks before last frost to start indoors (negative = before frost)
+  // weeksTransplant: weeks offset from last frost to transplant outdoors
   // directSow: weeks offset from last frost for direct sowing (null = transplant only)
   // warm: true = warm-season, false = cool-season
-  const PLANTS = [
-    { name:'Tomatoes',    warm:true,  weeksIndoor:-6,  weeksTransplant:0,  directSow:null, note:'Start 6–8 wks before last frost. Transplant after frost danger passes.' },
-    { name:'Peppers',     warm:true,  weeksIndoor:-8,  weeksTransplant:0,  directSow:null, note:'Start 8–10 wks indoors. Needs warm soil (65°F+) to transplant.' },
-    { name:'Eggplant',    warm:true,  weeksIndoor:-8,  weeksTransplant:0,  directSow:null, note:'Start 8 wks indoors. Loves heat — wait until soil is consistently warm.' },
-    { name:'Broccoli',    warm:false, weeksIndoor:-8,  weeksTransplant:-2, directSow:null, note:'Transplant 2 wks before last frost. Tolerates light frost.' },
-    { name:'Cauliflower', warm:false, weeksIndoor:-8,  weeksTransplant:-2, directSow:null, note:'Similar to broccoli. Plant in cool weather for best heads.' },
-    { name:'Cabbage',     warm:false, weeksIndoor:-8,  weeksTransplant:-2, directSow:null, note:'Start 8 wks indoors. Can transplant in early spring or fall.' },
-    { name:'Lettuce',     warm:false, weeksIndoor:-6,  weeksTransplant:-3, directSow:-4,   note:'Direct sow 4 wks before last frost or start indoors for earlier harvest.' },
-    { name:'Kale',        warm:false, weeksIndoor:-6,  weeksTransplant:-2, directSow:-2,   note:'Very frost tolerant. Can direct sow in early spring or start indoors.' },
-    { name:'Spinach',     warm:false, weeksIndoor:null, weeksTransplant:null, directSow:-6, note:'Direct sow outdoors 6 wks before last frost. Dislikes transplanting.' },
-    { name:'Squash',      warm:true,  weeksIndoor:-3,  weeksTransplant:1,  directSow:1,    note:'Start indoors 3 wks before transplant date or direct sow after frost.' },
-    { name:'Zucchini',    warm:true,  weeksIndoor:-3,  weeksTransplant:1,  directSow:1,    note:'Fast grower. Can direct sow after last frost for easiest results.' },
-    { name:'Cucumbers',   warm:true,  weeksIndoor:-3,  weeksTransplant:1,  directSow:1,    note:'Direct sow after soil warms to 60°F. Transplants poorly if rootbound.' },
-    { name:'Melons',      warm:true,  weeksIndoor:-3,  weeksTransplant:2,  directSow:2,    note:'Start indoors in short-season areas. Need long warm season.' },
-    { name:'Basil',       warm:true,  weeksIndoor:-4,  weeksTransplant:2,  directSow:2,    note:'Very frost sensitive. Do not transplant until nights stay above 50°F.' },
-    { name:'Parsley',     warm:false, weeksIndoor:-10, weeksTransplant:-1, directSow:null, note:'Slow to germinate. Start indoors 10–12 wks before last frost.' },
-    { name:'Cilantro',    warm:false, weeksIndoor:null, weeksTransplant:null, directSow:-3, note:'Best direct sown. Bolts in heat — sow early spring or fall.' },
-    { name:'Onions',      warm:false, weeksIndoor:-10, weeksTransplant:-4, directSow:null, note:'Start indoors 10–12 wks before transplant date for best bulbs.' },
-    { name:'Leeks',       warm:false, weeksIndoor:-12, weeksTransplant:-4, directSow:null, note:'Longest lead time — start 12 wks indoors for full-size leeks.' },
-    { name:'Celery',      warm:false, weeksIndoor:-10, weeksTransplant:0,  directSow:null, note:'Start 10 wks indoors. Needs consistent moisture and cool temps to thrive.' },
-    { name:'Pumpkins',    warm:true,  weeksIndoor:-3,  weeksTransplant:1,  directSow:1,    note:'Direct sow after last frost. Time planting so harvest falls before first frost.' },
+  const PLANT_GROUPS = [
+    {
+      family: 'Solanaceae', common: 'Nightshade',
+      plants: [
+        { name:'Tomatoes',   warm:true,  weeksIndoor:-6,  weeksTransplant:0,  directSow:null, note:'Start 6–8 wks before last frost. Transplant after frost danger passes.' },
+        { name:'Peppers',    warm:true,  weeksIndoor:-8,  weeksTransplant:0,  directSow:null, note:'Start 8–10 wks indoors. Needs warm soil (65°F+) to transplant.' },
+        { name:'Eggplant',   warm:true,  weeksIndoor:-8,  weeksTransplant:0,  directSow:null, note:'Start 8 wks indoors. Loves heat — wait until soil is consistently warm.' },
+        { name:'Tomatillo',  warm:true,  weeksIndoor:-6,  weeksTransplant:0,  directSow:null, note:'Start 6 wks indoors. Transplant after last frost — grows large, allow space.' },
+        { name:'Potato',     warm:true,  weeksIndoor:null, weeksTransplant:null, directSow:-3, note:'Plant seed potatoes 2–4 wks before last frost when soil reaches 45°F.' },
+      ]
+    },
+    {
+      family: 'Brassicaceae', common: 'Mustard/Crucifer',
+      plants: [
+        { name:'Broccoli',    warm:false, weeksIndoor:-8,  weeksTransplant:-2, directSow:null, note:'Transplant 2 wks before last frost. Tolerates light frost.' },
+        { name:'Cabbage',     warm:false, weeksIndoor:-8,  weeksTransplant:-2, directSow:null, note:'Start 8 wks indoors. Can transplant in early spring or fall.' },
+        { name:'Cauliflower', warm:false, weeksIndoor:-8,  weeksTransplant:-2, directSow:null, note:'Similar to broccoli. Plant in cool weather for best heads.' },
+        { name:'Kale',        warm:false, weeksIndoor:-6,  weeksTransplant:-2, directSow:-2,   note:'Very frost tolerant. Can direct sow in early spring or start indoors.' },
+        { name:'Radish',      warm:false, weeksIndoor:null, weeksTransplant:null, directSow:-5, note:'Direct sow 4–6 wks before last frost. Fast crop — resow every 2 wks.' },
+        { name:'Turnip',      warm:false, weeksIndoor:null, weeksTransplant:null, directSow:-4, note:'Direct sow 4 wks before last frost. Dislikes transplanting.' },
+      ]
+    },
+    {
+      family: 'Cucurbitaceae', common: 'Gourd/Squash',
+      plants: [
+        { name:'Cucumber',    warm:true, weeksIndoor:-3,  weeksTransplant:1,  directSow:1,  note:'Direct sow after soil warms to 60°F. Transplants poorly if rootbound.' },
+        { name:'Melon',       warm:true, weeksIndoor:-3,  weeksTransplant:2,  directSow:2,  note:'Start indoors in short-season areas. Need long warm season.' },
+        { name:'Pumpkin',     warm:true, weeksIndoor:-3,  weeksTransplant:1,  directSow:1,  note:'Direct sow after last frost. Time planting so harvest falls before first frost.' },
+        { name:'Squash',      warm:true, weeksIndoor:-3,  weeksTransplant:1,  directSow:1,  note:'Start indoors 3 wks before transplant date or direct sow after frost.' },
+        { name:'Watermelon',  warm:true, weeksIndoor:-3,  weeksTransplant:2,  directSow:2,  note:'Start indoors 3 wks before transplant. Needs long, hot season.' },
+        { name:'Zucchini',    warm:true, weeksIndoor:-3,  weeksTransplant:1,  directSow:1,  note:'Fast grower. Can direct sow after last frost for easiest results.' },
+      ]
+    },
+    {
+      family: 'Fabaceae', common: 'Legume',
+      plants: [
+        { name:'Beans',     warm:true,  weeksIndoor:null, weeksTransplant:null, directSow:1,  note:'Direct sow after last frost when soil is 60°F+. Dislikes transplanting.' },
+        { name:'Peas',      warm:false, weeksIndoor:null, weeksTransplant:null, directSow:-6, note:'Direct sow 4–6 wks before last frost — earliest spring crop possible.' },
+        { name:'Soybeans',  warm:true,  weeksIndoor:null, weeksTransplant:null, directSow:1,  note:'Direct sow after last frost when soil reaches 55°F.' },
+        { name:'Lentils',   warm:false, weeksIndoor:null, weeksTransplant:null, directSow:-4, note:'Direct sow 4 wks before last frost. Prefers cool, dry conditions.' },
+        { name:'Peanuts',   warm:true,  weeksIndoor:-4,   weeksTransplant:2,   directSow:2,  note:'Start indoors in short seasons. Need 120–150 frost-free days to mature.' },
+      ]
+    },
+    {
+      family: 'Apiaceae', common: 'Carrot/Parsley',
+      plants: [
+        { name:'Carrot',   warm:false, weeksIndoor:null, weeksTransplant:null, directSow:-3, note:'Direct sow 2–4 wks before last frost. Keep soil moist until germination.' },
+        { name:'Celery',   warm:false, weeksIndoor:-10,  weeksTransplant:0,   directSow:null, note:'Start 10 wks indoors. Needs consistent moisture and cool temps to thrive.' },
+        { name:'Dill',     warm:false, weeksIndoor:null, weeksTransplant:null, directSow:-2, note:'Direct sow in early spring. Bolts in heat — succession sow every 3 wks.' },
+        { name:'Fennel',   warm:false, weeksIndoor:-6,   weeksTransplant:-2,  directSow:null, note:'Start 6 wks indoors or direct sow. Keep away from most vegetables.' },
+        { name:'Parsley',  warm:false, weeksIndoor:-10,  weeksTransplant:-1,  directSow:null, note:'Slow to germinate. Start indoors 10–12 wks before last frost.' },
+        { name:'Parsnip',  warm:false, weeksIndoor:null, weeksTransplant:null, directSow:-2, note:'Direct sow as soon as soil can be worked. Very slow germination.' },
+      ]
+    },
+    {
+      family: 'Amaryllidaceae', common: 'Allium/Onion',
+      plants: [
+        { name:'Chives',   warm:false, weeksIndoor:-8,  weeksTransplant:-2, directSow:null, note:'Start 8–10 wks indoors. Slow to establish from seed — worth starting early.' },
+        { name:'Garlic',   warm:false, weeksIndoor:null, weeksTransplant:null, directSow:-6, note:'Plant cloves in fall for best results. Spring planting 4–6 wks before last frost.' },
+        { name:'Leek',     warm:false, weeksIndoor:-12, weeksTransplant:-4, directSow:null, note:'Longest lead time — start 12 wks indoors for full-size leeks.' },
+        { name:'Onion',    warm:false, weeksIndoor:-10, weeksTransplant:-4, directSow:null, note:'Start indoors 10–12 wks before transplant date for best bulbs.' },
+        { name:'Shallot',  warm:false, weeksIndoor:-10, weeksTransplant:-4, directSow:null, note:'Start like onions or plant sets. Harvest when tops fall over.' },
+      ]
+    },
+    {
+      family: 'Chenopodiaceae', common: 'Goosefoot/Beet',
+      plants: [
+        { name:'Beet',      warm:false, weeksIndoor:null, weeksTransplant:null, directSow:-4, note:'Direct sow 4 wks before last frost. Soak seeds overnight to speed germination.' },
+        { name:'Chard',     warm:false, weeksIndoor:-4,   weeksTransplant:-2,  directSow:-2,  note:'Start 4 wks indoors or direct sow. Very cold-hardy and heat-tolerant.' },
+        { name:'Spinach',   warm:false, weeksIndoor:null, weeksTransplant:null, directSow:-6,  note:'Direct sow outdoors 6 wks before last frost. Dislikes transplanting.' },
+        { name:'Sugar Beet',warm:false, weeksIndoor:null, weeksTransplant:null, directSow:-4, note:'Direct sow 4 wks before last frost. Grown for roots — needs full season.' },
+      ]
+    },
+    {
+      family: 'Asteraceae', common: 'Composite/Daisy',
+      plants: [
+        { name:'Artichoke',           warm:false, weeksIndoor:-8,  weeksTransplant:0,  directSow:null, note:'Start 8 wks indoors. Perennial in zones 7+; treat as annual in colder zones.' },
+        { name:'Endive',              warm:false, weeksIndoor:-6,  weeksTransplant:-2, directSow:null, note:'Start 6 wks indoors for spring crop. Can also direct sow for fall harvest.' },
+        { name:'Jerusalem Artichoke', warm:true,  weeksIndoor:null, weeksTransplant:null, directSow:0, note:'Plant tubers at last frost date. Vigorous grower — contain carefully.' },
+        { name:'Lettuce',             warm:false, weeksIndoor:-6,  weeksTransplant:-3, directSow:-4,   note:'Direct sow 4 wks before last frost or start indoors for earlier harvest.' },
+      ]
+    },
+    {
+      family: 'Poaceae', common: 'Grass',
+      plants: [
+        { name:'Corn', warm:true, weeksIndoor:null, weeksTransplant:null, directSow:1, note:'Direct sow after last frost when soil reaches 60°F. Plant in blocks for pollination.' },
+      ]
+    },
   ];
 
-  // ── RENDER PLANT CHECKLIST ────────────────────────────────────
+  // Flat lookup array populated from groups (maintains group order)
+  const ALL_PLANTS = [];
+  PLANT_GROUPS.forEach(g => g.plants.forEach(p => { p._idx = ALL_PLANTS.length; ALL_PLANTS.push(p); }));
+
+  // ── RENDER GROUPED PLANT CHECKLIST ───────────────────────────
+  function updateGroupCount(groupEl) {
+    const total = groupEl.querySelectorAll('input[type="checkbox"]').length;
+    const checked = groupEl.querySelectorAll('input[type="checkbox"]:checked').length;
+    groupEl.querySelector('.family-count').textContent = checked + ' of ' + total + ' selected';
+  }
+
   (function renderPlants() {
-    const grid = document.getElementById('plantGrid');
-    PLANTS.forEach((p, i) => {
-      const id = 'plant_' + i;
-      const label = document.createElement('label');
-      label.className = 'plant-item';
-      label.innerHTML = `<input type="checkbox" id="${id}" value="${i}" checked /><span>${p.name}</span>`;
-      grid.appendChild(label);
+    const container = document.getElementById('plantGrid');
+    const ARROW_SVG = '<svg class="family-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>';
+
+    PLANT_GROUPS.forEach((group, gi) => {
+      const groupEl = document.createElement('div');
+      groupEl.className = 'family-group';
+      groupEl.dataset.gi = gi;
+
+      const header = document.createElement('button');
+      header.type = 'button';
+      header.className = 'family-header';
+      header.innerHTML = ARROW_SVG +
+        '<span class="family-name">' + group.family + ' <span style="font-weight:400;color:var(--text-light);">(' + group.common + ')</span></span>' +
+        '<span class="family-count"></span>';
+      header.addEventListener('click', () => groupEl.classList.toggle('collapsed'));
+
+      const plantsDiv = document.createElement('div');
+      plantsDiv.className = 'family-plants';
+
+      group.plants.forEach(p => {
+        const id = 'plant_' + p._idx;
+        const label = document.createElement('label');
+        label.className = 'plant-item';
+        label.innerHTML = '<input type="checkbox" id="' + id + '" value="' + p._idx + '" checked /><span>' + p.name + '</span>';
+        plantsDiv.appendChild(label);
+      });
+
+      groupEl.appendChild(header);
+      groupEl.appendChild(plantsDiv);
+      container.appendChild(groupEl);
+
+      // Listen for changes to update count
+      plantsDiv.addEventListener('change', () => updateGroupCount(groupEl));
+      updateGroupCount(groupEl);
     });
   })();
 
   function selectAll() {
     document.querySelectorAll('#plantGrid input[type="checkbox"]').forEach(cb => cb.checked = true);
+    document.querySelectorAll('.family-group').forEach(g => updateGroupCount(g));
   }
   function clearAll() {
     document.querySelectorAll('#plantGrid input[type="checkbox"]').forEach(cb => cb.checked = false);
+    document.querySelectorAll('.family-group').forEach(g => updateGroupCount(g));
   }
 
   // ── ZIP LOOKUP ────────────────────────────────────────────────
@@ -867,7 +1028,7 @@
 
     const selected = [];
     document.querySelectorAll('#plantGrid input[type="checkbox"]:checked').forEach(cb => {
-      selected.push(PLANTS[parseInt(cb.value)]);
+      selected.push(ALL_PLANTS[parseInt(cb.value)]);
     });
     if (selected.length === 0) {
       alert('Please select at least one plant.');
