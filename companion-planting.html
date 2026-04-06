@@ -103,6 +103,101 @@
       font-size: 0.9rem;
       padding: 40px 0;
     }
+    /* ── Results Section ─────────────────────────────────────── */
+    .results-section {
+      display: none;
+      padding: 48px 0 56px;
+      background: var(--cream);
+      border-top: 1px solid rgba(0,0,0,0.07);
+    }
+    .results-section.visible { display: block; }
+    .results-heading {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--green-dark);
+      margin-bottom: 4px;
+    }
+    .results-sub {
+      font-size: 0.88rem;
+      color: var(--text-light);
+      margin-bottom: 28px;
+    }
+    .results-columns {
+      display: grid;
+      grid-template-columns: 1fr 300px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 880px) {
+      .results-columns { grid-template-columns: 1fr; }
+      .results-ad { order: 3; }
+    }
+    .companions-panel-head {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      border-bottom: 2px solid;
+    }
+    .companions-panel-head--good { color: var(--green-dark); border-color: var(--green-light); }
+    .companions-panel-head--bad  { color: #991b1b; border-color: #f87171; }
+    .companion-card {
+      background: var(--white);
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(0,0,0,0.07);
+      padding: 13px 16px;
+      margin-bottom: 10px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .companion-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+    .companion-dot--good { background: var(--green-light); }
+    .companion-dot--bad  { background: #ef4444; }
+    .companion-name {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+    }
+    .companion-reason {
+      font-size: 0.81rem;
+      color: var(--text-mid);
+      line-height: 1.55;
+    }
+    .results-ad {
+      display: flex;
+      justify-content: center;
+      padding-top: 38px;
+    }
+    .planner-btn-wrap { margin-top: 36px; text-align: center; }
+    .planner-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 14px 28px;
+      background: var(--green-mid);
+      color: var(--white);
+      border: none;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+    .planner-btn:hover { background: var(--green-dark); }
   </style>
 </head>
 <body>
@@ -214,11 +309,16 @@
     <!-- ============================================================
          RESULTS SECTION
          ============================================================ -->
-    <div id="resultsSection"></div>
+    <section class="results-section" id="resultsSection" aria-live="polite">
+      <div class="container">
+        <div id="resultsContent"></div>
+      </div>
+    </section>
 
     <!-- ============================================================
          GARDEN PLANNER SECTION
          ============================================================ -->
+    <div id="plannerSection"></div>
 
     <!-- ============================================================
          ADSENSE SLOT 2: Bottom Leaderboard (above footer)
@@ -908,12 +1008,62 @@
 
     // Update visual selection on all cards
     document.querySelectorAll('.plant-card').forEach(function(card) {
-      const isSelected = card.getAttribute('data-plant') === name;
+      var isSelected = card.getAttribute('data-plant') === name;
       card.classList.toggle('selected', isSelected);
       card.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
     });
 
-    // Scroll to results section
+    // Build results panel
+    var data = COMPANION_DATA[name];
+
+    // Good companions column
+    var goodHtml = '<div class="companions-panel-head companions-panel-head--good">' +
+      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' +
+      'Good Companions</div>';
+    data.good_companions.forEach(function(c) {
+      goodHtml += '<div class="companion-card">' +
+        '<div class="companion-dot companion-dot--good"></div>' +
+        '<div><div class="companion-name">' + c.name + '</div>' +
+        '<div class="companion-reason">' + c.reason + '</div></div>' +
+        '</div>';
+    });
+
+    // Bad companions column
+    var badHtml = '<div class="companions-panel-head companions-panel-head--bad">' +
+      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
+      'Bad Companions</div>';
+    data.bad_companions.forEach(function(c) {
+      badHtml += '<div class="companion-card">' +
+        '<div class="companion-dot companion-dot--bad"></div>' +
+        '<div><div class="companion-name">' + c.name + '</div>' +
+        '<div class="companion-reason">' + c.reason + '</div></div>' +
+        '</div>';
+    });
+
+    // Ad slot (middle column on desktop)
+    var adHtml = '<div class="results-ad" aria-hidden="true">' +
+      '<div class="ad-slot ad-slot--rectangle">' +
+      '<span class="ad-placeholder-label">Advertisement — 336×280</span>' +
+      '</div></div>';
+
+    // Assemble
+    document.getElementById('resultsContent').innerHTML =
+      '<h2 class="results-heading">' + name + '</h2>' +
+      '<p class="results-sub">Showing companion planting relationships for ' + name + '. Select another plant above to explore.</p>' +
+      '<div class="results-columns">' +
+        '<div>' + goodHtml + '</div>' +
+        adHtml +
+        '<div>' + badHtml + '</div>' +
+      '</div>' +
+      '<div class="planner-btn-wrap">' +
+        '<button class="planner-btn" onclick="document.getElementById(\'plannerSection\').scrollIntoView({behavior:\'smooth\',block:\'start\'})">' +
+          '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>' +
+          'Add these plants to the Garden Planner' +
+        '</button>' +
+      '</div>';
+
+    // Show section and scroll to it
+    document.getElementById('resultsSection').classList.add('visible');
     document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
