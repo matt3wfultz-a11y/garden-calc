@@ -14,6 +14,96 @@
        ============================================================ -->
   <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossorigin="anonymous"></script> -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* ── Browse & Search Section ─────────────────────────────── */
+    .browse-section { padding: 40px 0 52px; }
+    .browse-search-wrap {
+      position: relative;
+      max-width: 480px;
+      margin: 0 auto 32px;
+    }
+    .browse-search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 17px;
+      height: 17px;
+      stroke: var(--text-light);
+      fill: none;
+      pointer-events: none;
+    }
+    .browse-search {
+      width: 100%;
+      padding: 13px 18px 13px 46px;
+      border: 1.5px solid #ddd;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: var(--white);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      box-sizing: border-box;
+    }
+    .browse-search:focus { border-color: var(--green-mid); box-shadow: 0 0 0 3px rgba(45,134,83,0.12); }
+    /* ── Plant Grid ──────────────────────────────────────────── */
+    .plant-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 760px) { .plant-grid { grid-template-columns: repeat(2, 1fr); } }
+    .plant-card {
+      background: var(--white);
+      border: 2px solid rgba(0,0,0,0.07);
+      border-radius: var(--radius-md);
+      padding: 20px 12px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: border-color 0.18s, box-shadow 0.18s, transform 0.15s;
+      user-select: none;
+      text-align: center;
+    }
+    .plant-card:hover {
+      border-color: var(--green-light);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+    .plant-card.selected {
+      border-color: var(--green-mid);
+      box-shadow: 0 0 0 3px rgba(45,134,83,0.15), 0 4px 16px rgba(0,0,0,0.1);
+      background: #f0faf4;
+    }
+    .plant-card-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--green-pale);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .plant-card.selected .plant-card-icon { background: rgba(45,134,83,0.12); }
+    .plant-card-icon svg { width: 22px; height: 22px; stroke: var(--green-mid); fill: none; }
+    .plant-card-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.25;
+    }
+    .browse-no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      padding: 40px 0;
+    }
+  </style>
 </head>
 <body>
 
@@ -97,10 +187,34 @@
     <!-- ============================================================
          SEARCH AND BROWSE SECTION
          ============================================================ -->
+    <section class="browse-section">
+      <div class="container">
+
+        <!-- Search bar -->
+        <div class="browse-search-wrap">
+          <svg class="browse-search-icon" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input
+            class="browse-search"
+            id="plantSearch"
+            type="search"
+            placeholder="Search plants…"
+            aria-label="Search plants"
+            autocomplete="off"
+          />
+        </div>
+
+        <!-- Plant card grid — populated by JS -->
+        <div class="plant-grid" id="plantGrid" role="list"></div>
+
+      </div>
+    </section>
 
     <!-- ============================================================
          RESULTS SECTION
          ============================================================ -->
+    <div id="resultsSection"></div>
 
     <!-- ============================================================
          GARDEN PLANNER SECTION
@@ -713,6 +827,103 @@
     }
 
   }; // end COMPANION_DATA
+  </script>
+
+  <script>
+  // ── Plant icon mapping (Lucide icon names) ────────────────────
+  const PLANT_ICONS = {
+    "Tomato":     "circle-dot",
+    "Pepper":     "flame",
+    "Eggplant":   "droplet",
+    "Basil":      "leaf",
+    "Carrot":     "triangle",
+    "Onion":      "layers",
+    "Garlic":     "shield",
+    "Lettuce":    "align-justify",
+    "Spinach":    "wind",
+    "Kale":       "cloud",
+    "Broccoli":   "tree-pine",
+    "Cabbage":    "disc",
+    "Cucumber":   "minus-circle",
+    "Squash":     "sun",
+    "Zucchini":   "activity",
+    "Melon":      "smile",
+    "Pumpkin":    "star",
+    "Beans":      "link",
+    "Peas":       "more-horizontal",
+    "Corn":       "bar-chart-2",
+    "Beet":       "heart",
+    "Chard":      "feather",
+    "Parsley":    "git-merge",
+    "Dill":       "asterisk",
+    "Fennel":     "zap",
+    "Marigold":   "flower-2",
+    "Nasturtium": "flower",
+    "Sunflower":  "sun"
+  };
+
+  const PLANT_NAMES = Object.keys(COMPANION_DATA);
+  let selectedPlant = null;
+
+  function renderGrid(query) {
+    const grid = document.getElementById('plantGrid');
+    const q = (query || '').toLowerCase().trim();
+    const filtered = PLANT_NAMES.filter(function(n) { return n.toLowerCase().includes(q); });
+
+    grid.innerHTML = '';
+
+    if (filtered.length === 0) {
+      grid.innerHTML = '<div class="browse-no-results">No plants match your search.</div>';
+      return;
+    }
+
+    filtered.forEach(function(name) {
+      const card = document.createElement('div');
+      card.className = 'plant-card' + (name === selectedPlant ? ' selected' : '');
+      card.setAttribute('data-plant', name);
+      card.setAttribute('role', 'listitem');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-label', name);
+      card.setAttribute('aria-pressed', name === selectedPlant ? 'true' : 'false');
+
+      const iconName = PLANT_ICONS[name] || 'leaf';
+      card.innerHTML =
+        '<div class="plant-card-icon"><i data-lucide="' + iconName + '"></i></div>' +
+        '<div class="plant-card-name">' + name + '</div>';
+
+      card.addEventListener('click', function() { selectPlant(name); });
+      card.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectPlant(name); }
+      });
+
+      grid.appendChild(card);
+    });
+
+    // Render Lucide icons inside the newly added cards
+    lucide.createIcons();
+  }
+
+  function selectPlant(name) {
+    selectedPlant = name;
+
+    // Update visual selection on all cards
+    document.querySelectorAll('.plant-card').forEach(function(card) {
+      const isSelected = card.getAttribute('data-plant') === name;
+      card.classList.toggle('selected', isSelected);
+      card.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+    });
+
+    // Scroll to results section
+    document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Live search filtering
+  document.getElementById('plantSearch').addEventListener('input', function() {
+    renderGrid(this.value);
+  });
+
+  // Initial render
+  renderGrid('');
   </script>
 
   <script>lucide.createIcons();</script>
