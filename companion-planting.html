@@ -1498,7 +1498,7 @@
       // HTML5 DnD from sidebar
       tile.addEventListener('dragstart', function(e) {
         e.dataTransfer.setData('text/plain', JSON.stringify({ plant: name }));
-        e.dataTransfer.effectAllowed = 'copy';
+        e.dataTransfer.effectAllowed = 'move';
         tile.classList.add('dragging');
       });
       tile.addEventListener('dragend', function() {
