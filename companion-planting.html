@@ -198,6 +198,223 @@
       transition: background 0.2s;
     }
     .planner-btn:hover { background: var(--green-dark); }
+    /* ── Garden Planner ─────────────────────────────────────── */
+    .planner-section { padding: 56px 0 48px; background: var(--white); border-top: 1px solid rgba(0,0,0,0.07); }
+    .planner-intro { font-size: 0.92rem; color: var(--text-light); margin-bottom: 28px; }
+    .planner-layout {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+    }
+    /* Sidebar */
+    .planner-sidebar {
+      width: 170px;
+      flex-shrink: 0;
+      background: var(--cream);
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: var(--radius-md);
+      padding: 14px 12px;
+      max-height: 580px;
+      overflow-y: auto;
+    }
+    .planner-sidebar-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-light);
+      margin-bottom: 8px;
+    }
+    .planner-filter {
+      width: 100%;
+      padding: 7px 10px;
+      border: 1.5px solid #ddd;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-family: inherit;
+      outline: none;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+      background: var(--white);
+    }
+    .planner-filter:focus { border-color: var(--green-mid); }
+    .planner-tile {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 8px;
+      border-radius: var(--radius-sm);
+      cursor: grab;
+      transition: background 0.15s;
+      margin-bottom: 3px;
+      user-select: none;
+      border: 1px solid transparent;
+    }
+    .planner-tile:hover { background: var(--green-pale); border-color: var(--green-light); }
+    .planner-tile:active, .planner-tile.dragging { cursor: grabbing; opacity: 0.45; }
+    .planner-tile-icon {
+      width: 26px;
+      height: 26px;
+      background: var(--white);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .planner-tile-icon svg { width: 13px; height: 13px; stroke: var(--green-mid); fill: none; }
+    .planner-tile-name { font-size: 0.78rem; font-weight: 600; color: var(--text-dark); line-height: 1.2; }
+    /* Main area */
+    .planner-main { flex: 1; min-width: 0; }
+    .planner-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .planner-dim-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .planner-dim-input {
+      width: 48px;
+      padding: 6px 6px;
+      border: 1.5px solid #ddd;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      font-family: inherit;
+      outline: none;
+      text-align: center;
+    }
+    .planner-dim-input:focus { border-color: var(--green-mid); }
+    .planner-ctrl-btn {
+      padding: 7px 16px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.18s;
+    }
+    .planner-ctrl-btn--fill { background: var(--green-mid); color: var(--white); border: 1.5px solid var(--green-mid); }
+    .planner-ctrl-btn--fill:hover { background: var(--green-dark); border-color: var(--green-dark); }
+    .planner-ctrl-btn--outline { background: transparent; color: var(--green-mid); border: 1.5px solid var(--green-mid); }
+    .planner-ctrl-btn--outline:hover { background: var(--green-pale); }
+    /* Grid */
+    .planner-grid-wrap { overflow-x: auto; }
+    .planner-grid {
+      display: inline-grid;
+      gap: 2px;
+      background: #d1d5db;
+      padding: 2px;
+      border-radius: 6px;
+    }
+    .planner-cell {
+      width: 78px;
+      height: 78px;
+      background: var(--white);
+      border-radius: 3px;
+      border: 3px solid #e5e7eb;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      transition: background 0.12s;
+    }
+    .planner-cell.drag-over { background: #f0faf4; border-color: var(--green-mid) !important; }
+    .cell-plant {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      position: relative;
+      cursor: grab;
+      padding: 4px 2px 2px;
+      box-sizing: border-box;
+    }
+    .cell-plant:active { cursor: grabbing; }
+    .cell-plant-icon {
+      width: 30px;
+      height: 30px;
+      background: var(--green-pale);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .cell-plant-icon svg { width: 15px; height: 15px; stroke: var(--green-mid); fill: none; }
+    .cell-plant-name { font-size: 0.6rem; font-weight: 700; color: var(--text-dark); text-align: center; line-height: 1.2; word-break: break-word; max-width: 70px; }
+    .cell-remove {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.18);
+      border: none;
+      cursor: pointer;
+      font-size: 8px;
+      color: #fff;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.15s;
+      padding: 0;
+    }
+    .planner-cell:hover .cell-remove { opacity: 1; }
+    /* Legend */
+    .planner-legend {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.79rem;
+      color: var(--text-mid);
+    }
+    .legend-swatch {
+      display: inline-block;
+      width: 22px;
+      height: 0;
+      border-top: 4px solid;
+    }
+    .legend-swatch--good    { border-color: #52b788; }
+    .legend-swatch--bad     { border-color: #ef4444; }
+    .legend-swatch--neutral { border-color: #9ca3af; }
+    /* Mobile */
+    @media (max-width: 700px) {
+      .planner-layout { flex-direction: column; }
+      .planner-sidebar { width: 100%; max-height: none; }
+      .planner-tiles { display: flex; flex-wrap: wrap; gap: 5px; }
+      .planner-tile { width: calc(50% - 3px); flex-direction: row; }
+      .planner-cell { width: 60px; height: 60px; }
+      .cell-plant-name { font-size: 0.55rem; }
+    }
+    @media print {
+      body > *:not(main) { display: none !important; }
+      .page-hero, .ad-section, .browse-section, .results-section,
+      .planner-sidebar, .planner-controls, .planner-legend { display: none !important; }
+      .planner-section { padding: 0 !important; }
+      .planner-layout { display: block !important; }
+      .cell-remove { display: none !important; }
+    }
   </style>
 </head>
 <body>
@@ -318,7 +535,64 @@
     <!-- ============================================================
          GARDEN PLANNER SECTION
          ============================================================ -->
-    <div id="plannerSection"></div>
+    <section class="planner-section" id="plannerSection">
+      <div class="container">
+        <h2 class="results-heading">Garden Bed Planner</h2>
+        <p class="planner-intro">Drag plants from the sidebar onto the grid to design your bed. Borders show companion relationships at a glance.</p>
+        <div class="planner-layout">
+
+          <!-- Sidebar -->
+          <aside class="planner-sidebar" aria-label="Plant palette">
+            <div class="planner-sidebar-label">Plants</div>
+            <input class="planner-filter" id="plannerFilter" type="search" placeholder="Filter plants…" aria-label="Filter plants" autocomplete="off" />
+            <div class="planner-tiles" id="plannerTiles" role="list"></div>
+          </aside>
+
+          <!-- Main grid area -->
+          <div class="planner-main">
+            <div class="planner-controls">
+              <label class="planner-dim-label">
+                W: <input class="planner-dim-input" id="plannerCols" type="number" min="1" max="8" value="4" aria-label="Grid columns" />
+              </label>
+              <label class="planner-dim-label">
+                H: <input class="planner-dim-input" id="plannerRows" type="number" min="1" max="8" value="4" aria-label="Grid rows" />
+              </label>
+              <button class="planner-ctrl-btn planner-ctrl-btn--fill" onclick="resizeBed()">Resize</button>
+              <button class="planner-ctrl-btn planner-ctrl-btn--outline" onclick="clearBed()">Clear Bed</button>
+              <button class="planner-ctrl-btn planner-ctrl-btn--outline" onclick="window.print()">Print Layout</button>
+            </div>
+            <div class="planner-grid-wrap">
+              <div class="planner-grid" id="plannerGrid"></div>
+            </div>
+            <div class="planner-legend">
+              <div class="legend-item"><span class="legend-swatch legend-swatch--good"></span> Good companion</div>
+              <div class="legend-item"><span class="legend-swatch legend-swatch--bad"></span> Bad companion</div>
+              <div class="legend-item"><span class="legend-swatch legend-swatch--neutral"></span> Neutral</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ADSENSE SLOT: Planner Leaderboard (below planner)
+         Format: 728×90 (responsive)
+         ============================================================ -->
+    <div class="ad-section ad-section--center" aria-hidden="true">
+      <div class="ad-slot ad-slot--leaderboard" style="max-width:728px; width:100%;">
+        <!-- Replace with:
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+        <span class="ad-placeholder-label">Advertisement — 728×90</span>
+      </div>
+    </div>
 
     <!-- ============================================================
          ADSENSE SLOT 2: Bottom Leaderboard (above footer)
@@ -1077,5 +1351,256 @@
   </script>
 
   <script>lucide.createIcons();</script>
+
+  <script>
+  // ============================================================
+  // GARDEN PLANNER
+  // ============================================================
+
+  var bedRows = 4, bedCols = 4;
+  var bedPlants = []; // 2D array [row][col] = plant name or null
+
+  function initBed() {
+    bedPlants = [];
+    for (var r = 0; r < bedRows; r++) {
+      bedPlants[r] = [];
+      for (var c = 0; c < bedCols; c++) {
+        bedPlants[r][c] = null;
+      }
+    }
+    renderBedGrid();
+  }
+
+  function getRelationship(a, b) {
+    if (!a || !b || a === b) return 'none';
+    var dataA = COMPANION_DATA[a];
+    if (!dataA) return 'neutral';
+    for (var i = 0; i < dataA.good_companions.length; i++) {
+      if (dataA.good_companions[i].name === b) return 'good';
+    }
+    for (var j = 0; j < dataA.bad_companions.length; j++) {
+      if (dataA.bad_companions[j].name === b) return 'bad';
+    }
+    return 'neutral';
+  }
+
+  function relationColor(rel) {
+    if (rel === 'good')    return '#52b788';
+    if (rel === 'bad')     return '#ef4444';
+    if (rel === 'neutral') return '#9ca3af';
+    return '#e5e7eb'; // empty neighbor
+  }
+
+  function renderBedGrid() {
+    var grid = document.getElementById('plannerGrid');
+    grid.style.gridTemplateColumns = 'repeat(' + bedCols + ', auto)';
+    grid.innerHTML = '';
+
+    for (var r = 0; r < bedRows; r++) {
+      for (var c = 0; c < bedCols; c++) {
+        var cell = document.createElement('div');
+        cell.className = 'planner-cell';
+        cell.setAttribute('data-row', r);
+        cell.setAttribute('data-col', c);
+
+        var plant = bedPlants[r][c];
+        if (plant) {
+          // Compute neighbor border colors
+          var top    = r > 0           ? bedPlants[r-1][c] : null;
+          var bottom = r < bedRows - 1 ? bedPlants[r+1][c] : null;
+          var left   = c > 0           ? bedPlants[r][c-1] : null;
+          var right  = c < bedCols - 1 ? bedPlants[r][c+1] : null;
+          cell.style.borderTopColor    = relationColor(getRelationship(plant, top));
+          cell.style.borderBottomColor = relationColor(getRelationship(plant, bottom));
+          cell.style.borderLeftColor   = relationColor(getRelationship(plant, left));
+          cell.style.borderRightColor  = relationColor(getRelationship(plant, right));
+
+          // Build plant content
+          var iconName = PLANT_ICONS[plant] || 'leaf';
+          cell.innerHTML =
+            '<div class="cell-plant" draggable="true" data-plant="' + plant + '">' +
+              '<div class="cell-plant-icon"><i data-lucide="' + iconName + '"></i></div>' +
+              '<div class="cell-plant-name">' + plant + '</div>' +
+              '<button class="cell-remove" title="Remove" aria-label="Remove ' + plant + '">✕</button>' +
+            '</div>';
+
+          // Remove button
+          cell.querySelector('.cell-remove').addEventListener('click', function(e) {
+            e.stopPropagation();
+            var c2 = e.target.closest('.planner-cell');
+            var row = parseInt(c2.getAttribute('data-row'));
+            var col = parseInt(c2.getAttribute('data-col'));
+            bedPlants[row][col] = null;
+            renderBedGrid();
+          });
+
+          // Drag a placed plant to move it
+          var cellPlantEl = cell.querySelector('.cell-plant');
+          cellPlantEl.addEventListener('dragstart', function(e) {
+            var parentCell = e.currentTarget.closest('.planner-cell');
+            var row = parseInt(parentCell.getAttribute('data-row'));
+            var col = parseInt(parentCell.getAttribute('data-col'));
+            e.dataTransfer.setData('text/plain', JSON.stringify({ plant: e.currentTarget.getAttribute('data-plant'), fromRow: row, fromCol: col }));
+            e.dataTransfer.effectAllowed = 'move';
+          });
+        }
+
+        // DnD drop target
+        cell.addEventListener('dragover', function(e) {
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'move';
+          this.classList.add('drag-over');
+        });
+        cell.addEventListener('dragleave', function() {
+          this.classList.remove('drag-over');
+        });
+        cell.addEventListener('drop', function(e) {
+          e.preventDefault();
+          this.classList.remove('drag-over');
+          var toRow = parseInt(this.getAttribute('data-row'));
+          var toCol = parseInt(this.getAttribute('data-col'));
+          var raw = e.dataTransfer.getData('text/plain');
+          if (!raw) return;
+          var payload = JSON.parse(raw);
+          var plantName = payload.plant;
+          if (payload.fromRow !== undefined && payload.fromCol !== undefined) {
+            // Moving from another cell — clear old spot
+            bedPlants[payload.fromRow][payload.fromCol] = null;
+          }
+          bedPlants[toRow][toCol] = plantName;
+          renderBedGrid();
+        });
+
+        grid.appendChild(cell);
+      }
+    }
+    lucide.createIcons();
+  }
+
+  // ── Sidebar ────────────────────────────────────────────────
+
+  function renderSidebar(query) {
+    var tiles = document.getElementById('plannerTiles');
+    var q = (query || '').toLowerCase().trim();
+    var names = Object.keys(COMPANION_DATA).filter(function(n) { return n.toLowerCase().includes(q); });
+    tiles.innerHTML = '';
+    names.forEach(function(name) {
+      var iconName = PLANT_ICONS[name] || 'leaf';
+      var tile = document.createElement('div');
+      tile.className = 'planner-tile';
+      tile.setAttribute('draggable', 'true');
+      tile.setAttribute('role', 'listitem');
+      tile.setAttribute('data-plant', name);
+      tile.innerHTML =
+        '<div class="planner-tile-icon"><i data-lucide="' + iconName + '"></i></div>' +
+        '<div class="planner-tile-name">' + name + '</div>';
+
+      // HTML5 DnD from sidebar
+      tile.addEventListener('dragstart', function(e) {
+        e.dataTransfer.setData('text/plain', JSON.stringify({ plant: name }));
+        e.dataTransfer.effectAllowed = 'copy';
+        tile.classList.add('dragging');
+      });
+      tile.addEventListener('dragend', function() {
+        tile.classList.remove('dragging');
+      });
+
+      tiles.appendChild(tile);
+    });
+    lucide.createIcons();
+  }
+
+  // ── Touch drag ────────────────────────────────────────────
+
+  var touchDragPlant = null;
+  var touchDragFromRow = null, touchDragFromCol = null;
+  var touchGhost = null;
+
+  document.addEventListener('touchstart', function(e) {
+    var el = e.target.closest('.planner-tile, .cell-plant');
+    if (!el) return;
+    touchDragPlant = el.getAttribute('data-plant');
+    touchDragFromRow = null; touchDragFromCol = null;
+    if (el.classList.contains('cell-plant')) {
+      var parentCell = el.closest('.planner-cell');
+      touchDragFromRow = parseInt(parentCell.getAttribute('data-row'));
+      touchDragFromCol = parseInt(parentCell.getAttribute('data-col'));
+    }
+    // Create ghost
+    touchGhost = el.cloneNode(true);
+    touchGhost.style.cssText = 'position:fixed;opacity:0.6;pointer-events:none;z-index:9999;transform:scale(1.08);transition:none;border-radius:8px;background:var(--cream);padding:6px 10px;box-shadow:0 4px 16px rgba(0,0,0,0.18);';
+    document.body.appendChild(touchGhost);
+  }, { passive: true });
+
+  document.addEventListener('touchmove', function(e) {
+    if (!touchDragPlant) return;
+    e.preventDefault();
+    var touch = e.touches[0];
+    if (touchGhost) {
+      touchGhost.style.left = (touch.clientX - 40) + 'px';
+      touchGhost.style.top  = (touch.clientY - 20) + 'px';
+    }
+  }, { passive: false });
+
+  document.addEventListener('touchend', function(e) {
+    if (!touchDragPlant) return;
+    var touch = e.changedTouches[0];
+    if (touchGhost) { document.body.removeChild(touchGhost); touchGhost = null; }
+    var el = document.elementFromPoint(touch.clientX, touch.clientY);
+    var targetCell = el ? el.closest('.planner-cell') : null;
+    if (targetCell) {
+      var toRow = parseInt(targetCell.getAttribute('data-row'));
+      var toCol = parseInt(targetCell.getAttribute('data-col'));
+      if (touchDragFromRow !== null && touchDragFromCol !== null) {
+        bedPlants[touchDragFromRow][touchDragFromCol] = null;
+      }
+      bedPlants[toRow][toCol] = touchDragPlant;
+      renderBedGrid();
+    }
+    touchDragPlant = null;
+    touchDragFromRow = null; touchDragFromCol = null;
+  }, { passive: true });
+
+  // ── Controls ──────────────────────────────────────────────
+
+  function resizeBed() {
+    var newRows = Math.max(1, Math.min(8, parseInt(document.getElementById('plannerRows').value) || 4));
+    var newCols = Math.max(1, Math.min(8, parseInt(document.getElementById('plannerCols').value) || 4));
+    document.getElementById('plannerRows').value = newRows;
+    document.getElementById('plannerCols').value = newCols;
+    // Preserve existing plants that fit in new size
+    var newBed = [];
+    for (var r = 0; r < newRows; r++) {
+      newBed[r] = [];
+      for (var c = 0; c < newCols; c++) {
+        newBed[r][c] = (bedPlants[r] && bedPlants[r][c]) ? bedPlants[r][c] : null;
+      }
+    }
+    bedRows = newRows; bedCols = newCols;
+    bedPlants = newBed;
+    renderBedGrid();
+  }
+
+  function clearBed() {
+    for (var r = 0; r < bedRows; r++) {
+      for (var c = 0; c < bedCols; c++) {
+        bedPlants[r][c] = null;
+      }
+    }
+    renderBedGrid();
+  }
+
+  // ── Filter ────────────────────────────────────────────────
+
+  document.getElementById('plannerFilter').addEventListener('input', function() {
+    renderSidebar(this.value);
+  });
+
+  // ── Init ──────────────────────────────────────────────────
+
+  renderSidebar('');
+  initBed();
+  </script>
+
 </body>
 </html>
