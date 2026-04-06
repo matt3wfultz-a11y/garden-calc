@@ -285,7 +285,7 @@
     <div class="container">
       <div class="search-card">
         <h2>Find Your Frost Dates</h2>
-        <p>Covers Texas &amp; New Mexico ZIP codes. Results are based on 30-year NOAA climate averages.</p>
+        <p>Covers Texas, New Mexico &amp; Oregon ZIP codes. Results are based on 30-year NOAA climate averages.</p>
         <form class="zip-form" onsubmit="lookupZip(event)">
           <input
             id="zipInput"
@@ -302,7 +302,7 @@
         <div class="zip-error" id="zipError" role="alert">
           <i data-lucide="alert-triangle"></i> <span id="zipErrorMsg">ZIP code not found. Try a nearby ZIP or check our coverage area below.</span>
         </div>
-        <p class="zip-hint">Currently covers: Texas · New Mexico &nbsp;|&nbsp; More states coming soon</p>
+        <p class="zip-hint">Currently covers: Texas · New Mexico · Oregon &nbsp;|&nbsp; More states coming soon</p>
       </div>
     </div>
 
@@ -667,7 +667,7 @@
   <script>
   // ──────────────────────────────────────────────────────────────
   //  FROST DATE DATABASE  —  NOAA 30-Year Climate Normals (1991–2020)
-  //  Covers all Texas & New Mexico ZIP codes.
+  //  Covers all Texas, New Mexico & Oregon ZIP codes.
   //  Dates = average last spring frost / first fall frost.
   // ──────────────────────────────────────────────────────────────
   const FROST_DATA = (function () {
@@ -694,6 +694,7 @@
     range(79001, 79999, 'West Texas',     'TX', '7b', 'Mar 20', 'Nov 10');
     range(87001, 87999, 'New Mexico',     'NM', '7b', 'Apr 15', 'Oct 15');
     range(88001, 88999, 'New Mexico',     'NM', '8a', 'Mar 15', 'Nov 15');
+    range(97001, 97999, 'Oregon',         'OR', '8b', 'Mar 20', 'Nov 10');
 
     // ════════════════════════════════════════════════════════════
     //  STEP 2 — CITY & REGIONAL OVERRIDES  (later calls win)
@@ -875,6 +876,29 @@
     zips([88061,88062,88065],      'Silver City',      'NM', '7a', 'Apr 15', 'Oct 20');
     range(88500, 88599, 'El Paso (Fort Bliss)',       'TX', '8a', 'Mar 15', 'Nov 15');
 
+    // ── OR  Oregon ────────────────────────────────────────────────
+
+    // Coastal Oregon (97100–97199)
+    range(97100, 97199, 'Coastal Oregon',              'OR', '9a', 'Mar 1',  'Dec 1');
+
+    // Portland Metro (97201–97299)
+    range(97201, 97299, 'Portland',                    'OR', '9a', 'Mar 15', 'Nov 15');
+
+    // Salem (97301–97399)
+    range(97301, 97399, 'Salem',                       'OR', '8b', 'Mar 20', 'Nov 10');
+
+    // Eugene (97401–97499)
+    range(97401, 97499, 'Eugene',                      'OR', '8b', 'Mar 25', 'Nov 5');
+
+    // Southern Oregon / Medford (97501–97599)
+    range(97501, 97599, 'Medford / Southern Oregon',   'OR', '8a', 'Apr 1',  'Nov 1');
+
+    // Bend / Central Oregon (97701–97799)
+    range(97701, 97799, 'Bend / Central Oregon',       'OR', '5b', 'May 15', 'Sep 25');
+
+    // Eastern Oregon (97801–97999)
+    range(97801, 97999, 'Eastern Oregon',              'OR', '6a', 'May 1',  'Oct 1');
+
     return db;
   })();
 
@@ -972,7 +996,7 @@
     const data = FROST_DATA[zip];
     if (!data) {
       input.classList.add('error');
-      msgEl.textContent = 'ZIP code ' + zip + ' not found. GardenCalc currently covers Texas and New Mexico. Try a nearby ZIP code from a major city.';
+      msgEl.textContent = 'ZIP code ' + zip + ' not found. GardenCalc currently covers Texas, New Mexico, and Oregon. Try a nearby ZIP code from a major city.';
       errorEl.classList.add('visible');
       document.getElementById('resultsPanel').classList.remove('visible');
       return;
