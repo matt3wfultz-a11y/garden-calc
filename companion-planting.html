@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="GardenCalc Companion Planting Guide — Discover which vegetables, herbs, and flowers thrive together and which combinations to avoid for a healthier, more productive garden." />
+  <meta name="description" content="Companion planting guide for Texas and New Mexico gardeners. Discover which vegetables grow well together and plan your garden bed with our free interactive planner." />
   <title>Companion Planting Guide — GardenCalc</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" />
@@ -214,8 +214,14 @@
       border: 1px solid rgba(0,0,0,0.08);
       border-radius: var(--radius-md);
       padding: 14px 12px;
-      max-height: 580px;
+      max-height: 540px;
+      display: flex;
+      flex-direction: column;
+    }
+    .planner-tiles {
+      flex: 1;
       overflow-y: auto;
+      min-height: 0;
     }
     .planner-sidebar-label {
       font-size: 0.7rem;
@@ -401,8 +407,8 @@
     /* Mobile */
     @media (max-width: 700px) {
       .planner-layout { flex-direction: column; }
-      .planner-sidebar { width: 100%; max-height: none; }
-      .planner-tiles { display: flex; flex-wrap: wrap; gap: 5px; }
+      .planner-sidebar { width: 100%; max-height: none; flex-direction: column; }
+      .planner-tiles { overflow-y: visible; display: flex; flex-wrap: wrap; gap: 5px; }
       .planner-tile { width: calc(50% - 3px); flex-direction: row; }
       .planner-cell { width: 60px; height: 60px; }
       .cell-plant-name { font-size: 0.55rem; }
@@ -580,26 +586,6 @@
          Format: 728×90 (responsive)
          ============================================================ -->
     <div class="ad-section ad-section--center" aria-hidden="true">
-      <div class="ad-slot ad-slot--leaderboard" style="max-width:728px; width:100%;">
-        <!-- Replace with:
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-XXXXXXXXXX"
-             data-ad-slot="XXXXXXXXXX"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-        -->
-        <span class="ad-placeholder-label">Advertisement — 728×90</span>
-      </div>
-    </div>
-
-    <!-- ============================================================
-         ADSENSE SLOT 2: Bottom Leaderboard (above footer)
-         Format: 728×90 (responsive)
-         ============================================================ -->
-    <div class="ad-section ad-section--center" aria-hidden="true">
-      <!-- AdSense: Bottom Leaderboard — 728×90 (responsive) -->
       <div class="ad-slot ad-slot--leaderboard" style="max-width:728px; width:100%;">
         <!-- Replace with:
         <ins class="adsbygoogle"
@@ -1280,12 +1266,9 @@
   function selectPlant(name) {
     selectedPlant = name;
 
-    // Update visual selection on all cards
-    document.querySelectorAll('.plant-card').forEach(function(card) {
-      var isSelected = card.getAttribute('data-plant') === name;
-      card.classList.toggle('selected', isSelected);
-      card.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
-    });
+    // Clear search bar and re-render all cards (selected card will be highlighted)
+    document.getElementById('plantSearch').value = '';
+    renderGrid('');
 
     // Build results panel
     var data = COMPANION_DATA[name];
