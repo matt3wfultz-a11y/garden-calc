@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Square foot garden planner for Texas, New Mexico, and Oregon gardeners. Plan your raised beds visually and know exactly how many plants fit in each square foot." />
+  <title>Square Foot Garden Planner — GardenCalc</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" />
+
+  <!-- ============================================================
+       ADSENSE: Publisher Script
+       Replace ca-pub-XXXXXXXXXX with your Publisher ID
+       ============================================================ -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossorigin="anonymous"></script> -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- ============================================================
+       SITE HEADER
+       ============================================================ -->
+  <header class="site-header">
+    <div class="header-inner container">
+
+      <!-- Logo -->
+      <a href="index.html" class="site-logo" aria-label="GardenCalc Home">
+        <div class="logo-icon"><i data-lucide="leaf"></i></div>
+        <span class="logo-text">Garden<span>Calc</span></span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="frost-dates.html" class="nav-link">Frost Date Calculator</a>
+        <a href="seed-starting-schedule.html" class="nav-link">Seed Starting Schedule</a>
+        <a href="companion-planting.html" class="nav-link">Companion Planting</a>
+        <a href="square-foot-planner.html" class="nav-link active">Square Foot Planner</a>
+        <a href="mulch-calculator.html" class="nav-link">Mulch Calculator</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+        <a href="about.html" class="nav-link nav-cta">About</a>
+      </nav>
+
+      <!-- Mobile hamburger -->
+      <button class="hamburger" aria-label="Toggle menu" onclick="toggleMobileNav()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Mobile Nav Drawer -->
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="index.html" class="nav-link"><i data-lucide="home"></i> Home</a>
+      <a href="frost-dates.html" class="nav-link"><i data-lucide="snowflake"></i> Frost Date Calculator</a>
+      <a href="seed-starting-schedule.html" class="nav-link"><i data-lucide="sprout"></i> Seed Starting Schedule</a>
+      <a href="companion-planting.html" class="nav-link"><i data-lucide="git-merge"></i> Companion Planting</a>
+      <a href="square-foot-planner.html" class="nav-link active"><i data-lucide="layout-grid"></i> Square Foot Planner</a>
+      <a href="mulch-calculator.html" class="nav-link"><i data-lucide="wind"></i> Mulch Calculator</a>
+      <a href="blog.html" class="nav-link"><i data-lucide="book-open"></i> Blog</a>
+      <a href="about.html" class="nav-link"><i data-lucide="sun"></i> About Us</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ============================================================
+         PAGE HERO
+         ============================================================ -->
+    <section class="page-hero" aria-label="Square Foot Garden Planner hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <span>›</span>
+          <span>Square Foot Planner</span>
+        </nav>
+        <h1>Square Foot Garden Planner</h1>
+        <p>Plan your raised beds visually — know exactly how many plants fit and where to put them.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ADSENSE SLOT 1: Leaderboard Banner (below hero)
+         Format: 728×90 desktop / responsive mobile
+         ============================================================ -->
+    <div class="ad-section ad-section--center" aria-hidden="true">
+      <!-- AdSense: Top Leaderboard — 728×90 (responsive) -->
+      <div class="ad-slot ad-slot--leaderboard" style="max-width:728px; width:100%;">
+        <!-- Replace with:
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+        <span class="ad-placeholder-label">Advertisement — 728×90</span>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         BED SETUP SECTION
+         ============================================================ -->
+
+    <!-- ============================================================
+         PLANNER GRID SECTION
+         ============================================================ -->
+
+    <!-- ============================================================
+         PLANT INFO SECTION
+         ============================================================ -->
+
+  </main>
+
+  <!-- ============================================================
+       SITE FOOTER
+       ============================================================ -->
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <a href="index.html" class="site-logo" style="margin-bottom:0;">
+            <div class="logo-icon"><i data-lucide="leaf"></i></div>
+            <span class="logo-text">Garden<span>Calc</span></span>
+          </a>
+          <p class="footer-tagline">
+            Free, accurate gardening tools for every zone, every season.
+          </p>
+          <div class="footer-social">
+            <a href="#" class="social-link" aria-label="Pinterest">Pinterest</a>
+            <a href="#" class="social-link" aria-label="Instagram">Instagram</a>
+            <a href="#" class="social-link" aria-label="Facebook">Facebook</a>
+            <a href="#" class="social-link" aria-label="YouTube">YouTube</a>
+          </div>
+          <p style="font-size:0.8rem; color:rgba(255,255,255,0.5); margin-top:18px; margin-bottom:8px;">Get seasonal planting reminders:</p>
+          <a href="https://forms.gle/dfamR4Msp9jFP5uw9" target="_blank" rel="noopener noreferrer" class="newsletter-btn" style="display:inline-block; text-align:center; text-decoration:none;">Join →</a>
+        </div>
+
+        <!-- Tools Column -->
+        <div class="footer-col">
+          <h5>Tools</h5>
+          <div class="footer-links">
+            <a href="frost-dates.html">Frost Date Calculator</a>
+            <a href="seed-starting-schedule.html">Seed Starting Schedule</a>
+            <a href="companion-planting.html">Companion Planting</a>
+            <a href="square-foot-planner.html">Square Foot Planner</a>
+            <a href="mulch-calculator.html">Mulch Calculator</a>
+          </div>
+        </div>
+
+        <!-- Learn Column -->
+        <div class="footer-col">
+          <h5>Learn</h5>
+          <div class="footer-links">
+            <a href="blog.html">Blog</a>
+            <a href="blog.html#beginner">Beginner Guides</a>
+            <a href="blog.html#raised-beds">Raised Bed Gardening</a>
+            <a href="blog.html#composting">Composting</a>
+            <a href="blog.html#pest-control">Organic Pest Control</a>
+          </div>
+        </div>
+
+        <!-- Company Column -->
+        <div class="footer-col">
+          <h5>Company</h5>
+          <div class="footer-links">
+            <a href="about.html">About GardenCalc</a>
+            <a href="about.html#contact">Contact Us</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Use</a>
+            <a href="sitemap.html">Sitemap</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 GardenCalc. All rights reserved. For informational purposes only.</p>
+        <div class="footer-legal">
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="about.html#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileNav() {
+      const nav = document.getElementById('mobileNav');
+      nav.classList.toggle('open');
+    }
+    document.querySelectorAll('.mobile-nav .nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('mobileNav').classList.remove('open');
+      });
+    });
+    document.addEventListener('click', function(e) {
+      const nav = document.getElementById('mobileNav');
+      const hamburger = document.querySelector('.hamburger');
+      if (nav.classList.contains('open') && !nav.contains(e.target) && !hamburger.contains(e.target)) {
+        nav.classList.remove('open');
+      }
+    });
+  </script>
+
+  <script>
+  // ============================================================
+  // PLANT_DATA — Square Foot Gardening spacing data
+  // Based on Mel Bartholomew's Square Foot Gardening method.
+  // plants_per_sqft: number of plants that fit in one 12"×12" square
+  // spacing_inches: center-to-center spacing between plants
+  // depth_inches: minimum root depth / bed depth needed
+  // days_to_harvest: typical days from transplant (or direct sow)
+  // companion_plants: good neighbors from companion planting research
+  // color: distinct hex color for the visual grid tile
+  // tip: one-sentence planting tip
+  // ============================================================
+  const PLANT_DATA = {
+
+    "Tomato": {
+      name: "Tomato",
+      plants_per_sqft: 1,
+      spacing_inches: 24,
+      depth_inches: 18,
+      days_to_harvest: 70,
+      companion_plants: ["Basil", "Parsley", "Marigold", "Carrot"],
+      color: "#e63946",
+      tip: "Plant one per two square feet and provide a cage or stake — tomatoes need vertical space as much as horizontal."
+    },
+
+    "Pepper": {
+      name: "Pepper",
+      plants_per_sqft: 1,
+      spacing_inches: 12,
+      depth_inches: 12,
+      days_to_harvest: 75,
+      companion_plants: ["Basil", "Carrot", "Marigold", "Onion"],
+      color: "#f4a261",
+      tip: "Peppers love heat — wait until soil reaches 65°F before transplanting and they'll establish much faster."
+    },
+
+    "Eggplant": {
+      name: "Eggplant",
+      plants_per_sqft: 1,
+      spacing_inches: 18,
+      depth_inches: 12,
+      days_to_harvest: 80,
+      companion_plants: ["Basil", "Marigold", "Spinach"],
+      color: "#6a0572",
+      tip: "Give each eggplant one square foot and keep soil consistently moist — drought stress causes bitter fruit."
+    },
+
+    "Broccoli": {
+      name: "Broccoli",
+      plants_per_sqft: 1,
+      spacing_inches: 18,
+      depth_inches: 12,
+      days_to_harvest: 80,
+      companion_plants: ["Marigold", "Onion", "Nasturtium", "Dill"],
+      color: "#2d6a4f",
+      tip: "One plant per square foot — harvest the central head promptly to encourage side shoots for weeks of additional harvests."
+    },
+
+    "Cabbage": {
+      name: "Cabbage",
+      plants_per_sqft: 1,
+      spacing_inches: 18,
+      depth_inches: 12,
+      days_to_harvest: 70,
+      companion_plants: ["Marigold", "Dill", "Onion"],
+      color: "#52b788",
+      tip: "One cabbage per square foot; consistent watering prevents heads from splitting just before harvest."
+    },
+
+    "Cauliflower": {
+      name: "Cauliflower",
+      plants_per_sqft: 1,
+      spacing_inches: 18,
+      depth_inches: 12,
+      days_to_harvest: 75,
+      companion_plants: ["Marigold", "Dill", "Onion"],
+      color: "#f1faee",
+      tip: "Tie outer leaves over the developing head (blanching) to keep it white and mild-flavored."
+    },
+
+    "Kale": {
+      name: "Kale",
+      plants_per_sqft: 1,
+      spacing_inches: 12,
+      depth_inches: 12,
+      days_to_harvest: 55,
+      companion_plants: ["Marigold", "Nasturtium", "Onion", "Beet"],
+      color: "#1b4332",
+      tip: "One plant per square foot; harvest outer leaves regularly and the plant will produce all season long."
+    },
+
+    "Lettuce": {
+      name: "Lettuce",
+      plants_per_sqft: 4,
+      spacing_inches: 6,
+      depth_inches: 6,
+      days_to_harvest: 45,
+      companion_plants: ["Carrot", "Onion", "Radish", "Garlic"],
+      color: "#95d5b2",
+      tip: "Four per square foot; cut-and-come-again harvesting extends production — never pull the whole plant at once."
+    },
+
+    "Spinach": {
+      name: "Spinach",
+      plants_per_sqft: 9,
+      spacing_inches: 4,
+      depth_inches: 6,
+      days_to_harvest: 40,
+      companion_plants: ["Onion", "Pepper", "Eggplant", "Strawberry"],
+      color: "#40916c",
+      tip: "Nine per square foot; sow successively every two weeks for a continuous harvest before summer heat bolts the crop."
+    },
+
+    "Chard": {
+      name: "Chard",
+      plants_per_sqft: 4,
+      spacing_inches: 6,
+      depth_inches: 8,
+      days_to_harvest: 50,
+      companion_plants: ["Onion", "Kale", "Beet"],
+      color: "#d62828",
+      tip: "Four per square foot; harvest outer stalks and the plant regrows — one planting can feed you all season."
+    },
+
+    "Beet": {
+      name: "Beet",
+      plants_per_sqft: 9,
+      spacing_inches: 4,
+      depth_inches: 8,
+      days_to_harvest: 55,
+      companion_plants: ["Onion", "Kale", "Chard", "Lettuce"],
+      color: "#9d0208",
+      tip: "Nine per square foot; beet seeds are actually seed clusters, so thin to one seedling per spot after germination."
+    },
+
+    "Carrot": {
+      name: "Carrot",
+      plants_per_sqft: 16,
+      spacing_inches: 3,
+      depth_inches: 12,
+      days_to_harvest: 70,
+      companion_plants: ["Onion", "Lettuce", "Tomato", "Parsley"],
+      color: "#fb8500",
+      tip: "Sixteen per square foot; loose, deep, rock-free soil is critical — compaction causes forked and stubby roots."
+    },
+
+    "Onion": {
+      name: "Onion",
+      plants_per_sqft: 9,
+      spacing_inches: 4,
+      depth_inches: 6,
+      days_to_harvest: 100,
+      companion_plants: ["Carrot", "Beet", "Lettuce", "Pepper"],
+      color: "#ffb703",
+      tip: "Nine per square foot when growing from sets; stop watering when tops fall over naturally — that signals they're ready."
+    },
+
+    "Garlic": {
+      name: "Garlic",
+      plants_per_sqft: 9,
+      spacing_inches: 4,
+      depth_inches: 6,
+      days_to_harvest: 240,
+      companion_plants: ["Tomato", "Carrot", "Basil", "Lettuce"],
+      color: "#e9c46a",
+      tip: "Nine per square foot; plant cloves pointed-end up in fall for the biggest bulbs the following summer."
+    },
+
+    "Leek": {
+      name: "Leek",
+      plants_per_sqft: 9,
+      spacing_inches: 4,
+      depth_inches: 8,
+      days_to_harvest: 120,
+      companion_plants: ["Carrot", "Onion", "Beet", "Lettuce"],
+      color: "#a7c957",
+      tip: "Nine per square foot; mound soil up around the stems as they grow (blanching) to develop more of the tender white shaft."
+    },
+
+    "Cucumber": {
+      name: "Cucumber",
+      plants_per_sqft: 2,
+      spacing_inches: 12,
+      depth_inches: 8,
+      days_to_harvest: 55,
+      companion_plants: ["Beans", "Marigold", "Nasturtium", "Dill"],
+      color: "#606c38",
+      tip: "Two per square foot when trellised vertically — training cucumbers up saves enormous bed space and improves air circulation."
+    },
+
+    "Squash": {
+      name: "Squash",
+      plants_per_sqft: 1,
+      spacing_inches: 24,
+      depth_inches: 12,
+      days_to_harvest: 60,
+      companion_plants: ["Corn", "Beans", "Nasturtium", "Marigold"],
+      color: "#e9c46a",
+      tip: "One plant per two square feet minimum; summer squash is incredibly prolific — harvest young at 6–8 inches for best flavor."
+    },
+
+    "Zucchini": {
+      name: "Zucchini",
+      plants_per_sqft: 1,
+      spacing_inches: 24,
+      depth_inches: 12,
+      days_to_harvest: 50,
+      companion_plants: ["Corn", "Beans", "Nasturtium", "Marigold"],
+      color: "#588157",
+      tip: "One plant per two square feet; check daily at peak season — a missed zucchini becomes a baseball bat overnight."
+    },
+
+    "Pumpkin": {
+      name: "Pumpkin",
+      plants_per_sqft: 1,
+      spacing_inches: 36,
+      depth_inches: 12,
+      days_to_harvest: 100,
+      companion_plants: ["Corn", "Beans", "Nasturtium", "Marigold"],
+      color: "#e76f51",
+      tip: "Allow at least three square feet in bed with vines trailing outside — pinch off extra fruits to size up your best pumpkins."
+    },
+
+    "Melon": {
+      name: "Melon",
+      plants_per_sqft: 1,
+      spacing_inches: 24,
+      depth_inches: 12,
+      days_to_harvest: 80,
+      companion_plants: ["Corn", "Nasturtium", "Marigold"],
+      color: "#f9c74f",
+      tip: "One per two square feet and trellis the vines; use fabric slings to support melons growing vertically so they don't drop."
+    },
+
+    "Beans": {
+      name: "Beans",
+      plants_per_sqft: 9,
+      spacing_inches: 4,
+      depth_inches: 6,
+      days_to_harvest: 55,
+      companion_plants: ["Corn", "Cucumber", "Carrot", "Squash"],
+      color: "#457b9d",
+      tip: "Nine per square foot for bush beans; they fix their own nitrogen so skip the fertilizer and let them do their job."
+    },
+
+    "Peas": {
+      name: "Peas",
+      plants_per_sqft: 8,
+      spacing_inches: 4,
+      depth_inches: 6,
+      days_to_harvest: 60,
+      companion_plants: ["Carrot", "Beans", "Lettuce", "Turnip"],
+      color: "#74c69d",
+      tip: "Eight per square foot along a trellis; direct sow as soon as soil can be worked — peas are a true cold-weather crop."
+    },
+
+    "Corn": {
+      name: "Corn",
+      plants_per_sqft: 1,
+      spacing_inches: 12,
+      depth_inches: 12,
+      days_to_harvest: 75,
+      companion_plants: ["Beans", "Squash", "Pumpkin", "Cucumber"],
+      color: "#ffd166",
+      tip: "One per square foot but plant in a block of at least 4×4 — corn is wind-pollinated and needs nearby plants to set ears."
+    },
+
+    "Basil": {
+      name: "Basil",
+      plants_per_sqft: 4,
+      spacing_inches: 6,
+      depth_inches: 6,
+      days_to_harvest: 60,
+      companion_plants: ["Tomato", "Pepper", "Marigold", "Parsley"],
+      color: "#52b788",
+      tip: "Four per square foot; pinch flower buds off immediately — once basil bolts, leaves turn bitter and production drops fast."
+    },
+
+    "Parsley": {
+      name: "Parsley",
+      plants_per_sqft: 4,
+      spacing_inches: 6,
+      depth_inches: 8,
+      days_to_harvest: 80,
+      companion_plants: ["Tomato", "Carrot", "Basil", "Onion"],
+      color: "#2d6a4f",
+      tip: "Four per square foot; parsley is biennial so it overwinters — harvest the first year and enjoy early spring regrowth."
+    },
+
+    "Dill": {
+      name: "Dill",
+      plants_per_sqft: 4,
+      spacing_inches: 6,
+      depth_inches: 6,
+      days_to_harvest: 40,
+      companion_plants: ["Cucumber", "Broccoli", "Cabbage", "Onion"],
+      color: "#b7e4c7",
+      tip: "Four per square foot; keep dill away from fennel — the two will cross-pollinate and ruin the flavor of both."
+    },
+
+    "Marigold": {
+      name: "Marigold",
+      plants_per_sqft: 4,
+      spacing_inches: 6,
+      depth_inches: 6,
+      days_to_harvest: 50,
+      companion_plants: ["Tomato", "Pepper", "Cucumber", "Basil"],
+      color: "#f4a261",
+      tip: "Four per square foot; plant French marigolds (not African) for nematode suppression — their roots release the active compounds."
+    },
+
+    "Nasturtium": {
+      name: "Nasturtium",
+      plants_per_sqft: 4,
+      spacing_inches: 6,
+      depth_inches: 6,
+      days_to_harvest: 55,
+      companion_plants: ["Tomato", "Cucumber", "Squash", "Kale"],
+      color: "#e9c46a",
+      tip: "Four per square foot; poor soil actually produces more flowers — rich soil grows lush leaves at the expense of blooms."
+    },
+
+    "Radish": {
+      name: "Radish",
+      plants_per_sqft: 16,
+      spacing_inches: 3,
+      depth_inches: 6,
+      days_to_harvest: 25,
+      companion_plants: ["Carrot", "Lettuce", "Cucumber", "Beans"],
+      color: "#e63946",
+      tip: "Sixteen per square foot; radishes mature in as little as 25 days making them perfect gap-fillers between slower crops."
+    },
+
+    "Turnip": {
+      name: "Turnip",
+      plants_per_sqft: 9,
+      spacing_inches: 4,
+      depth_inches: 8,
+      days_to_harvest: 45,
+      companion_plants: ["Peas", "Lettuce", "Kale", "Onion"],
+      color: "#c77dff",
+      tip: "Nine per square foot; harvest young at 2–3 inches for the sweetest, most tender roots — larger turnips get woody and bitter."
+    }
+
+  };
+  </script>
+
+  <script>lucide.createIcons();</script>
+</body>
+</html>
