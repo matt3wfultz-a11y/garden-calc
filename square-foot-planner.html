@@ -14,6 +14,252 @@
        ============================================================ -->
   <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossorigin="anonymous"></script> -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* ── Bed Setup Section ───────────────────────────────────── */
+    .sfp-section {
+      padding: 48px 0 40px;
+    }
+
+    /* Individual bed card */
+    .sfp-bed-card {
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.09);
+      border-radius: var(--radius-md);
+      padding: 24px 28px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+    }
+
+    /* Bed header row: editable name + delete */
+    .sfp-bed-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      gap: 12px;
+    }
+    .sfp-bed-name {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--green-dark);
+      border: 1.5px solid transparent;
+      border-radius: var(--radius-sm);
+      padding: 4px 8px;
+      background: transparent;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      min-width: 60px;
+      max-width: 220px;
+      font-family: inherit;
+    }
+    .sfp-bed-name:hover,
+    .sfp-bed-name:focus {
+      border-color: var(--green-mid);
+      background: var(--cream);
+      outline: none;
+    }
+    .sfp-delete-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #ef4444;
+      background: none;
+      border: 1.5px solid #fca5a5;
+      border-radius: 50px;
+      padding: 5px 13px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s, color 0.15s;
+    }
+    .sfp-delete-btn:hover {
+      background: #fef2f2;
+    }
+
+    /* Preset size buttons */
+    .sfp-presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .sfp-preset-btn {
+      padding: 7px 16px;
+      border-radius: 50px;
+      border: 1.5px solid #ddd;
+      background: var(--white);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+    .sfp-preset-btn:hover {
+      border-color: var(--green-mid);
+      color: var(--green-dark);
+    }
+    .sfp-preset-btn.active {
+      background: var(--green-mid);
+      border-color: var(--green-mid);
+      color: var(--white);
+    }
+
+    /* Custom size inputs */
+    .sfp-custom-inputs {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    .sfp-custom-inputs label {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .sfp-dim-input {
+      width: 56px;
+      padding: 7px 8px;
+      border: 1.5px solid #ddd;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-family: inherit;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .sfp-dim-input:focus { border-color: var(--green-mid); }
+
+    /* Summary line */
+    .sfp-summary {
+      font-size: 0.88rem;
+      color: var(--text-mid);
+      margin-top: 10px;
+      padding: 9px 14px;
+      background: var(--cream);
+      border-radius: var(--radius-sm);
+      display: inline-block;
+    }
+    .sfp-summary strong { color: var(--green-dark); }
+
+    /* Add bed button */
+    .sfp-add-bed-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 20px;
+      border-radius: 50px;
+      border: 1.5px solid var(--green-mid);
+      background: transparent;
+      color: var(--green-mid);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s;
+    }
+    .sfp-add-bed-btn:hover { background: var(--green-pale); }
+
+    /* Plant palette */
+    .sfp-palette-wrap {
+      margin-top: 36px;
+    }
+    .sfp-palette-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .sfp-palette-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-light);
+    }
+    .sfp-clear-sel-btn {
+      padding: 5px 14px;
+      border-radius: 50px;
+      border: 1.5px solid #ddd;
+      background: var(--white);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-mid);
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+    .sfp-clear-sel-btn:not(:disabled):hover {
+      border-color: var(--green-mid);
+      color: var(--green-dark);
+    }
+    .sfp-clear-sel-btn:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+    .sfp-palette {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .sfp-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      padding: 10px 10px 8px;
+      border-radius: 10px;
+      border: 2.5px solid transparent;
+      cursor: pointer;
+      transition: border-color 0.15s, transform 0.12s, box-shadow 0.15s;
+      background: var(--white);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      min-width: 72px;
+      text-align: center;
+      user-select: none;
+    }
+    .sfp-tile:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .sfp-tile.selected {
+      border-color: var(--green-mid);
+      box-shadow: 0 0 0 3px rgba(45,134,83,0.18);
+    }
+    .sfp-tile-swatch {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+    .sfp-tile-name {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.2;
+      word-break: break-word;
+    }
+    .sfp-tile-count {
+      font-size: 0.62rem;
+      color: var(--text-light);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 600px) {
+      .sfp-bed-card { padding: 18px 16px; }
+      .sfp-presets { gap: 6px; }
+      .sfp-preset-btn { font-size: 0.78rem; padding: 6px 12px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -100,6 +346,31 @@
     <!-- ============================================================
          BED SETUP SECTION
          ============================================================ -->
+    <section class="sfp-section" id="bedSetupSection">
+      <div class="container">
+
+        <!-- Beds list -->
+        <div id="bedsList"></div>
+
+        <!-- Add Another Bed -->
+        <div style="margin-top:16px;">
+          <button class="sfp-add-bed-btn" onclick="addBed()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Another Bed
+          </button>
+        </div>
+
+        <!-- Plant Palette -->
+        <div class="sfp-palette-wrap">
+          <div class="sfp-palette-header">
+            <span class="sfp-palette-label">Plant Palette — click to select, then click squares in the grid to plant</span>
+            <button class="sfp-clear-sel-btn" id="clearSelBtn" onclick="clearSelection()" disabled>Clear Selection</button>
+          </div>
+          <div class="sfp-palette" id="plantPalette" role="list"></div>
+        </div>
+
+      </div>
+    </section>
 
     <!-- ============================================================
          PLANNER GRID SECTION
@@ -550,6 +821,169 @@
     }
 
   };
+  </script>
+
+  <script>
+  // ── State ────────────────────────────────────────────────────
+  var beds = [];          // array of { id, name, w, h, preset }
+  var nextBedId = 1;
+  var selectedPlant = null;
+
+  var PRESETS = [
+    { label: '4×4 ft',  w: 4,  h: 4  },
+    { label: '4×8 ft',  w: 4,  h: 8  },
+    { label: '4×12 ft', w: 4,  h: 12 },
+    { label: '8×8 ft',  w: 8,  h: 8  },
+    { label: 'Custom',  w: null, h: null }
+  ];
+
+  // ── Init ─────────────────────────────────────────────────────
+  function init() {
+    addBed();
+    renderPalette();
+  }
+
+  // ── Beds ─────────────────────────────────────────────────────
+  function addBed() {
+    var id = nextBedId++;
+    beds.push({ id: id, name: 'Bed ' + id, w: 4, h: 8, preset: '4×8 ft' });
+    renderBeds();
+  }
+
+  function removeBed(id) {
+    if (beds.length <= 1) return;
+    beds = beds.filter(function(b) { return b.id !== id; });
+    renderBeds();
+  }
+
+  function getBed(id) {
+    return beds.find(function(b) { return b.id === id; });
+  }
+
+  function setPreset(id, presetLabel) {
+    var bed = getBed(id);
+    if (!bed) return;
+    var preset = PRESETS.find(function(p) { return p.label === presetLabel; });
+    if (!preset) return;
+    bed.preset = presetLabel;
+    if (preset.w !== null) {
+      bed.w = preset.w;
+      bed.h = preset.h;
+    }
+    renderBeds();
+  }
+
+  function updateCustomDim(id, axis, val) {
+    var bed = getBed(id);
+    if (!bed) return;
+    var n = Math.max(1, Math.min(20, parseInt(val) || 1));
+    bed[axis] = n;
+    updateSummary(id);
+  }
+
+  function updateSummary(id) {
+    var el = document.getElementById('sfp-summary-' + id);
+    var bed = getBed(id);
+    if (el && bed) {
+      el.innerHTML = 'Your bed: <strong>' + bed.w + ' ft × ' + bed.h + ' ft = ' + (bed.w * bed.h) + ' square feet</strong>';
+    }
+  }
+
+  function updateBedName(id, val) {
+    var bed = getBed(id);
+    if (bed) bed.name = val || ('Bed ' + id);
+  }
+
+  // ── Render beds ───────────────────────────────────────────────
+  function renderBeds() {
+    var container = document.getElementById('bedsList');
+    container.innerHTML = '';
+    beds.forEach(function(bed) {
+      var card = document.createElement('div');
+      card.className = 'sfp-bed-card';
+      card.id = 'sfp-bed-' + bed.id;
+
+      // Header
+      var header = '<div class="sfp-bed-header">';
+      header += '<input class="sfp-bed-name" type="text" value="' + escHtml(bed.name) + '" aria-label="Bed name" '
+        + 'onchange="updateBedName(' + bed.id + ', this.value)" '
+        + 'onblur="updateBedName(' + bed.id + ', this.value)" />';
+      if (beds.length > 1) {
+        header += '<button class="sfp-delete-btn" onclick="removeBed(' + bed.id + ')" aria-label="Delete ' + escHtml(bed.name) + '">'
+          + '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>'
+          + 'Delete</button>';
+      }
+      header += '</div>';
+
+      // Presets
+      var presetHtml = '<div class="sfp-presets">';
+      PRESETS.forEach(function(p) {
+        var active = bed.preset === p.label ? ' active' : '';
+        presetHtml += '<button class="sfp-preset-btn' + active + '" onclick="setPreset(' + bed.id + ', \'' + p.label + '\')">' + p.label + '</button>';
+      });
+      presetHtml += '</div>';
+
+      // Custom inputs (only shown when Custom is selected)
+      var customStyle = bed.preset === 'Custom' ? '' : 'display:none;';
+      var customHtml = '<div class="sfp-custom-inputs" id="sfp-custom-' + bed.id + '" style="' + customStyle + '">'
+        + '<label>Width (ft): <input class="sfp-dim-input" type="number" min="1" max="20" value="' + bed.w + '" '
+        + 'oninput="updateCustomDim(' + bed.id + ', \'w\', this.value)" aria-label="Bed width in feet" /></label>'
+        + '<label>Height (ft): <input class="sfp-dim-input" type="number" min="1" max="20" value="' + bed.h + '" '
+        + 'oninput="updateCustomDim(' + bed.id + ', \'h\', this.value)" aria-label="Bed height in feet" /></label>'
+        + '</div>';
+
+      // Summary
+      var summary = '<div class="sfp-summary" id="sfp-summary-' + bed.id + '">'
+        + 'Your bed: <strong>' + bed.w + ' ft × ' + bed.h + ' ft = ' + (bed.w * bed.h) + ' square feet</strong>'
+        + '</div>';
+
+      card.innerHTML = header + presetHtml + customHtml + summary;
+      container.appendChild(card);
+    });
+  }
+
+  // ── Plant palette ────────────────────────────────────────────
+  function renderPalette() {
+    var palette = document.getElementById('plantPalette');
+    palette.innerHTML = '';
+    Object.values(PLANT_DATA).forEach(function(plant) {
+      var tile = document.createElement('div');
+      tile.className = 'sfp-tile' + (selectedPlant === plant.name ? ' selected' : '');
+      tile.setAttribute('role', 'listitem');
+      tile.setAttribute('tabindex', '0');
+      tile.setAttribute('aria-label', plant.name + ', ' + plant.plants_per_sqft + ' per sq ft');
+      tile.setAttribute('title', plant.name + ' — ' + plant.plants_per_sqft + '/sq ft');
+      tile.innerHTML =
+        '<div class="sfp-tile-swatch" style="background:' + plant.color + ';"></div>'
+        + '<div class="sfp-tile-name">' + plant.name + '</div>'
+        + '<div class="sfp-tile-count">' + plant.plants_per_sqft + '/sq ft</div>';
+      tile.addEventListener('click', function() { selectPlant(plant.name); });
+      tile.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectPlant(plant.name); }
+      });
+      palette.appendChild(tile);
+    });
+  }
+
+  function selectPlant(name) {
+    selectedPlant = (selectedPlant === name) ? null : name;
+    renderPalette();
+    document.getElementById('clearSelBtn').disabled = !selectedPlant;
+  }
+
+  function clearSelection() {
+    selectedPlant = null;
+    renderPalette();
+    document.getElementById('clearSelBtn').disabled = true;
+  }
+
+  // ── Utilities ────────────────────────────────────────────────
+  function escHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ── Boot ─────────────────────────────────────────────────────
+  init();
   </script>
 
   <script>lucide.createIcons();</script>
