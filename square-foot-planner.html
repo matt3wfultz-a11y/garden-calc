@@ -259,6 +259,203 @@
       .sfp-presets { gap: 6px; }
       .sfp-preset-btn { font-size: 0.78rem; padding: 6px 12px; }
     }
+
+    /* ── Cell size variable ──────────────────────────────────── */
+    :root { --sfp-cell: 64px; }
+    @media (max-width: 600px) { :root { --sfp-cell: 48px; } }
+
+    /* ── Planner Grid Section ────────────────────────────────── */
+    .sfp-grids-section {
+      padding: 0 0 60px;
+      background: var(--cream);
+      border-top: 1px solid rgba(0,0,0,0.07);
+    }
+    .sfp-grids-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-top: 40px;
+      padding-bottom: 20px;
+    }
+    .sfp-grids-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: var(--text-dark);
+    }
+    .sfp-print-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 20px;
+      border-radius: 50px;
+      border: 1.5px solid var(--green-mid);
+      background: var(--white);
+      color: var(--green-mid);
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s;
+    }
+    .sfp-print-btn:hover { background: var(--green-pale); }
+
+    /* Per-bed grid card */
+    .sfp-grid-section {
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: var(--radius-md);
+      padding: 22px 26px 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+    }
+    .sfp-grid-heading-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .sfp-grid-heading {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--green-dark);
+    }
+    .sfp-ctrl-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+    .sfp-ctrl-btn--outline {
+      background: transparent;
+      color: var(--text-mid);
+      border: 1.5px solid #ddd;
+    }
+    .sfp-ctrl-btn--outline:hover {
+      border-color: #ef4444;
+      color: #ef4444;
+    }
+
+    /* CSS Grid */
+    .sfp-grid-outer {
+      overflow-x: auto;
+      padding-bottom: 4px;
+      margin-bottom: 18px;
+    }
+    .sfp-grid {
+      display: grid;
+      gap: 3px;
+      background: #d1d5db;
+      padding: 3px;
+      border-radius: 8px;
+      width: max-content;
+    }
+    .sfp-cell {
+      width: var(--sfp-cell);
+      height: var(--sfp-cell);
+      background: #f3f4f6;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      transition: filter 0.1s, transform 0.08s;
+      box-sizing: border-box;
+      user-select: none;
+      position: relative;
+    }
+    .sfp-cell:hover { filter: brightness(0.9); }
+    .sfp-cell:active { transform: scale(0.94); }
+    .sfp-cell-name {
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.95);
+      text-align: center;
+      line-height: 1.2;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.35);
+      max-width: calc(var(--sfp-cell) - 8px);
+      overflow: hidden;
+    }
+    .sfp-cell-count {
+      font-size: 0.55rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.82);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    /* Crosshair cursor when a plant is active */
+    .sfp-is-planting .sfp-cell { cursor: crosshair; }
+
+    /* Plant count summary */
+    .sfp-plant-summary {
+      padding-top: 14px;
+      border-top: 1px solid rgba(0,0,0,0.07);
+    }
+    .sfp-plant-summary--empty {
+      font-size: 0.83rem;
+      color: var(--text-light);
+      font-style: italic;
+    }
+    .sfp-summary-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-light);
+      margin-bottom: 10px;
+    }
+    .sfp-summary-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+    .sfp-summary-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--cream);
+      border-radius: 50px;
+      padding: 5px 12px 5px 7px;
+      font-size: 0.79rem;
+    }
+    .sfp-summary-swatch {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .sfp-summary-name { font-weight: 700; color: var(--text-dark); }
+    .sfp-summary-detail { color: var(--text-mid); }
+
+    /* Print styles */
+    @media print {
+      .site-header, .site-footer, .ad-section, .page-hero,
+      #bedSetupSection, .sfp-grids-header, .sfp-ctrl-btn,
+      .sfp-plant-summary { display: none !important; }
+      .sfp-grids-section { background: #fff; padding: 0; border: none; }
+      .sfp-grid-section { box-shadow: none; border: 1px solid #e5e7eb; margin-bottom: 24px; break-inside: avoid; }
+      .sfp-cell {
+        --sfp-cell: 68px;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+    @media (max-width: 520px) {
+      .sfp-grid-section { padding: 14px 12px; }
+      .sfp-cell-name { font-size: 0.52rem; }
+    }
   </style>
 </head>
 <body>
@@ -375,6 +572,18 @@
     <!-- ============================================================
          PLANNER GRID SECTION
          ============================================================ -->
+    <section class="sfp-grids-section" id="gridSection">
+      <div class="container">
+        <div class="sfp-grids-header">
+          <h2 class="sfp-grids-title">Your Garden Beds</h2>
+          <button class="sfp-print-btn" onclick="window.print()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Print Layout
+          </button>
+        </div>
+        <div id="bedGridsList"></div>
+      </div>
+    </section>
 
     <!-- ============================================================
          PLANT INFO SECTION
@@ -825,7 +1034,7 @@
 
   <script>
   // ── State ────────────────────────────────────────────────────
-  var beds = [];          // array of { id, name, w, h, preset }
+  var beds = [];       // { id, name, w, h, preset, cells: { "r,c": plantName } }
   var nextBedId = 1;
   var selectedPlant = null;
 
@@ -837,23 +1046,51 @@
     { label: 'Custom',  w: null, h: null }
   ];
 
+  var ABBR = {
+    'Tomato':'Tom.','Pepper':'Pep.','Eggplant':'Egg.',
+    'Broccoli':'Broc.','Cabbage':'Cab.','Cauliflower':'Caul.',
+    'Lettuce':'Lett.','Spinach':'Spin.','Cucumber':'Cuc.',
+    'Zucchini':'Zuc.','Pumpkin':'Pum.','Nasturtium':'Nast.',
+    'Marigold':'Mar.','Parsley':'Par.','Turnip':'Turn.','Radish':'Rad.'
+  };
+
+  function abbreviate(name) {
+    if (ABBR[name]) return ABBR[name];
+    return name.length <= 5 ? name : name.slice(0, 5) + '.';
+  }
+
+  function escHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function trimCells(cells, newW, newH) {
+    var out = {};
+    for (var key in cells) {
+      var p = key.split(',');
+      if (parseInt(p[0]) < newH && parseInt(p[1]) < newW) out[key] = cells[key];
+    }
+    return out;
+  }
+
   // ── Init ─────────────────────────────────────────────────────
   function init() {
     addBed();
     renderPalette();
   }
 
-  // ── Beds ─────────────────────────────────────────────────────
+  // ── Bed management ───────────────────────────────────────────
   function addBed() {
     var id = nextBedId++;
-    beds.push({ id: id, name: 'Bed ' + id, w: 4, h: 8, preset: '4×8 ft' });
+    beds.push({ id: id, name: 'Bed ' + id, w: 4, h: 8, preset: '4×8 ft', cells: {} });
     renderBeds();
+    renderAllGrids();
   }
 
   function removeBed(id) {
     if (beds.length <= 1) return;
     beds = beds.filter(function(b) { return b.id !== id; });
     renderBeds();
+    renderAllGrids();
   }
 
   function getBed(id) {
@@ -867,34 +1104,43 @@
     if (!preset) return;
     bed.preset = presetLabel;
     if (preset.w !== null) {
+      bed.cells = trimCells(bed.cells, preset.w, preset.h);
       bed.w = preset.w;
       bed.h = preset.h;
     }
     renderBeds();
+    renderAllGrids();
   }
 
   function updateCustomDim(id, axis, val) {
     var bed = getBed(id);
     if (!bed) return;
     var n = Math.max(1, Math.min(20, parseInt(val) || 1));
+    var newW = axis === 'w' ? n : bed.w;
+    var newH = axis === 'h' ? n : bed.h;
+    bed.cells = trimCells(bed.cells, newW, newH);
     bed[axis] = n;
     updateSummary(id);
+    refreshBedGrid(bed);
   }
 
   function updateSummary(id) {
     var el = document.getElementById('sfp-summary-' + id);
     var bed = getBed(id);
     if (el && bed) {
-      el.innerHTML = 'Your bed: <strong>' + bed.w + ' ft × ' + bed.h + ' ft = ' + (bed.w * bed.h) + ' square feet</strong>';
+      el.innerHTML = 'Your bed: <strong>' + bed.w + ' ft \xd7 ' + bed.h + ' ft = ' + (bed.w * bed.h) + ' square feet</strong>';
     }
   }
 
   function updateBedName(id, val) {
     var bed = getBed(id);
-    if (bed) bed.name = val || ('Bed ' + id);
+    if (!bed) return;
+    bed.name = val || ('Bed ' + id);
+    var h = document.getElementById('sfp-grid-heading-' + id);
+    if (h) h.textContent = bed.name;
   }
 
-  // ── Render beds ───────────────────────────────────────────────
+  // ── Render bed setup cards ────────────────────────────────────
   function renderBeds() {
     var container = document.getElementById('bedsList');
     container.innerHTML = '';
@@ -903,19 +1149,15 @@
       card.className = 'sfp-bed-card';
       card.id = 'sfp-bed-' + bed.id;
 
-      // Header
-      var header = '<div class="sfp-bed-header">';
-      header += '<input class="sfp-bed-name" type="text" value="' + escHtml(bed.name) + '" aria-label="Bed name" '
-        + 'onchange="updateBedName(' + bed.id + ', this.value)" '
-        + 'onblur="updateBedName(' + bed.id + ', this.value)" />';
+      var header = '<div class="sfp-bed-header">'
+        + '<input class="sfp-bed-name" type="text" value="' + escHtml(bed.name) + '" aria-label="Bed name" '
+        + 'onchange="updateBedName(' + bed.id + ', this.value)" onblur="updateBedName(' + bed.id + ', this.value)" />';
       if (beds.length > 1) {
-        header += '<button class="sfp-delete-btn" onclick="removeBed(' + bed.id + ')" aria-label="Delete ' + escHtml(bed.name) + '">'
-          + '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>'
-          + 'Delete</button>';
+        header += '<button class="sfp-delete-btn" onclick="removeBed(' + bed.id + ')" aria-label="Delete bed">'
+          + '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>Delete</button>';
       }
       header += '</div>';
 
-      // Presets
       var presetHtml = '<div class="sfp-presets">';
       PRESETS.forEach(function(p) {
         var active = bed.preset === p.label ? ' active' : '';
@@ -923,23 +1165,132 @@
       });
       presetHtml += '</div>';
 
-      // Custom inputs (only shown when Custom is selected)
       var customStyle = bed.preset === 'Custom' ? '' : 'display:none;';
       var customHtml = '<div class="sfp-custom-inputs" id="sfp-custom-' + bed.id + '" style="' + customStyle + '">'
         + '<label>Width (ft): <input class="sfp-dim-input" type="number" min="1" max="20" value="' + bed.w + '" '
-        + 'oninput="updateCustomDim(' + bed.id + ', \'w\', this.value)" aria-label="Bed width in feet" /></label>'
+        + 'oninput="updateCustomDim(' + bed.id + ',\'w\',this.value)" aria-label="Bed width in feet" /></label>'
         + '<label>Height (ft): <input class="sfp-dim-input" type="number" min="1" max="20" value="' + bed.h + '" '
-        + 'oninput="updateCustomDim(' + bed.id + ', \'h\', this.value)" aria-label="Bed height in feet" /></label>'
+        + 'oninput="updateCustomDim(' + bed.id + ',\'h\',this.value)" aria-label="Bed height in feet" /></label>'
         + '</div>';
 
-      // Summary
       var summary = '<div class="sfp-summary" id="sfp-summary-' + bed.id + '">'
-        + 'Your bed: <strong>' + bed.w + ' ft × ' + bed.h + ' ft = ' + (bed.w * bed.h) + ' square feet</strong>'
+        + 'Your bed: <strong>' + bed.w + ' ft \xd7 ' + bed.h + ' ft = ' + (bed.w * bed.h) + ' square feet</strong>'
         + '</div>';
 
       card.innerHTML = header + presetHtml + customHtml + summary;
       container.appendChild(card);
     });
+  }
+
+  // ── Cell interaction ─────────────────────────────────────────
+  function handleCellClick(bedId, row, col) {
+    var bed = getBed(bedId);
+    if (!bed) return;
+    var key = row + ',' + col;
+    if (selectedPlant) {
+      bed.cells[key] = selectedPlant;
+    } else {
+      delete bed.cells[key];
+    }
+    refreshBedGrid(bed);
+  }
+
+  function handleCellRightClick(e, bedId, row, col) {
+    e.preventDefault();
+    var bed = getBed(bedId);
+    if (!bed) return;
+    delete bed.cells[row + ',' + col];
+    refreshBedGrid(bed);
+  }
+
+  function clearBed(id) {
+    var bed = getBed(id);
+    if (!bed) return;
+    bed.cells = {};
+    refreshBedGrid(bed);
+  }
+
+  // ── Render grids ─────────────────────────────────────────────
+  function renderAllGrids() {
+    var container = document.getElementById('bedGridsList');
+    container.innerHTML = '';
+    beds.forEach(function(bed) {
+      container.appendChild(buildBedGridEl(bed));
+    });
+  }
+
+  function refreshBedGrid(bed) {
+    var existing = document.getElementById('sfp-grid-section-' + bed.id);
+    if (existing) {
+      existing.parentNode.replaceChild(buildBedGridEl(bed), existing);
+    }
+  }
+
+  function buildBedGridEl(bed) {
+    var section = document.createElement('div');
+    section.className = 'sfp-grid-section';
+    section.id = 'sfp-grid-section-' + bed.id;
+
+    var headingRow = '<div class="sfp-grid-heading-row">'
+      + '<h3 class="sfp-grid-heading" id="sfp-grid-heading-' + bed.id + '">' + escHtml(bed.name) + '</h3>'
+      + '<button class="sfp-ctrl-btn sfp-ctrl-btn--outline" onclick="clearBed(' + bed.id + ')">'
+      + '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>Clear Bed</button>'
+      + '</div>';
+
+    var gridHtml = '<div class="sfp-grid-outer"><div class="sfp-grid" style="grid-template-columns:repeat(' + bed.w + ',var(--sfp-cell));">';
+    for (var r = 0; r < bed.h; r++) {
+      for (var c = 0; c < bed.w; c++) {
+        var key = r + ',' + c;
+        var pName = bed.cells[key] || null;
+        var plant = pName ? PLANT_DATA[pName] : null;
+        var filledClass = plant ? ' sfp-cell--filled' : '';
+        var bgStyle = plant ? 'background:' + plant.color + ';' : '';
+        var tipText = plant
+          ? (pName + ' \xb7 ' + plant.plants_per_sqft + '/sq ft \u2014 right-click to remove')
+          : 'Empty \u2014 click to plant';
+        gridHtml += '<div class="sfp-cell' + filledClass + '" style="' + bgStyle + '"'
+          + ' title="' + escHtml(tipText) + '"'
+          + ' onclick="handleCellClick(' + bed.id + ',' + r + ',' + c + ')"'
+          + ' oncontextmenu="handleCellRightClick(event,' + bed.id + ',' + r + ',' + c + ')">';
+        if (plant) {
+          gridHtml += '<span class="sfp-cell-name">' + escHtml(abbreviate(pName)) + '</span>'
+            + '<span class="sfp-cell-count">\xd7' + plant.plants_per_sqft + '</span>';
+        }
+        gridHtml += '</div>';
+      }
+    }
+    gridHtml += '</div></div>';
+
+    section.innerHTML = headingRow + gridHtml + buildSummaryHtml(bed);
+    return section;
+  }
+
+  function buildSummaryHtml(bed) {
+    var counts = {};
+    for (var key in bed.cells) {
+      var pName = bed.cells[key];
+      counts[pName] = (counts[pName] || 0) + 1;
+    }
+    var names = Object.keys(counts);
+    if (names.length === 0) {
+      return '<div class="sfp-plant-summary sfp-plant-summary--empty">No plants placed yet \u2014 select a plant from the palette above, then click squares in the grid to plant.</div>';
+    }
+    var html = '<div class="sfp-plant-summary">'
+      + '<div class="sfp-summary-title">Plants in this bed</div>'
+      + '<div class="sfp-summary-list">';
+    names.sort().forEach(function(pName) {
+      var squares = counts[pName];
+      var plant = PLANT_DATA[pName];
+      var total = plant ? (squares * plant.plants_per_sqft) : squares;
+      var pLabel = total === 1 ? 'plant' : 'plants';
+      html += '<div class="sfp-summary-row">'
+        + '<span class="sfp-summary-swatch" style="background:' + (plant ? plant.color : '#ccc') + ';"></span>'
+        + '<span class="sfp-summary-name">' + escHtml(pName) + '</span>'
+        + '<span class="sfp-summary-detail">' + squares + ' sq ft \u2192 <strong>' + total + ' ' + pLabel + '</strong></span>'
+        + '</div>';
+    });
+    html += '</div></div>';
+    return html;
   }
 
   // ── Plant palette ────────────────────────────────────────────
@@ -952,7 +1303,7 @@
       tile.setAttribute('role', 'listitem');
       tile.setAttribute('tabindex', '0');
       tile.setAttribute('aria-label', plant.name + ', ' + plant.plants_per_sqft + ' per sq ft');
-      tile.setAttribute('title', plant.name + ' — ' + plant.plants_per_sqft + '/sq ft');
+      tile.setAttribute('title', plant.name + ' \u2014 ' + plant.plants_per_sqft + '/sq ft');
       tile.innerHTML =
         '<div class="sfp-tile-swatch" style="background:' + plant.color + ';"></div>'
         + '<div class="sfp-tile-name">' + plant.name + '</div>'
@@ -969,17 +1320,14 @@
     selectedPlant = (selectedPlant === name) ? null : name;
     renderPalette();
     document.getElementById('clearSelBtn').disabled = !selectedPlant;
+    document.body.classList.toggle('sfp-is-planting', !!selectedPlant);
   }
 
   function clearSelection() {
     selectedPlant = null;
     renderPalette();
     document.getElementById('clearSelBtn').disabled = true;
-  }
-
-  // ── Utilities ────────────────────────────────────────────────
-  function escHtml(str) {
-    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    document.body.classList.remove('sfp-is-planting');
   }
 
   // ── Boot ─────────────────────────────────────────────────────
