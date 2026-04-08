@@ -439,11 +439,205 @@
     .sfp-summary-name { font-weight: 700; color: var(--text-dark); }
     .sfp-summary-detail { color: var(--text-mid); }
 
+    /* ── Plant Info Section ─────────────────────────────────────── */
+    .sfp-info-section {
+      background: #fff;
+      padding: 56px 0 48px;
+      border-top: 1px solid #e5e7eb;
+    }
+    .sfp-info-layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .sfp-info-layout { grid-template-columns: 1fr; }
+    }
+
+    /* Left panel */
+    .sfp-info-panel {
+      background: var(--cream);
+      border-radius: 14px;
+      padding: 28px 26px 24px;
+      border: 1px solid #e5e7eb;
+    }
+    .sfp-info-empty {
+      text-align: center;
+      padding: 32px 16px;
+      color: var(--text-light);
+      font-style: italic;
+      font-size: 0.9rem;
+    }
+    .sfp-info-empty i { display: block; margin: 0 auto 10px; width: 36px; height: 36px; opacity: 0.4; }
+    .sfp-info-detail { display: none; }
+    .sfp-info-detail.visible { display: block; }
+    .sfp-info-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin: 0 0 10px;
+    }
+    .sfp-info-badge {
+      display: inline-block;
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 4px 12px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+    }
+    .sfp-stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .sfp-stat {
+      background: #fff;
+      border-radius: 10px;
+      padding: 12px 14px;
+      border: 1px solid #e5e7eb;
+    }
+    .sfp-stat-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-light);
+      margin-bottom: 4px;
+    }
+    .sfp-stat-value {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+    .sfp-info-tip {
+      font-size: 0.84rem;
+      color: var(--text-mid);
+      line-height: 1.55;
+      margin-bottom: 18px;
+      padding: 12px 14px;
+      background: #fff;
+      border-radius: 10px;
+      border-left: 3px solid var(--green-mid);
+    }
+    .sfp-companion-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-light);
+      margin-bottom: 9px;
+    }
+    .sfp-companion-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+    .sfp-companion-badge {
+      background: var(--green-light);
+      color: var(--green-dark);
+      font-size: 0.73rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 50px;
+    }
+    .sfp-companion-none {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      font-style: italic;
+    }
+    .sfp-info-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--green-dark);
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1.5px solid var(--green-dark);
+      border-radius: 6px;
+      padding: 7px 14px;
+      transition: background 0.18s, color 0.18s;
+    }
+    .sfp-info-link:hover { background: var(--green-dark); color: #fff; }
+
+    /* Right panel — reference table */
+    .sfp-table-wrap { overflow-x: auto; }
+    .sfp-table-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin: 0 0 16px;
+    }
+    .sfp-ref-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+    }
+    .sfp-ref-table th {
+      background: var(--green-dark);
+      color: #fff;
+      text-align: left;
+      padding: 10px 14px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .sfp-ref-table th:hover { background: var(--green-mid); }
+    .sfp-ref-table th .sort-arrow {
+      display: inline-block;
+      margin-left: 5px;
+      opacity: 0.5;
+      font-size: 0.65rem;
+    }
+    .sfp-ref-table th.sort-active .sort-arrow { opacity: 1; }
+    .sfp-ref-table td {
+      padding: 9px 14px;
+      border-bottom: 1px solid #f0f0ee;
+      color: var(--text-mid);
+      vertical-align: middle;
+    }
+    .sfp-ref-table tr:last-child td { border-bottom: none; }
+    .sfp-ref-table tr:nth-child(even) td { background: #fafaf8; }
+    .sfp-ref-table tr:hover td { background: #f0f4ec; }
+    .sfp-tbl-plant-cell {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-weight: 600;
+      color: var(--text-dark);
+      white-space: nowrap;
+    }
+    .sfp-tbl-swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .sfp-tbl-highlight td { background: #edf3e8 !important; }
+
+    /* AdSense slot */
+    .sfp-info-ad {
+      margin-top: 36px;
+      text-align: center;
+    }
+
     /* Print styles */
     @media print {
       .site-header, .site-footer, .ad-section, .page-hero,
       #bedSetupSection, .sfp-grids-header, .sfp-ctrl-btn,
-      .sfp-plant-summary { display: none !important; }
+      .sfp-plant-summary, #plantInfoSection { display: none !important; }
       .sfp-grids-section { background: #fff; padding: 0; border: none; }
       .sfp-grid-section { box-shadow: none; border: 1px solid #e5e7eb; margin-bottom: 24px; break-inside: avoid; }
       .sfp-cell {
@@ -588,6 +782,89 @@
     <!-- ============================================================
          PLANT INFO SECTION
          ============================================================ -->
+    <section class="sfp-info-section" id="plantInfoSection">
+      <div class="container">
+        <div class="sfp-info-layout">
+
+          <!-- Left: selected plant detail panel -->
+          <div>
+            <div class="sfp-info-panel" id="plantInfoPanel">
+              <div class="sfp-info-empty" id="plantInfoEmpty">
+                <i data-lucide="mouse-pointer-click"></i>
+                Select a plant from the palette above to see details.
+              </div>
+              <div class="sfp-info-detail" id="plantInfoDetail">
+                <h2 class="sfp-info-name" id="piName"></h2>
+                <span class="sfp-info-badge" id="piBadge"></span>
+                <div class="sfp-stats-grid">
+                  <div class="sfp-stat">
+                    <div class="sfp-stat-label">Plants / Sq Ft</div>
+                    <div class="sfp-stat-value" id="piPerSqft"></div>
+                  </div>
+                  <div class="sfp-stat">
+                    <div class="sfp-stat-label">Spacing</div>
+                    <div class="sfp-stat-value" id="piSpacing"></div>
+                  </div>
+                  <div class="sfp-stat">
+                    <div class="sfp-stat-label">Planting Depth</div>
+                    <div class="sfp-stat-value" id="piDepth"></div>
+                  </div>
+                  <div class="sfp-stat">
+                    <div class="sfp-stat-label">Days to Harvest</div>
+                    <div class="sfp-stat-value" id="piDays"></div>
+                  </div>
+                </div>
+                <div class="sfp-info-tip" id="piTip"></div>
+                <div class="sfp-companion-label">Good Companions</div>
+                <div class="sfp-companion-badges" id="piCompanions"></div>
+                <a href="companion-planting.html" class="sfp-info-link" aria-label="View full companion planting guide">
+                  <i data-lucide="git-merge"></i> Full Companion Planting Guide →
+                </a>
+              </div>
+            </div>
+
+            <!-- 336×280 AdSense slot -->
+            <div class="sfp-info-ad">
+              <ins class="adsbygoogle"
+                   style="display:inline-block;width:336px;height:280px"
+                   data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                   data-ad-slot="XXXXXXXXXX"></ins>
+              <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            </div>
+          </div>
+
+          <!-- Right: full reference table -->
+          <div>
+            <h2 class="sfp-table-title">Plant Spacing Reference</h2>
+            <div class="sfp-table-wrap">
+              <table class="sfp-ref-table" id="plantRefTable" aria-label="Plant spacing reference table">
+                <thead>
+                  <tr>
+                    <th data-col="name" onclick="sortTable('name')">
+                      Plant <span class="sort-arrow" id="arrow-name">▲</span>
+                    </th>
+                    <th data-col="plants_per_sqft" onclick="sortTable('plants_per_sqft')">
+                      Plants / Sq Ft <span class="sort-arrow" id="arrow-plants_per_sqft">▲</span>
+                    </th>
+                    <th data-col="spacing_inches" onclick="sortTable('spacing_inches')">
+                      Spacing <span class="sort-arrow" id="arrow-spacing_inches">▲</span>
+                    </th>
+                    <th data-col="depth_inches" onclick="sortTable('depth_inches')">
+                      Depth <span class="sort-arrow" id="arrow-depth_inches">▲</span>
+                    </th>
+                    <th data-col="days_to_harvest" onclick="sortTable('days_to_harvest')">
+                      Days to Harvest <span class="sort-arrow" id="arrow-days_to_harvest">▲</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="plantRefTbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
 
   </main>
 
@@ -1321,6 +1598,7 @@
     renderPalette();
     document.getElementById('clearSelBtn').disabled = !selectedPlant;
     document.body.classList.toggle('sfp-is-planting', !!selectedPlant);
+    updatePlantInfo(selectedPlant);
   }
 
   function clearSelection() {
@@ -1328,10 +1606,132 @@
     renderPalette();
     document.getElementById('clearSelBtn').disabled = true;
     document.body.classList.remove('sfp-is-planting');
+    updatePlantInfo(null);
+  }
+
+  // ── Plant Info Panel ──────────────────────────────────────────
+  function updatePlantInfo(name) {
+    var empty  = document.getElementById('plantInfoEmpty');
+    var detail = document.getElementById('plantInfoDetail');
+    if (!name || !PLANT_DATA[name]) {
+      empty.style.display  = '';
+      detail.classList.remove('visible');
+      // clear table highlight
+      document.querySelectorAll('.sfp-tbl-highlight').forEach(function(r) {
+        r.classList.remove('sfp-tbl-highlight');
+      });
+      return;
+    }
+    var p = PLANT_DATA[name];
+    empty.style.display = 'none';
+    detail.classList.add('visible');
+
+    document.getElementById('piName').textContent    = p.name;
+    var badge = document.getElementById('piBadge');
+    badge.textContent          = p.name;
+    badge.style.backgroundColor = p.color;
+
+    document.getElementById('piPerSqft').textContent = p.plants_per_sqft + (p.plants_per_sqft === 1 ? ' plant' : ' plants');
+    document.getElementById('piSpacing').textContent = p.spacing_inches + '"';
+    document.getElementById('piDepth').textContent   = p.depth_inches + '"';
+    document.getElementById('piDays').textContent    = p.days_to_harvest + ' days';
+    document.getElementById('piTip').textContent     = p.tip || '';
+
+    var cbWrap = document.getElementById('piCompanions');
+    cbWrap.innerHTML = '';
+    var companions = p.companion_plants || [];
+    if (companions.length === 0) {
+      cbWrap.innerHTML = '<span class="sfp-companion-none">None listed</span>';
+    } else {
+      companions.forEach(function(c) {
+        var span = document.createElement('span');
+        span.className   = 'sfp-companion-badge';
+        span.textContent = c;
+        cbWrap.appendChild(span);
+      });
+    }
+
+    // Re-init Lucide for any new icons injected into the panel
+    if (window.lucide) lucide.createIcons();
+
+    // Highlight matching row in reference table
+    document.querySelectorAll('#plantRefTbody tr').forEach(function(row) {
+      if (row.dataset.plant === name) {
+        row.classList.add('sfp-tbl-highlight');
+        row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } else {
+        row.classList.remove('sfp-tbl-highlight');
+      }
+    });
+  }
+
+  // ── Plant Reference Table ─────────────────────────────────────
+  var tblSortCol = 'name';
+  var tblSortDir = 1; // 1 = asc, -1 = desc
+
+  function renderRefTable() {
+    var keys = Object.keys(PLANT_DATA);
+    keys.sort(function(a, b) {
+      var pa = PLANT_DATA[a], pb = PLANT_DATA[b];
+      var va = tblSortCol === 'name' ? a : pa[tblSortCol];
+      var vb = tblSortCol === 'name' ? b : pb[tblSortCol];
+      if (typeof va === 'string') va = va.toLowerCase();
+      if (typeof vb === 'string') vb = vb.toLowerCase();
+      if (va < vb) return -1 * tblSortDir;
+      if (va > vb) return  1 * tblSortDir;
+      return 0;
+    });
+
+    var tbody = document.getElementById('plantRefTbody');
+    tbody.innerHTML = '';
+    keys.forEach(function(k) {
+      var p   = PLANT_DATA[k];
+      var row = document.createElement('tr');
+      row.dataset.plant = k;
+      if (selectedPlant === k) row.classList.add('sfp-tbl-highlight');
+      row.innerHTML =
+        '<td><div class="sfp-tbl-plant-cell">' +
+          '<span class="sfp-tbl-swatch" style="background:' + p.color + '"></span>' +
+          p.name +
+        '</div></td>' +
+        '<td>' + p.plants_per_sqft + '</td>' +
+        '<td>' + p.spacing_inches + '"</td>' +
+        '<td>' + p.depth_inches + '"</td>' +
+        '<td>' + p.days_to_harvest + '</td>';
+      tbody.appendChild(row);
+    });
+
+    // Update header arrow indicators
+    var cols = ['name','plants_per_sqft','spacing_inches','depth_inches','days_to_harvest'];
+    cols.forEach(function(col) {
+      var th    = document.querySelector('[data-col="' + col + '"]');
+      var arrow = document.getElementById('arrow-' + col);
+      if (!th || !arrow) return;
+      if (col === tblSortCol) {
+        th.classList.add('sort-active');
+        arrow.textContent = tblSortDir === 1 ? '▲' : '▼';
+        arrow.style.opacity = '1';
+      } else {
+        th.classList.remove('sort-active');
+        arrow.textContent = '▲';
+        arrow.style.opacity = '0.35';
+      }
+    });
+  }
+
+  function sortTable(col) {
+    if (tblSortCol === col) {
+      tblSortDir = -tblSortDir;
+    } else {
+      tblSortCol = col;
+      tblSortDir = 1;
+    }
+    renderRefTable();
   }
 
   // ── Boot ─────────────────────────────────────────────────────
   init();
+  renderRefTable();
   </script>
 
   <script>lucide.createIcons();</script>
