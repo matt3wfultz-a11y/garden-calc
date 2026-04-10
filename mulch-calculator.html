@@ -221,6 +221,234 @@
       border-top: 1px solid #eaede9;
       margin: 28px 0;
     }
+
+    /* ── Calculate button ────────────────────────────────────── */
+    .mc-calc-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 32px;
+      padding: 14px 36px;
+      background: var(--green-mid);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.18s, transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 2px 8px rgba(45,134,83,0.25);
+    }
+    .mc-calc-btn:hover {
+      background: var(--green-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(45,134,83,0.3);
+    }
+    .mc-calc-btn svg { flex-shrink: 0; }
+
+    /* ── Results section ─────────────────────────────────────── */
+    .mc-results-section {
+      display: none;
+      padding: 0 0 60px;
+      background: var(--cream);
+    }
+    .mc-results-section.visible { display: block; }
+
+    .mc-results-layout {
+      display: grid;
+      grid-template-columns: 1fr 336px;
+      gap: 40px;
+      align-items: start;
+    }
+    @media (max-width: 960px) {
+      .mc-results-layout { grid-template-columns: 1fr; }
+      .mc-results-ad { order: 10; }
+    }
+
+    /* Results header row */
+    .mc-results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+    .mc-results-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--green-dark);
+      margin: 0;
+    }
+    .mc-results-meta {
+      font-size: 0.82rem;
+      color: var(--text-light);
+      margin: 0 0 22px;
+    }
+    .mc-results-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Buffer toggle */
+    .mc-toggle-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      cursor: pointer;
+      user-select: none;
+      padding: 8px 14px;
+      background: var(--white);
+      border: 1.5px solid #dde0db;
+      border-radius: 50px;
+      transition: border-color 0.15s;
+    }
+    .mc-toggle-label:has(input:checked) {
+      border-color: var(--green-mid);
+      color: var(--green-dark);
+    }
+    .mc-toggle-label input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      accent-color: var(--green-mid);
+      cursor: pointer;
+      margin: 0;
+    }
+
+    /* Action buttons */
+    .mc-recalc-btn,
+    .mc-print-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-size: 0.83rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .mc-recalc-btn {
+      background: var(--white);
+      color: var(--green-dark);
+      border: 1.5px solid var(--green-dark);
+    }
+    .mc-recalc-btn:hover { background: #edf6f1; }
+    .mc-print-btn {
+      background: var(--white);
+      color: var(--text-dark);
+      border: 1.5px solid #ccc;
+    }
+    .mc-print-btn:hover { background: #f5f5f5; }
+
+    /* Result cards grid */
+    .mc-result-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 600px) {
+      .mc-result-cards { grid-template-columns: repeat(2, 1fr); }
+    }
+    .mc-result-card {
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.07);
+      border-radius: var(--radius-md);
+      padding: 20px 14px 16px;
+      text-align: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .mc-result-card--accent {
+      border-color: var(--green-light);
+      background: #f0faf4;
+    }
+    .mc-result-value {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--green-dark);
+      font-family: var(--font-display);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .mc-result-label {
+      font-size: 0.73rem;
+      color: var(--text-light);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+    .mc-result-sub {
+      font-size: 0.74rem;
+      color: var(--text-light);
+      margin-top: 3px;
+    }
+
+    /* Cost estimate */
+    .mc-cost-section {
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.07);
+      border-radius: var(--radius-md);
+      padding: 22px 26px 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .mc-cost-heading {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-light);
+      margin-bottom: 10px;
+    }
+    .mc-cost-range {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .mc-cost-low  { font-size: 1.9rem; font-weight: 800; color: var(--green-dark); font-family: var(--font-display); }
+    .mc-cost-sep  { font-size: 1rem; color: var(--text-light); }
+    .mc-cost-high { font-size: 1.9rem; font-weight: 800; color: var(--text-dark); font-family: var(--font-display); }
+    .mc-cost-note { font-size: 0.8rem; color: var(--text-light); line-height: 1.5; margin: 0; }
+
+    /* Shopping tip */
+    .mc-tip-box {
+      background: #f2faf5;
+      border: 1px solid #c2e0cc;
+      border-left: 4px solid var(--green-mid);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      font-size: 0.86rem;
+      color: var(--text-dark);
+      line-height: 1.65;
+    }
+    .mc-tip-box strong { color: var(--green-dark); }
+
+    /* Ad slot in results */
+    .mc-results-ad {
+      position: sticky;
+      top: 16px;
+    }
+
+    /* Print styles */
+    @media print {
+      .mc-tabs, .mc-calc-btn, .mc-results-actions,
+      .mc-results-ad, .ad-section, .site-header, .site-footer,
+      .page-hero { display: none !important; }
+      .mc-results-section { display: block !important; }
+      .mc-results-layout { grid-template-columns: 1fr; }
+      .mc-section { background: none; padding: 0; }
+    }
   </style>
 </head>
 <body>
@@ -469,6 +697,18 @@
             </p>
           </div>
 
+          <!-- ── Calculate button ───────────────────────────── -->
+          <button class="mc-calc-btn" onclick="calculate()" aria-label="Calculate material needed">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="4" y="2" width="16" height="20" rx="2"/>
+              <line x1="8" y1="8" x2="16" y2="8"/>
+              <line x1="8" y1="12" x2="16" y2="12"/>
+              <line x1="8" y1="16" x2="12" y2="16"/>
+            </svg>
+            Calculate
+          </button>
+
         </div><!-- /.mc-card -->
       </div><!-- /.container -->
     </section>
@@ -476,6 +716,108 @@
     <!-- ============================================================
          RESULTS SECTION
          ============================================================ -->
+    <section class="mc-results-section" id="resultsSection" aria-label="Calculation results" aria-live="polite">
+      <div class="container">
+
+        <!-- Results header: title + buffer toggle + action buttons -->
+        <div class="mc-results-header">
+          <div>
+            <h2 class="mc-results-title">Your Results</h2>
+            <p class="mc-results-meta" id="resultsMeta"></p>
+          </div>
+          <div class="mc-results-actions">
+            <label class="mc-toggle-label" title="Adds 10% extra to account for uneven spreading and waste">
+              <input type="checkbox" id="bufferToggle" checked onchange="renderResults()"/>
+              Add 10% buffer
+            </label>
+            <button class="mc-recalc-btn" onclick="recalculate()" aria-label="Go back to inputs">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="15 18 9 12 15 6"/>
+              </svg>
+              Recalculate
+            </button>
+            <button class="mc-print-btn" onclick="window.print()" aria-label="Print results">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="6 9 6 2 18 2 18 9"/>
+                <path d="M6 18H4a2 2 0 0 1-2-2V11a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                <rect x="6" y="14" width="12" height="8"/>
+              </svg>
+              Print Results
+            </button>
+          </div>
+        </div>
+
+        <div class="mc-results-layout">
+          <!-- Left: main results -->
+          <div class="mc-results-main">
+
+            <!-- Result cards -->
+            <div class="mc-result-cards">
+              <div class="mc-result-card mc-result-card--accent">
+                <div class="mc-result-value" id="resCuYd">—</div>
+                <div class="mc-result-label">Cubic Yards</div>
+              </div>
+              <div class="mc-result-card mc-result-card--accent">
+                <div class="mc-result-value" id="resCuFt">—</div>
+                <div class="mc-result-label">Cubic Feet</div>
+              </div>
+              <div class="mc-result-card">
+                <div class="mc-result-value" id="resBags2">—</div>
+                <div class="mc-result-label">2 cu ft Bags</div>
+                <div class="mc-result-sub">standard size</div>
+              </div>
+              <div class="mc-result-card">
+                <div class="mc-result-value" id="resBags3">—</div>
+                <div class="mc-result-label">3 cu ft Bags</div>
+                <div class="mc-result-sub">large size</div>
+              </div>
+              <div class="mc-result-card">
+                <div class="mc-result-value" id="resLbs">—</div>
+                <div class="mc-result-label">Weight (lbs)</div>
+              </div>
+              <div class="mc-result-card">
+                <div class="mc-result-value" id="resTons">—</div>
+                <div class="mc-result-label">Weight (tons)</div>
+              </div>
+            </div>
+
+            <!-- Cost estimate -->
+            <div class="mc-cost-section">
+              <div class="mc-cost-heading">Estimated Cost</div>
+              <div class="mc-cost-range">
+                <span class="mc-cost-low" id="costLow">—</span>
+                <span class="mc-cost-sep">–</span>
+                <span class="mc-cost-high" id="costHigh">—</span>
+              </div>
+              <p class="mc-cost-note" id="costNote"></p>
+            </div>
+
+            <!-- Shopping tip -->
+            <div class="mc-tip-box" id="shoppingTip"></div>
+
+          </div><!-- /.mc-results-main -->
+
+          <!-- Right: AdSense 336×280 -->
+          <div class="mc-results-ad">
+            <div class="ad-section" aria-hidden="true" style="padding:0;">
+              <!-- AdSense: Results Panel — 336×280
+              <ins class="adsbygoogle"
+                   style="display:inline-block;width:336px;height:280px"
+                   data-ad-client="ca-pub-XXXXXXXXXX"
+                   data-ad-slot="XXXXXXXXXX"></ins>
+              <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+              -->
+              <div class="ad-slot" style="width:336px;height:280px;max-width:100%;">
+                <span class="ad-placeholder-label">Advertisement — 336×280</span>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /.mc-results-layout -->
+      </div><!-- /.container -->
+    </section>
 
     <!-- ============================================================
          GUIDE SECTION
@@ -911,11 +1253,202 @@
     }
 
     /* ============================================================
-       DIMENSION CHANGE — placeholder for Results section wiring
-       Called whenever any input changes so results stay live.
+       CALCULATION STATE — stored so renderResults() can re-run
+       on buffer toggle without re-reading inputs
+       ============================================================ */
+    var lastCalc = null; // { cuFtRaw, matKey, sqFt, depthIn }
+
+    /* ============================================================
+       DIMENSION CHANGE
+       Hides stale results whenever inputs change after a calc.
        ============================================================ */
     function onDimensionChange() {
-      // Results section will hook into this in the next build step.
+      if (lastCalc !== null) {
+        document.getElementById('resultsSection').classList.remove('visible');
+        lastCalc = null;
+      }
+    }
+
+    /* ============================================================
+       SQUARE FOOTAGE from current shape inputs
+       Returns null if inputs are incomplete/invalid.
+       ============================================================ */
+    function getSqFt() {
+      if (activeShape === 'rect') {
+        var l = parseFloat(document.getElementById('rectLength').value);
+        var w = parseFloat(document.getElementById('rectWidth').value);
+        if (!l || !w || l <= 0 || w <= 0) return null;
+        return l * w;
+      }
+      if (activeShape === 'circle') {
+        var d = parseFloat(document.getElementById('circleDiameter').value);
+        if (!d || d <= 0) return null;
+        var r = d / 2;
+        return Math.PI * r * r;
+      }
+      if (activeShape === 'irregular') {
+        var a = parseFloat(document.getElementById('irregArea').value);
+        if (!a || a <= 0) return null;
+        return a;
+      }
+      return null;
+    }
+
+    /* ============================================================
+       CALCULATE — triggered by the Calculate button
+       ============================================================ */
+    function calculate() {
+      var sqFt = getSqFt();
+      if (sqFt === null) {
+        alert('Please fill in all dimension fields before calculating.');
+        return;
+      }
+
+      var depthIn = parseFloat(document.getElementById('depthInput').value);
+      if (!depthIn || depthIn <= 0) {
+        alert('Please enter a depth in inches before calculating.');
+        return;
+      }
+
+      var matKey = document.getElementById('materialSelect').value;
+      if (!matKey || !MATERIAL_DATA[matKey]) {
+        alert('Please select a material type before calculating.');
+        return;
+      }
+
+      // Raw cubic feet (no buffer yet)
+      var depthFt  = depthIn / 12;
+      var cuFtRaw  = sqFt * depthFt;
+
+      lastCalc = { cuFtRaw: cuFtRaw, matKey: matKey, sqFt: sqFt, depthIn: depthIn };
+      renderResults();
+
+      // Smooth-scroll to results
+      document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    /* ============================================================
+       RENDER RESULTS
+       Called by calculate() and by the buffer toggle.
+       ============================================================ */
+    function renderResults() {
+      if (!lastCalc) return;
+
+      var mat      = MATERIAL_DATA[lastCalc.matKey];
+      var buffer   = document.getElementById('bufferToggle').checked ? 1.10 : 1.00;
+      var cuFt     = lastCalc.cuFtRaw * buffer;
+      var cuYd     = cuFt / 27;
+      var bags2    = Math.ceil(cuFt / 2);
+      var bags3    = Math.ceil(cuFt / 3);
+      var weightLb = cuYd * mat.density_lbs_per_cubic_yard;
+      var weightTn = weightLb / 2000;
+
+      // Bags based on actual retail bag size from MATERIAL_DATA
+      var bagSz    = mat.bag_size_cubic_feet;
+      var bagsReal = Math.ceil(cuFt / bagSz);
+
+      // Cost estimate (based on actual bag size)
+      var costLow  = bagsReal * mat.cost_per_bag_low;
+      var costHigh = bagsReal * mat.cost_per_bag_high;
+
+      // ── Fill result cards ────────────────────────────────────
+      document.getElementById('resCuYd').textContent  = fmtNum(cuYd,  2);
+      document.getElementById('resCuFt').textContent  = fmtNum(cuFt,  1);
+      document.getElementById('resBags2').textContent = bags2;
+      document.getElementById('resBags3').textContent = bags3;
+      document.getElementById('resLbs').textContent   = fmtNum(weightLb, 0);
+      document.getElementById('resTons').textContent  = fmtNum(weightTn, 2);
+
+      // ── Meta line ────────────────────────────────────────────
+      var shapeLabel = { rect: 'rectangular', circle: 'circular', irregular: 'irregular' }[activeShape];
+      document.getElementById('resultsMeta').textContent =
+        fmtNum(lastCalc.sqFt, 1) + ' sq ft ' + shapeLabel + ' bed  ·  '
+        + lastCalc.depthIn + '" ' + mat.name
+        + (buffer > 1 ? '  ·  +10% buffer included' : '');
+
+      // ── Cost ─────────────────────────────────────────────────
+      document.getElementById('costLow').textContent  = '$' + Math.round(costLow);
+      document.getElementById('costHigh').textContent = '$' + Math.round(costHigh);
+      document.getElementById('costNote').textContent =
+        'Based on ' + bagsReal + ' × ' + bagSz + ' cu ft bags at $'
+        + mat.cost_per_bag_low + '–$' + mat.cost_per_bag_high + ' per bag. '
+        + 'Prices vary by region and retailer.';
+
+      // ── Shopping tip ─────────────────────────────────────────
+      var tipHtml = buildShoppingTip(mat, cuFt, cuYd, bagsReal, bagSz);
+      document.getElementById('shoppingTip').innerHTML = tipHtml;
+
+      // Show section
+      document.getElementById('resultsSection').classList.add('visible');
+    }
+
+    /* ============================================================
+       SHOPPING TIP builder
+       ============================================================ */
+    function buildShoppingTip(mat, cuFt, cuYd, bagsReal, bagSz) {
+      var typeLabel  = mat.type === 'compost' ? 'compost' : 'mulch';
+      var cuYdRound  = Math.ceil(cuYd * 4) / 4; // round up to nearest 0.25 yd
+      var bulkThresh = 15; // bags — below this, bagged is usually easier
+
+      var tip = '<strong>Shopping tip:</strong> ';
+
+      if (mat.type === 'mulch') {
+        tip += mat.name + ' is sold at home improvement stores in '
+            + bagSz + ' cu ft bags. '
+            + 'For this project you\'ll need approximately <strong>'
+            + bagsReal + ' bag' + (bagsReal !== 1 ? 's' : '') + '</strong>. ';
+
+        if (bagsReal >= bulkThresh) {
+          tip += 'At ' + bagsReal + ' bags, ordering <strong>'
+              + fmtNum(cuYdRound, 2) + ' cubic yard'
+              + (cuYdRound !== 1 ? 's' : '') + ' in bulk</strong> from a local landscape supplier '
+              + 'is often cheaper and saves multiple trips — bulk delivery typically breaks even around 10–15 bags.';
+        } else {
+          tip += 'Bagged ' + typeLabel + ' is the most convenient option at this quantity. '
+              + 'Bulk delivery typically becomes cost-effective at 10–15 bags or more.';
+        }
+      } else {
+        // Compost
+        tip += mat.name + ' is sold at garden centers in '
+            + bagSz + ' cu ft bags. '
+            + 'For this project you\'ll need approximately <strong>'
+            + bagsReal + ' bag' + (bagsReal !== 1 ? 's' : '') + '</strong>. ';
+
+        if (mat.application_rate_new_bed_inches) {
+          tip += 'For a <em>new bed</em>, work ' + mat.application_rate_new_bed_inches
+              + '" into the top 6–8" of soil. '
+              + 'For an <em>existing bed</em>, a ' + mat.application_rate_existing_bed_inches
+              + '" topdress each season is typical. ';
+        }
+
+        if (bagsReal >= bulkThresh) {
+          tip += 'At this quantity, ask a local landscape supplier about bulk cubic yard pricing — '
+              + 'you\'d need about <strong>' + fmtNum(cuYdRound, 2) + ' cubic yard'
+              + (cuYdRound !== 1 ? 's' : '') + '</strong>, which is often cheaper in bulk.';
+        }
+      }
+
+      // Best-for note
+      if (mat.best_for) {
+        tip += ' <em>Best for: ' + mat.best_for + '.</em>';
+      }
+
+      return tip;
+    }
+
+    /* ============================================================
+       RECALCULATE — scroll back to the inputs
+       ============================================================ */
+    function recalculate() {
+      document.getElementById('calculatorSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    /* ============================================================
+       NUMBER FORMATTING HELPER
+       ============================================================ */
+    function fmtNum(n, decimals) {
+      if (n === null || isNaN(n)) return '—';
+      return parseFloat(n.toFixed(decimals)).toLocaleString();
     }
 
     /* ============================================================
