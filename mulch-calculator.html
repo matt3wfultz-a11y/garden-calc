@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Free mulch and compost calculator. Find out exactly how many bags or cubic yards you need for any bed size — no waste, no guesswork." />
+  <meta name="description" content="Free mulch and compost calculator for garden beds. Calculate cubic yards, cubic feet, bags, and weight needed for rectangular, circular, and irregular shaped beds." />
   <title>Mulch &amp; Compost Calculator — GardenCalc</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" />
@@ -613,6 +613,24 @@
     .mc-tea-calc-btn:hover { background: var(--green-dark); }
     .mc-tea-note { font-size: 0.8rem; color: var(--text-light); margin-top: 14px; line-height: 1.55; }
 
+    /* ── Mobile responsiveness ───────────────────────────────── */
+    @media (max-width: 480px) {
+      /* Shape cards: 3-across is tight at 320px, wrap gracefully */
+      .mc-shape-cards { gap: 8px; }
+      .mc-shape-card  { min-width: 88px; padding: 14px 8px 10px; font-size: 0.82rem; }
+      /* Stack input row fields full-width */
+      .mc-input-row { flex-direction: column; gap: 14px; }
+      .mc-input-row .mc-field { min-width: 0; width: 100%; }
+      /* Full-width inputs */
+      .mc-input, .mc-select { font-size: 1rem; }
+      /* Results cards 2-col already set at 600px — keep on mobile */
+      .mc-result-value { font-size: 1.5rem; }
+      /* Cost figures */
+      .mc-cost-low, .mc-cost-high { font-size: 1.5rem; }
+      /* Tea row: stack vertically */
+      .mc-tea-row { flex-direction: column; align-items: flex-start; }
+    }
+
     /* Print styles */
     @media print {
       .mc-tabs, .mc-calc-btn, .mc-results-actions,
@@ -806,30 +824,38 @@
           <!-- Irregular inputs -->
           <div class="mc-shape-inputs" id="inputsIrreg" style="display:none;">
             <div class="mc-irreg-hint">
-              <!-- Small diagram: two labelled rectangles that together form an L-shape -->
+              <!-- Diagram: L-shaped bed split into two labelled rectangles -->
               <div class="mc-irreg-diagram" aria-hidden="true">
-                <svg width="80" height="68" viewBox="0 0 80 68" fill="none"
+                <svg width="96" height="90" viewBox="0 0 96 90" fill="none"
                      xmlns="http://www.w3.org/2000/svg">
-                  <!-- Rectangle A -->
-                  <rect x="2" y="2" width="44" height="26" rx="2"
+                  <!-- Section A (top-left rectangle) -->
+                  <rect x="2" y="2" width="44" height="36" rx="2"
                         fill="#d1ead9" stroke="#2d8653" stroke-width="1.8"/>
-                  <text x="24" y="18" text-anchor="middle" font-size="9"
-                        fill="#2d6a4f" font-family="sans-serif" font-weight="700">A</text>
-                  <!-- Rectangle B -->
-                  <rect x="2" y="38" width="76" height="26" rx="2"
+                  <text x="24" y="23" text-anchor="middle" font-size="11"
+                        fill="#2d6a4f" font-family="sans-serif" font-weight="800">A</text>
+                  <!-- Section B (bottom full-width rectangle) -->
+                  <rect x="2" y="50" width="92" height="36" rx="2"
                         fill="#b7dfc3" stroke="#2d8653" stroke-width="1.8"/>
-                  <text x="40" y="55" text-anchor="middle" font-size="9"
-                        fill="#2d6a4f" font-family="sans-serif" font-weight="700">B</text>
-                  <!-- Plus sign -->
-                  <text x="50" y="18" text-anchor="middle" font-size="11"
-                        fill="#888" font-family="sans-serif">+</text>
+                  <text x="48" y="72" text-anchor="middle" font-size="11"
+                        fill="#2d6a4f" font-family="sans-serif" font-weight="800">B</text>
+                  <!-- Dashed dividing line showing where A and B meet -->
+                  <line x1="2" y1="50" x2="46" y2="50"
+                        stroke="#2d8653" stroke-width="1.2" stroke-dasharray="3 2"/>
+                  <!-- "+" label between A and B -->
+                  <text x="52" y="27" text-anchor="start" font-size="13"
+                        fill="#6b7280" font-family="sans-serif" font-weight="700">+</text>
+                  <!-- Area formula labels -->
+                  <text x="24" y="34" text-anchor="middle" font-size="7"
+                        fill="#2d6a4f" font-family="sans-serif">L×W</text>
+                  <text x="48" y="83" text-anchor="middle" font-size="7"
+                        fill="#2d6a4f" font-family="sans-serif">L×W</text>
                 </svg>
               </div>
               <p class="mc-irreg-text">
                 <strong>How to measure an irregular bed:</strong><br>
-                Divide your bed into simple rectangles (A, B, …). Multiply length × width
-                for each section, then add them together to get the total square footage.
-                Enter that total below.
+                Divide your bed into rectangles (A, B, …). Calculate
+                <em>length × width</em> for each section, then add the areas together.
+                Enter the total square footage below.
               </p>
             </div>
             <div class="mc-field">
@@ -1354,7 +1380,6 @@
       'Cocoa Hull Mulch': {
         type: 'mulch',
         name: 'Cocoa Hull Mulch',
-        density_lbs_per_cubic_yards: 600,
         density_lbs_per_cubic_yard: 600,
         coverage_notes: '1 cu yd covers ~162 sq ft at 2" depth. Pleasant chocolate scent; adds nitrogen as it breaks down. Toxic to dogs — keep pets away.',
         best_for: 'Vegetable gardens, annual flower beds, raised beds; adds minor nutrients as it decomposes',
@@ -1518,6 +1543,10 @@
     var activeTab   = 'mulch';      // 'mulch' | 'compost'
     var activeShape = 'rect';       // 'rect' | 'circle' | 'irregular'
 
+    // Remembers the last material selected for each tab type so switching
+    // tabs and back restores the user's previous selection.
+    var tabMemory   = { mulch: null, compost: null };
+
     /* ============================================================
        TAB SWITCHING
        ============================================================ */
@@ -1568,20 +1597,26 @@
        Populates <select> with only the entries matching the active tab type.
        ============================================================ */
     function populateMaterialDropdown() {
-      var sel = document.getElementById('materialSelect');
-      var currentVal = sel.value; // preserve selection if re-populating
+      var sel      = document.getElementById('materialSelect');
+      var restoreKey = tabMemory[activeTab]; // last selection for this tab type
       sel.innerHTML = '';
 
-      var type = activeTab; // 'mulch' or 'compost'
+      var firstKey = null;
       Object.keys(MATERIAL_DATA).forEach(function(key) {
         var mat = MATERIAL_DATA[key];
-        if (mat.type !== type) return;
+        if (mat.type !== activeTab) return;
+        if (!firstKey) firstKey = key;
         var opt = document.createElement('option');
         opt.value = key;
         opt.textContent = mat.name;
-        if (key === currentVal) opt.selected = true;
+        if (key === restoreKey) opt.selected = true;
         sel.appendChild(opt);
       });
+
+      // If no saved selection for this tab, default to first option
+      if (!restoreKey || !MATERIAL_DATA[restoreKey] || MATERIAL_DATA[restoreKey].type !== activeTab) {
+        sel.value = firstKey;
+      }
 
       // Fire change handler to sync depth hint
       onMaterialChange();
@@ -1976,6 +2011,9 @@
        ============================================================ */
     var _origSwitchTab = switchTab;
     switchTab = function(tab) {
+      // Save the current material selection before changing tabs
+      var sel = document.getElementById('materialSelect');
+      if (sel.value) tabMemory[activeTab] = sel.value;
       _origSwitchTab(tab);
       syncGuidePanels(tab);
     };
