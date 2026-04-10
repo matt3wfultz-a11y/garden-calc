@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Square foot garden planner for Texas, New Mexico, and Oregon gardeners. Plan your raised beds visually and know exactly how many plants fit in each square foot." />
+  <meta name="description" content="Free square foot garden planner for raised beds. Plan your garden visually, see how many plants fit per square foot, and print your layout." />
   <title>Square Foot Garden Planner — GardenCalc</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" />
@@ -633,11 +633,180 @@
       text-align: center;
     }
 
+    /* ── Save / Load buttons ────────────────────────────────────── */
+    .sfp-layout-btns {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .sfp-save-btn, .sfp-load-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+    .sfp-save-btn {
+      background: var(--green-dark);
+      color: #fff;
+      border: 1.5px solid var(--green-dark);
+    }
+    .sfp-save-btn:hover { background: var(--green-mid); border-color: var(--green-mid); }
+    .sfp-load-btn {
+      background: var(--white);
+      color: var(--green-dark);
+      border: 1.5px solid var(--green-dark);
+    }
+    .sfp-load-btn:hover { background: var(--green-pale); }
+
+    /* ── All-Beds Summary Section ───────────────────────────────── */
+    .sfp-summary-section {
+      background: var(--green-dark);
+      padding: 56px 0 60px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .sfp-summary-section-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 6px;
+    }
+    .sfp-summary-section-sub {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.65);
+      margin: 0 0 32px;
+    }
+    .sfp-totals-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+    .sfp-total-card {
+      flex: 1;
+      min-width: 130px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      padding: 20px 22px;
+      text-align: center;
+    }
+    .sfp-total-label {
+      font-size: 0.67rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 8px;
+    }
+    .sfp-total-value {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+    }
+    .sfp-shopping-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+      align-items: start;
+    }
+    @media (max-width: 720px) {
+      .sfp-shopping-wrap { grid-template-columns: 1fr; gap: 24px; }
+    }
+    .sfp-shopping-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sfp-shopping-title svg { opacity: 0.7; }
+    .sfp-shop-list {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .sfp-shop-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .sfp-shop-row:last-child { border-bottom: none; }
+    .sfp-shop-swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .sfp-shop-name {
+      flex: 1;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: #fff;
+    }
+    .sfp-shop-detail {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+    }
+    .sfp-shop-total {
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: #fff;
+      background: rgba(255,255,255,0.15);
+      padding: 3px 10px;
+      border-radius: 50px;
+      white-space: nowrap;
+    }
+    .sfp-shop-empty {
+      color: rgba(255,255,255,0.45);
+      font-style: italic;
+      font-size: 0.86rem;
+      padding: 20px 16px;
+      text-align: center;
+    }
+    .sfp-shop-hint {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.45);
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    /* ── Mobile palette grid ────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .sfp-palette {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+      }
+      .sfp-tile {
+        min-width: unset;
+        width: 100%;
+      }
+      .sfp-cell {
+        min-width: 44px;
+        min-height: 44px;
+      }
+    }
+
     /* Print styles */
     @media print {
       .site-header, .site-footer, .ad-section, .page-hero,
       #bedSetupSection, .sfp-grids-header, .sfp-ctrl-btn,
-      .sfp-plant-summary, #plantInfoSection { display: none !important; }
+      .sfp-plant-summary, #plantInfoSection,
+      #allBedsSummarySection { display: none !important; }
       .sfp-grids-section { background: #fff; padding: 0; border: none; }
       .sfp-grid-section { box-shadow: none; border: 1px solid #e5e7eb; margin-bottom: 24px; break-inside: avoid; }
       .sfp-cell {
@@ -770,10 +939,20 @@
       <div class="container">
         <div class="sfp-grids-header">
           <h2 class="sfp-grids-title">Your Garden Beds</h2>
-          <button class="sfp-print-btn" onclick="window.print()">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-            Print Layout
-          </button>
+          <div class="sfp-layout-btns">
+            <button class="sfp-save-btn" id="saveLayoutBtn" onclick="saveLayout()" aria-label="Save layout to browser">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Save Layout
+            </button>
+            <button class="sfp-load-btn" id="loadLayoutBtn" onclick="loadLayout()" aria-label="Load saved layout">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Load Layout
+            </button>
+            <button class="sfp-print-btn" onclick="window.print()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+              Print Layout
+            </button>
+          </div>
         </div>
         <div id="bedGridsList"></div>
       </div>
@@ -823,13 +1002,18 @@
               </div>
             </div>
 
-            <!-- 336×280 AdSense slot -->
-            <div class="sfp-info-ad">
-              <ins class="adsbygoogle"
-                   style="display:inline-block;width:336px;height:280px"
-                   data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-                   data-ad-slot="XXXXXXXXXX"></ins>
-              <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <!-- AdSense Slot 2: Rectangle (plant info panel) — 336×280 -->
+            <div class="sfp-info-ad ad-section" aria-hidden="true" style="padding:0; margin-top:20px;">
+              <div class="ad-slot" style="max-width:336px;">
+                <!-- Replace with:
+                <ins class="adsbygoogle"
+                     style="display:inline-block;width:336px;height:280px"
+                     data-ad-client="ca-pub-XXXXXXXXXX"
+                     data-ad-slot="XXXXXXXXXX"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                -->
+                <span class="ad-placeholder-label">Advertisement — 336×280</span>
+              </div>
             </div>
           </div>
 
@@ -862,6 +1046,66 @@
             </div>
           </div>
 
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ALL-BEDS SUMMARY SECTION
+         ============================================================ -->
+    <section class="sfp-summary-section" id="allBedsSummarySection" aria-label="Garden summary">
+      <div class="container">
+        <h2 class="sfp-summary-section-title">Your Garden Summary</h2>
+        <p class="sfp-summary-section-sub">Totals across all beds — updates as you plan.</p>
+
+        <!-- Total stat cards -->
+        <div class="sfp-totals-row">
+          <div class="sfp-total-card">
+            <div class="sfp-total-label">Total Beds</div>
+            <div class="sfp-total-value" id="summTotalBeds">1 bed</div>
+          </div>
+          <div class="sfp-total-card">
+            <div class="sfp-total-label">Total Area</div>
+            <div class="sfp-total-value" id="summTotalSqFt">32 sq ft</div>
+          </div>
+          <div class="sfp-total-card">
+            <div class="sfp-total-label">Total Plants</div>
+            <div class="sfp-total-value" id="summTotalPlants">0 plants</div>
+          </div>
+          <div class="sfp-total-card">
+            <div class="sfp-total-label">Varieties</div>
+            <div class="sfp-total-value" id="summVarieties">0</div>
+          </div>
+        </div>
+
+        <!-- Shopping list + tip -->
+        <div class="sfp-shopping-wrap">
+          <div>
+            <div class="sfp-shopping-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+              Shopping List
+            </div>
+            <div class="sfp-shop-list" id="shoppingList">
+              <p class="sfp-shop-empty">Place plants in your grid above to generate a shopping list.</p>
+            </div>
+            <p class="sfp-shop-hint">Plants per square foot based on Mel Bartholomew's Square Foot Gardening method.</p>
+          </div>
+
+          <!-- AdSense Slot 3: Rectangle (after summary) -->
+          <div>
+            <div class="ad-section" aria-hidden="true" style="padding:0;">
+              <div class="ad-slot" style="max-width:336px;">
+                <!-- AdSense: Summary Rectangle — 336×280
+                <ins class="adsbygoogle"
+                     style="display:inline-block;width:336px;height:280px"
+                     data-ad-client="ca-pub-XXXXXXXXXX"
+                     data-ad-slot="XXXXXXXXXX"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                -->
+                <span class="ad-placeholder-label">Advertisement — 336×280</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1351,8 +1595,29 @@
 
   // ── Init ─────────────────────────────────────────────────────
   function init() {
-    addBed();
+    // Try to restore a saved layout; fall back to a blank default bed
+    var restored = false;
+    try {
+      var raw = localStorage.getItem('gardencalc_sfp_layout');
+      if (raw) {
+        var data = JSON.parse(raw);
+        if (data && Array.isArray(data.beds) && data.beds.length > 0) {
+          beds      = data.beds;
+          nextBedId = data.nextBedId || (beds.length + 1);
+          restored  = true;
+        }
+      }
+    } catch(e) { /* localStorage unavailable */ }
+
+    if (!restored) {
+      var id = nextBedId++;
+      beds.push({ id: id, name: 'Bed ' + id, w: 4, h: 8, preset: '4×8 ft', cells: {} });
+    }
+
+    renderBeds();
+    renderAllGrids();
     renderPalette();
+    renderAllBedsSummary();
   }
 
   // ── Bed management ───────────────────────────────────────────
@@ -1361,6 +1626,7 @@
     beds.push({ id: id, name: 'Bed ' + id, w: 4, h: 8, preset: '4×8 ft', cells: {} });
     renderBeds();
     renderAllGrids();
+    renderAllBedsSummary();
   }
 
   function removeBed(id) {
@@ -1368,6 +1634,7 @@
     beds = beds.filter(function(b) { return b.id !== id; });
     renderBeds();
     renderAllGrids();
+    renderAllBedsSummary();
   }
 
   function getBed(id) {
@@ -1387,6 +1654,7 @@
     }
     renderBeds();
     renderAllGrids();
+    renderAllBedsSummary();
   }
 
   function updateCustomDim(id, axis, val) {
@@ -1399,6 +1667,7 @@
     bed[axis] = n;
     updateSummary(id);
     refreshBedGrid(bed);
+    // refreshBedGrid already calls renderAllBedsSummary
   }
 
   function updateSummary(id) {
@@ -1501,6 +1770,7 @@
     if (existing) {
       existing.parentNode.replaceChild(buildBedGridEl(bed), existing);
     }
+    renderAllBedsSummary();
   }
 
   function buildBedGridEl(bed) {
@@ -1727,6 +1997,104 @@
       tblSortDir = 1;
     }
     renderRefTable();
+  }
+
+  // ── Save / Load Layout ────────────────────────────────────────
+  function saveLayout() {
+    try {
+      var data = { beds: beds, nextBedId: nextBedId };
+      localStorage.setItem('gardencalc_sfp_layout', JSON.stringify(data));
+      var btn = document.getElementById('saveLayoutBtn');
+      if (btn) {
+        var orig = btn.innerHTML;
+        btn.innerHTML = '&#10003; Saved!';
+        btn.style.background = '#22c55e';
+        setTimeout(function() { btn.innerHTML = orig; btn.style.background = ''; }, 2000);
+      }
+    } catch(e) {
+      alert('Your browser does not support saving layouts. Try allowing localStorage or using a different browser.');
+    }
+  }
+
+  function loadLayout() {
+    try {
+      var raw = localStorage.getItem('gardencalc_sfp_layout');
+      if (!raw) { alert('No saved layout found. Save a layout first!'); return; }
+      var data = JSON.parse(raw);
+      if (!data || !Array.isArray(data.beds) || data.beds.length === 0) {
+        alert('No saved layout found. Save a layout first!'); return;
+      }
+      beds      = data.beds;
+      nextBedId = data.nextBedId || (beds.length + 1);
+      renderBeds();
+      renderAllGrids();
+      renderAllBedsSummary();
+      var btn = document.getElementById('loadLayoutBtn');
+      if (btn) {
+        var orig = btn.innerHTML;
+        btn.innerHTML = '&#10003; Loaded!';
+        btn.style.background = '#d1fae5';
+        setTimeout(function() { btn.innerHTML = orig; btn.style.background = ''; }, 2000);
+      }
+    } catch(e) {
+      alert('Could not load saved layout. The data may be corrupted.');
+    }
+  }
+
+  // ── All-Beds Summary ──────────────────────────────────────────
+  function renderAllBedsSummary() {
+    // Aggregate totals
+    var totalSqFt  = 0;
+    var totalPlants = 0;
+    var shopping   = {}; // plantName → { squares, total, color }
+
+    beds.forEach(function(bed) {
+      totalSqFt += bed.w * bed.h;
+      for (var key in bed.cells) {
+        var pName = bed.cells[key];
+        var plant = PLANT_DATA[pName];
+        if (!plant) continue;
+        var ppsf = plant.plants_per_sqft;
+        totalPlants += ppsf;
+        if (!shopping[pName]) {
+          shopping[pName] = { squares: 0, total: 0, color: plant.color };
+        }
+        shopping[pName].squares += 1;
+        shopping[pName].total   += ppsf;
+      }
+    });
+
+    var varieties = Object.keys(shopping).length;
+
+    // Update stat cards
+    var bedEl  = document.getElementById('summTotalBeds');
+    var sqEl   = document.getElementById('summTotalSqFt');
+    var plEl   = document.getElementById('summTotalPlants');
+    var varEl  = document.getElementById('summVarieties');
+    if (bedEl)  bedEl.textContent  = beds.length + (beds.length === 1 ? ' bed'    : ' beds');
+    if (sqEl)   sqEl.textContent   = totalSqFt   + ' sq ft';
+    if (plEl)   plEl.textContent   = totalPlants + (totalPlants === 1 ? ' plant'  : ' plants');
+    if (varEl)  varEl.textContent  = varieties;
+
+    // Shopping list
+    var listEl = document.getElementById('shoppingList');
+    if (!listEl) return;
+    if (varieties === 0) {
+      listEl.innerHTML = '<p class="sfp-shop-empty">Place plants in your grid above to generate a shopping list.</p>';
+      return;
+    }
+    var names = Object.keys(shopping).sort();
+    var html  = '';
+    names.forEach(function(pName) {
+      var s = shopping[pName];
+      html += '<div class="sfp-shop-row">'
+        + '<span class="sfp-shop-swatch" style="background:' + s.color + '"></span>'
+        + '<span class="sfp-shop-name">'    + escHtml(pName)   + '</span>'
+        + '<span class="sfp-shop-detail">'  + s.squares + ' sq ft</span>'
+        + '<span class="sfp-shop-total">&times; ' + s.total + '</span>'
+        + '</div>';
+    });
+    listEl.innerHTML = html;
   }
 
   // ── Boot ─────────────────────────────────────────────────────

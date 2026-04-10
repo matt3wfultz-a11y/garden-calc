@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free mulch and compost calculator. Find out exactly how many bags or cubic yards you need for any bed size — no waste, no guesswork." />
+  <title>Mulch &amp; Compost Calculator — GardenCalc</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" />
+
+  <!-- ============================================================
+       ADSENSE: Publisher Script
+       Replace ca-pub-XXXXXXXXXX with your Publisher ID
+       ============================================================ -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossorigin="anonymous"></script> -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* ── Mulch Calculator page styles ────────────────────────── */
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner container">
+
+      <!-- Logo -->
+      <a href="index.html" class="site-logo" aria-label="GardenCalc Home">
+        <div class="logo-icon"><i data-lucide="leaf"></i></div>
+        <span class="logo-text">Garden<span>Calc</span></span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="frost-dates.html" class="nav-link">Frost Date Calculator</a>
+        <a href="seed-starting-schedule.html" class="nav-link">Seed Starting Schedule</a>
+        <a href="companion-planting.html" class="nav-link">Companion Planting</a>
+        <a href="square-foot-planner.html" class="nav-link">Square Foot Planner</a>
+        <a href="mulch-calculator.html" class="nav-link active">Mulch Calculator</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+        <a href="about.html" class="nav-link nav-cta">About</a>
+      </nav>
+
+      <!-- Mobile hamburger -->
+      <button class="hamburger" aria-label="Toggle menu" onclick="toggleMobileNav()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Mobile Nav Drawer -->
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="index.html" class="nav-link"><i data-lucide="home"></i> Home</a>
+      <a href="frost-dates.html" class="nav-link"><i data-lucide="snowflake"></i> Frost Date Calculator</a>
+      <a href="seed-starting-schedule.html" class="nav-link"><i data-lucide="sprout"></i> Seed Starting Schedule</a>
+      <a href="companion-planting.html" class="nav-link"><i data-lucide="git-merge"></i> Companion Planting</a>
+      <a href="square-foot-planner.html" class="nav-link"><i data-lucide="layout-grid"></i> Square Foot Planner</a>
+      <a href="mulch-calculator.html" class="nav-link active"><i data-lucide="wind"></i> Mulch Calculator</a>
+      <a href="blog.html" class="nav-link"><i data-lucide="book-open"></i> Blog</a>
+      <a href="about.html" class="nav-link"><i data-lucide="sun"></i> About Us</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ============================================================
+         PAGE HERO
+         ============================================================ -->
+    <section class="page-hero" aria-label="Mulch and Compost Calculator hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <span>›</span>
+          <span>Mulch &amp; Compost Calculator</span>
+        </nav>
+        <h1>Mulch &amp; Compost Calculator</h1>
+        <p>Calculate exactly how much mulch or compost you need — no waste, no guesswork.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ADSENSE SLOT 1: Leaderboard Banner (below hero)
+         Format: 728×90 desktop / responsive mobile
+         ============================================================ -->
+    <div class="ad-section ad-section--center" aria-hidden="true">
+      <!-- AdSense: Top Leaderboard — 728×90 (responsive) -->
+      <div class="ad-slot ad-slot--leaderboard" style="max-width:728px; width:100%;">
+        <!-- Replace with:
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+        <span class="ad-placeholder-label">Advertisement — 728×90</span>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         TAB SECTION
+         ============================================================ -->
+
+    <!-- ============================================================
+         CALCULATOR SECTION
+         ============================================================ -->
+
+    <!-- ============================================================
+         RESULTS SECTION
+         ============================================================ -->
+
+    <!-- ============================================================
+         GUIDE SECTION
+         ============================================================ -->
+
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <a href="index.html" class="site-logo" style="margin-bottom:0;">
+            <div class="logo-icon"><i data-lucide="leaf"></i></div>
+            <span class="logo-text">Garden<span>Calc</span></span>
+          </a>
+          <p class="footer-tagline">
+            Free, accurate gardening tools for every zone, every season.
+          </p>
+          <div class="footer-social">
+            <a href="#" class="social-link" aria-label="Pinterest">Pinterest</a>
+            <a href="#" class="social-link" aria-label="Instagram">Instagram</a>
+            <a href="#" class="social-link" aria-label="Facebook">Facebook</a>
+            <a href="#" class="social-link" aria-label="YouTube">YouTube</a>
+          </div>
+          <p style="font-size:0.8rem; color:rgba(255,255,255,0.5); margin-top:18px; margin-bottom:8px;">Get seasonal planting reminders:</p>
+          <a href="https://forms.gle/dfamR4Msp9jFP5uw9" target="_blank" rel="noopener noreferrer" class="newsletter-btn" style="display:inline-block; text-align:center; text-decoration:none;">Join →</a>
+        </div>
+
+        <!-- Tools Column -->
+        <div class="footer-col">
+          <h5>Tools</h5>
+          <div class="footer-links">
+            <a href="frost-dates.html">Frost Date Calculator</a>
+            <a href="seed-starting-schedule.html">Seed Starting Schedule</a>
+            <a href="companion-planting.html">Companion Planting</a>
+            <a href="square-foot-planner.html">Square Foot Planner</a>
+            <a href="mulch-calculator.html">Mulch Calculator</a>
+          </div>
+        </div>
+
+        <!-- Learn Column -->
+        <div class="footer-col">
+          <h5>Learn</h5>
+          <div class="footer-links">
+            <a href="blog.html">Blog</a>
+            <a href="blog.html#beginner">Beginner Guides</a>
+            <a href="blog.html#raised-beds">Raised Bed Gardening</a>
+            <a href="blog.html#composting">Composting</a>
+            <a href="blog.html#pest-control">Organic Pest Control</a>
+          </div>
+        </div>
+
+        <!-- Company Column -->
+        <div class="footer-col">
+          <h5>Company</h5>
+          <div class="footer-links">
+            <a href="about.html">About GardenCalc</a>
+            <a href="about.html#contact">Contact Us</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Use</a>
+            <a href="sitemap.html">Sitemap</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 GardenCalc. All rights reserved. For informational purposes only.</p>
+        <div class="footer-legal">
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="about.html#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ============================================================
+       MOBILE NAV
+       ============================================================ */
+    function toggleMobileNav() {
+      const nav = document.getElementById('mobileNav');
+      nav.classList.toggle('open');
+    }
+    document.querySelectorAll('.mobile-nav .nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('mobileNav').classList.remove('open');
+      });
+    });
+
+    /* ============================================================
+       MATERIAL DATA
+       All coverage and density values sourced from cooperative
+       extension publications and manufacturer specifications.
+
+       Cubic yard coverage formula:
+         sq ft covered = (27 cu ft / depth_ft)
+         e.g. 3" depth → 27 / 0.25 = 108 sq ft per cu yd
+
+       density_lbs_per_cubic_yard: air-dry bulk density
+       bag_size_cubic_feet: standard retail bag size
+       cost_per_bag_low / high: USD, typical retail range (2024)
+       ============================================================ */
+    var MATERIAL_DATA = {
+
+      /* ── MULCH TYPES ──────────────────────────────────────── */
+
+      'Hardwood Bark Mulch': {
+        type: 'mulch',
+        name: 'Hardwood Bark Mulch',
+        density_lbs_per_cubic_yard: 800,
+        coverage_notes: '1 cu yd covers ~108 sq ft at 3" depth. Breaks down slowly and enriches soil as it decomposes.',
+        best_for: 'Perennial beds, trees, shrubs, foundation plantings',
+        depth_min_inches: 2,
+        depth_max_inches: 4,
+        depth_recommended_inches: 3,
+        cost_per_bag_low: 4,
+        cost_per_bag_high: 7,
+        bag_size_cubic_feet: 2
+      },
+
+      'Cedar Mulch': {
+        type: 'mulch',
+        name: 'Cedar Mulch',
+        density_lbs_per_cubic_yard: 700,
+        coverage_notes: '1 cu yd covers ~108 sq ft at 3" depth. Natural oils repel some insects and slow decomposition.',
+        best_for: 'Ornamental beds, paths, areas with pest pressure; natural moth and insect deterrent',
+        depth_min_inches: 2,
+        depth_max_inches: 4,
+        depth_recommended_inches: 3,
+        cost_per_bag_low: 5,
+        cost_per_bag_high: 9,
+        bag_size_cubic_feet: 2
+      },
+
+      'Pine Straw': {
+        type: 'mulch',
+        name: 'Pine Straw',
+        density_lbs_per_cubic_yard: 200,
+        coverage_notes: '1 standard bale covers ~35–50 sq ft at 3" depth. Lightweight; needles knit together and resist washing.',
+        best_for: 'Acid-loving plants: blueberries, azaleas, camellias, rhododendrons; sloped beds prone to erosion',
+        depth_min_inches: 3,
+        depth_max_inches: 5,
+        depth_recommended_inches: 3,
+        cost_per_bag_low: 4,
+        cost_per_bag_high: 7,
+        bag_size_cubic_feet: 2.5
+      },
+
+      'Rubber Mulch': {
+        type: 'mulch',
+        name: 'Rubber Mulch',
+        density_lbs_per_cubic_yard: 1500,
+        coverage_notes: '1 cu yd covers ~162 sq ft at 2" depth. Does not decompose; permanent weed suppression.',
+        best_for: 'Playgrounds, high-traffic paths, areas needing long-term permanent coverage',
+        depth_min_inches: 2,
+        depth_max_inches: 3,
+        depth_recommended_inches: 2,
+        cost_per_bag_low: 8,
+        cost_per_bag_high: 15,
+        bag_size_cubic_feet: 0.8
+      },
+
+      'Cocoa Hull Mulch': {
+        type: 'mulch',
+        name: 'Cocoa Hull Mulch',
+        density_lbs_per_cubic_yards: 600,
+        density_lbs_per_cubic_yard: 600,
+        coverage_notes: '1 cu yd covers ~162 sq ft at 2" depth. Pleasant chocolate scent; adds nitrogen as it breaks down. Toxic to dogs — keep pets away.',
+        best_for: 'Vegetable gardens, annual flower beds, raised beds; adds minor nutrients as it decomposes',
+        depth_min_inches: 1,
+        depth_max_inches: 3,
+        depth_recommended_inches: 2,
+        cost_per_bag_low: 8,
+        cost_per_bag_high: 14,
+        bag_size_cubic_feet: 2
+      },
+
+      'Straw Mulch': {
+        type: 'mulch',
+        name: 'Straw Mulch',
+        density_lbs_per_cubic_yard: 200,
+        coverage_notes: '1 standard bale (~2–3 cu ft) covers ~100 sq ft at 3" depth. Breaks down in one season; adds organic matter.',
+        best_for: 'Vegetable gardens, strawberry beds, winter protection for perennials, newly seeded lawns',
+        depth_min_inches: 3,
+        depth_max_inches: 6,
+        depth_recommended_inches: 4,
+        cost_per_bag_low: 6,
+        cost_per_bag_high: 12,
+        bag_size_cubic_feet: 3.5
+      },
+
+      'Gravel / Rock': {
+        type: 'mulch',
+        name: 'Gravel / Rock',
+        density_lbs_per_cubic_yard: 2700,
+        coverage_notes: '1 cu yd covers ~162 sq ft at 2" depth. Permanent; does not break down or add nutrients.',
+        best_for: 'Xeriscaping, desert-style gardens, permanent paths, drainage areas, cactus and succulent beds',
+        depth_min_inches: 2,
+        depth_max_inches: 4,
+        depth_recommended_inches: 2,
+        cost_per_bag_low: 5,
+        cost_per_bag_high: 10,
+        bag_size_cubic_feet: 0.5
+      },
+
+      /* ── COMPOST TYPES ────────────────────────────────────── */
+
+      'Finished Compost': {
+        type: 'compost',
+        name: 'Finished Compost',
+        density_lbs_per_cubic_yard: 1000,
+        coverage_notes: '1 cu yd covers ~324 sq ft at 1" depth as a topdress. Work into top 6–8" when prepping new beds.',
+        best_for: 'All gardens and all plants; universal soil conditioner and nutrient source',
+        avoid_for: 'No significant restrictions — safe for all plants when fully decomposed',
+        depth_min_inches: 1,
+        depth_max_inches: 4,
+        depth_recommended_inches: 2,
+        cost_per_bag_low: 5,
+        cost_per_bag_high: 9,
+        bag_size_cubic_feet: 1,
+        nitrogen_ratio: '1.5–2.5% N (varies by feedstock)',
+        carbon_ratio: '25:1 C:N (finished, stable)',
+        application_rate_new_bed_inches: 3,
+        application_rate_existing_bed_inches: 1
+      },
+
+      'Mushroom Compost': {
+        type: 'compost',
+        name: 'Mushroom Compost',
+        density_lbs_per_cubic_yard: 900,
+        coverage_notes: '1 cu yd covers ~324 sq ft at 1" depth. Spent substrate from mushroom production; high in nutrients and may slightly raise soil pH.',
+        best_for: 'Heavy feeders: corn, tomatoes, squash, brassicas; improving clay soils',
+        avoid_for: 'Acid-loving plants (blueberries, azaleas); salt-sensitive plants; seedlings (dilute with regular compost)',
+        depth_min_inches: 1,
+        depth_max_inches: 3,
+        depth_recommended_inches: 2,
+        cost_per_bag_low: 5,
+        cost_per_bag_high: 10,
+        bag_size_cubic_feet: 1,
+        nitrogen_ratio: '1.5–3% N',
+        carbon_ratio: '13:1 C:N',
+        application_rate_new_bed_inches: 3,
+        application_rate_existing_bed_inches: 1
+      },
+
+      'Worm Castings': {
+        type: 'compost',
+        name: 'Worm Castings',
+        density_lbs_per_cubic_yard: 1200,
+        coverage_notes: 'Premium amendment; typically mixed into soil or potting mix rather than applied as a thick topdress. A little goes a long way.',
+        best_for: 'Seedlings, transplants, container plants, potting mixes; highly bioavailable micronutrients',
+        avoid_for: 'No plant restrictions — safe for all plants; use sparingly given cost',
+        depth_min_inches: 0.25,
+        depth_max_inches: 1,
+        depth_recommended_inches: 0.5,
+        cost_per_bag_low: 12,
+        cost_per_bag_high: 25,
+        bag_size_cubic_feet: 0.5,
+        nitrogen_ratio: '1–2% N',
+        carbon_ratio: '15:1 C:N',
+        application_rate_new_bed_inches: 1,
+        application_rate_existing_bed_inches: 0.5
+      },
+
+      'Chicken Manure Compost': {
+        type: 'compost',
+        name: 'Chicken Manure Compost',
+        density_lbs_per_cubic_yard: 1100,
+        coverage_notes: '1 cu yd covers ~324 sq ft at 1" depth. High-nitrogen amendment; must be fully composted to prevent root burn.',
+        best_for: 'Heavy nitrogen feeders: corn, leafy greens, brassicas, squash; depleted soils needing a boost',
+        avoid_for: 'Root vegetables (excess N causes forking); avoid applying fresh or uncomposted manure near edibles',
+        depth_min_inches: 1,
+        depth_max_inches: 2,
+        depth_recommended_inches: 1,
+        cost_per_bag_low: 6,
+        cost_per_bag_high: 10,
+        bag_size_cubic_feet: 1,
+        nitrogen_ratio: '3–5% N (composted)',
+        carbon_ratio: '10:1 C:N',
+        application_rate_new_bed_inches: 2,
+        application_rate_existing_bed_inches: 0.5
+      },
+
+      'Cow Manure Compost': {
+        type: 'compost',
+        name: 'Cow Manure Compost',
+        density_lbs_per_cubic_yard: 1000,
+        coverage_notes: '1 cu yd covers ~324 sq ft at 1" depth. Mild, balanced amendment; excellent for building long-term soil structure.',
+        best_for: 'General vegetable gardens, perennial beds, lawns; improving sandy or clay soils',
+        avoid_for: 'Purchase from reputable sources to minimize weed seed contamination; not suitable for high-salt-sensitive plants in quantity',
+        depth_min_inches: 1,
+        depth_max_inches: 3,
+        depth_recommended_inches: 2,
+        cost_per_bag_low: 4,
+        cost_per_bag_high: 8,
+        bag_size_cubic_feet: 1,
+        nitrogen_ratio: '1–2% N',
+        carbon_ratio: '20:1 C:N',
+        application_rate_new_bed_inches: 3,
+        application_rate_existing_bed_inches: 1
+      },
+
+      'Peat Moss': {
+        type: 'compost',
+        name: 'Peat Moss',
+        density_lbs_per_cubic_yard: 500,
+        coverage_notes: '1 cu yd covers ~162 sq ft at 2" depth. Exceptional water retention; lowers soil pH. Always pre-wet before incorporating — dry peat repels water.',
+        best_for: 'Acid-loving plants: blueberries, azaleas, rhododendrons; seed-starting mixes; improving drainage in clay',
+        avoid_for: 'Alkaline-preferring plants (lavender, clematis, brassicas); do not use as a standalone amendment — mix with compost',
+        depth_min_inches: 1,
+        depth_max_inches: 3,
+        depth_recommended_inches: 2,
+        cost_per_bag_low: 10,
+        cost_per_bag_high: 20,
+        bag_size_cubic_feet: 2.2,
+        nitrogen_ratio: '~0.5–1% N (very low)',
+        carbon_ratio: '50:1 C:N (very high — can temporarily tie up available nitrogen)',
+        application_rate_new_bed_inches: 2,
+        application_rate_existing_bed_inches: 1
+      }
+
+    };
+
+    /* ============================================================
+       LUCIDE ICONS INIT
+       ============================================================ */
+    if (window.lucide) lucide.createIcons();
+  </script>
+
+</body>
+</html>
