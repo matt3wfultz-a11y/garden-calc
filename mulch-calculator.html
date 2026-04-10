@@ -16,6 +16,211 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     /* ── Mulch Calculator page styles ────────────────────────── */
+
+    /* ── Calculator wrapper ──────────────────────────────────── */
+    .mc-section {
+      padding: 48px 0 56px;
+      background: var(--cream);
+    }
+
+    /* ── Tab bar ─────────────────────────────────────────────── */
+    .mc-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid #e0e7df;
+      margin-bottom: 32px;
+    }
+    .mc-tab {
+      position: relative;
+      padding: 14px 28px;
+      font-size: 0.97rem;
+      font-weight: 600;
+      font-family: inherit;
+      color: var(--text-light);
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color 0.18s;
+      border-radius: 0;
+      outline: none;
+    }
+    .mc-tab::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: -2px;
+      height: 3px;
+      background: var(--green-mid);
+      border-radius: 2px 2px 0 0;
+      opacity: 0;
+      transition: opacity 0.18s;
+    }
+    .mc-tab.active {
+      color: var(--green-dark);
+      font-weight: 800;
+    }
+    .mc-tab.active::after { opacity: 1; }
+    .mc-tab:hover:not(.active) { color: var(--green-mid); }
+
+    /* ── Calculator card ─────────────────────────────────────── */
+    .mc-card {
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.07);
+      border-radius: var(--radius-lg);
+      padding: 36px 40px 40px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      max-width: 780px;
+    }
+    @media (max-width: 600px) {
+      .mc-card { padding: 24px 18px 28px; }
+    }
+
+    .mc-field-group { margin-bottom: 28px; }
+    .mc-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 12px;
+    }
+
+    /* ── Shape cards ─────────────────────────────────────────── */
+    .mc-shape-cards {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .mc-shape-card {
+      flex: 1;
+      min-width: 110px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 18px 12px 14px;
+      background: var(--cream);
+      border: 2px solid #dde5db;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      transition: border-color 0.17s, background 0.17s, box-shadow 0.17s;
+    }
+    .mc-shape-card svg { display: block; }
+    .mc-shape-card:hover {
+      border-color: var(--green-light);
+      background: #f0faf4;
+    }
+    .mc-shape-card.active {
+      border-color: var(--green-mid);
+      background: #edf6f1;
+      box-shadow: 0 0 0 3px rgba(45,134,83,0.12);
+      color: var(--green-dark);
+    }
+
+    /* ── Shape-specific inputs ───────────────────────────────── */
+    .mc-shape-inputs { margin-bottom: 28px; }
+    .mc-input-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .mc-input-row .mc-field { flex: 1; min-width: 130px; }
+
+    .mc-field { margin-bottom: 0; }
+    .mc-field-label {
+      display: block;
+      font-size: 0.87rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 7px;
+    }
+    .mc-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #dde0db;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-family: inherit;
+      color: var(--text-dark);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.17s, box-shadow 0.17s;
+      box-sizing: border-box;
+    }
+    .mc-input:focus {
+      border-color: var(--green-mid);
+      box-shadow: 0 0 0 3px rgba(45,134,83,0.1);
+    }
+    /* hide number spinner */
+    .mc-input[type="number"]::-webkit-inner-spin-button,
+    .mc-input[type="number"]::-webkit-outer-spin-button { opacity: 0.4; }
+
+    /* ── Irregular bed hint box ──────────────────────────────── */
+    .mc-irreg-hint {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      background: #f8faf7;
+      border: 1px solid #d4e8cc;
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+    .mc-irreg-diagram { flex-shrink: 0; }
+    .mc-irreg-text {
+      font-size: 0.84rem;
+      color: var(--text-light);
+      line-height: 1.55;
+    }
+    .mc-irreg-text strong { color: var(--text-dark); }
+
+    /* ── Select ──────────────────────────────────────────────── */
+    .mc-select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #dde0db;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-family: inherit;
+      color: var(--text-dark);
+      background: var(--white);
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+      box-sizing: border-box;
+      transition: border-color 0.17s, box-shadow 0.17s;
+    }
+    .mc-select:focus {
+      border-color: var(--green-mid);
+      box-shadow: 0 0 0 3px rgba(45,134,83,0.1);
+    }
+
+    /* ── Depth hint ──────────────────────────────────────────── */
+    .mc-depth-hint {
+      margin-top: 8px;
+      font-size: 0.82rem;
+      color: var(--green-dark);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 1.2em;
+    }
+    .mc-depth-hint svg { flex-shrink: 0; }
+
+    /* ── Divider between field groups ────────────────────────── */
+    .mc-divider {
+      border: none;
+      border-top: 1px solid #eaede9;
+      margin: 28px 0;
+    }
   </style>
 </head>
 <body>
@@ -98,12 +303,175 @@
     </div>
 
     <!-- ============================================================
-         TAB SECTION
+         TAB + CALCULATOR SECTION
          ============================================================ -->
+    <section class="mc-section" id="calculatorSection">
+      <div class="container">
 
-    <!-- ============================================================
-         CALCULATOR SECTION
-         ============================================================ -->
+        <!-- Tab bar -->
+        <div class="mc-tabs" role="tablist" aria-label="Calculator type">
+          <button class="mc-tab active" id="tabMulch" role="tab" aria-selected="true"
+                  aria-controls="calcPanel" onclick="switchTab('mulch')">
+            Mulch Calculator
+          </button>
+          <button class="mc-tab" id="tabCompost" role="tab" aria-selected="false"
+                  aria-controls="calcPanel" onclick="switchTab('compost')">
+            Compost Calculator
+          </button>
+        </div>
+
+        <!-- Calculator card -->
+        <div class="mc-card" id="calcPanel" role="tabpanel">
+
+          <!-- ── 1. Bed Shape ──────────────────────────────── -->
+          <div class="mc-field-group">
+            <span class="mc-label">Bed Shape</span>
+            <div class="mc-shape-cards" role="group" aria-label="Select bed shape">
+
+              <!-- Rectangular -->
+              <button class="mc-shape-card active" id="shapeRect"
+                      onclick="selectShape('rect')" aria-pressed="true">
+                <svg width="64" height="44" viewBox="0 0 64 44" fill="none"
+                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <rect x="4" y="6" width="56" height="32" rx="3"
+                        fill="#d1ead9" stroke="#2d8653" stroke-width="2.2"/>
+                  <line x1="4" y1="22" x2="60" y2="22"
+                        stroke="#2d8653" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
+                  <line x1="32" y1="6" x2="32" y2="38"
+                        stroke="#2d8653" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
+                </svg>
+                Rectangular
+              </button>
+
+              <!-- Circular -->
+              <button class="mc-shape-card" id="shapeCircle"
+                      onclick="selectShape('circle')" aria-pressed="false">
+                <svg width="64" height="44" viewBox="0 0 64 44" fill="none"
+                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <circle cx="32" cy="22" r="18"
+                          fill="#d1ead9" stroke="#2d8653" stroke-width="2.2"/>
+                  <line x1="14" y1="22" x2="50" y2="22"
+                        stroke="#2d8653" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
+                </svg>
+                Circular
+              </button>
+
+              <!-- Irregular -->
+              <button class="mc-shape-card" id="shapeIrreg"
+                      onclick="selectShape('irregular')" aria-pressed="false">
+                <svg width="64" height="44" viewBox="0 0 64 44" fill="none"
+                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <polygon points="8,36 4,16 18,6 40,8 60,14 58,36 38,40 16,38"
+                           fill="#d1ead9" stroke="#2d8653" stroke-width="2.2"
+                           stroke-linejoin="round"/>
+                </svg>
+                Irregular
+              </button>
+
+            </div>
+          </div>
+
+          <!-- ── 2. Shape-specific inputs ───────────────────── -->
+
+          <!-- Rectangular inputs -->
+          <div class="mc-shape-inputs" id="inputsRect">
+            <div class="mc-input-row">
+              <div class="mc-field">
+                <label class="mc-field-label" for="rectLength">Length (ft)</label>
+                <input class="mc-input" type="number" id="rectLength"
+                       min="0.5" max="999" step="0.5" placeholder="e.g. 8"
+                       aria-label="Bed length in feet" oninput="onDimensionChange()"/>
+              </div>
+              <div class="mc-field">
+                <label class="mc-field-label" for="rectWidth">Width (ft)</label>
+                <input class="mc-input" type="number" id="rectWidth"
+                       min="0.5" max="999" step="0.5" placeholder="e.g. 4"
+                       aria-label="Bed width in feet" oninput="onDimensionChange()"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- Circular inputs -->
+          <div class="mc-shape-inputs" id="inputsCircle" style="display:none;">
+            <div class="mc-field">
+              <label class="mc-field-label" for="circleDiameter">Diameter (ft)</label>
+              <input class="mc-input" type="number" id="circleDiameter"
+                     min="0.5" max="999" step="0.5" placeholder="e.g. 6"
+                     aria-label="Bed diameter in feet" oninput="onDimensionChange()"
+                     style="max-width:260px;"/>
+            </div>
+          </div>
+
+          <!-- Irregular inputs -->
+          <div class="mc-shape-inputs" id="inputsIrreg" style="display:none;">
+            <div class="mc-irreg-hint">
+              <!-- Small diagram: two labelled rectangles that together form an L-shape -->
+              <div class="mc-irreg-diagram" aria-hidden="true">
+                <svg width="80" height="68" viewBox="0 0 80 68" fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+                  <!-- Rectangle A -->
+                  <rect x="2" y="2" width="44" height="26" rx="2"
+                        fill="#d1ead9" stroke="#2d8653" stroke-width="1.8"/>
+                  <text x="24" y="18" text-anchor="middle" font-size="9"
+                        fill="#2d6a4f" font-family="sans-serif" font-weight="700">A</text>
+                  <!-- Rectangle B -->
+                  <rect x="2" y="38" width="76" height="26" rx="2"
+                        fill="#b7dfc3" stroke="#2d8653" stroke-width="1.8"/>
+                  <text x="40" y="55" text-anchor="middle" font-size="9"
+                        fill="#2d6a4f" font-family="sans-serif" font-weight="700">B</text>
+                  <!-- Plus sign -->
+                  <text x="50" y="18" text-anchor="middle" font-size="11"
+                        fill="#888" font-family="sans-serif">+</text>
+                </svg>
+              </div>
+              <p class="mc-irreg-text">
+                <strong>How to measure an irregular bed:</strong><br>
+                Divide your bed into simple rectangles (A, B, …). Multiply length × width
+                for each section, then add them together to get the total square footage.
+                Enter that total below.
+              </p>
+            </div>
+            <div class="mc-field">
+              <label class="mc-field-label" for="irregArea">Total Area (sq ft)</label>
+              <input class="mc-input" type="number" id="irregArea"
+                     min="0.5" max="99999" step="0.5" placeholder="e.g. 48"
+                     aria-label="Total bed area in square feet" oninput="onDimensionChange()"
+                     style="max-width:260px;"/>
+            </div>
+          </div>
+
+          <hr class="mc-divider"/>
+
+          <!-- ── 3. Material type ────────────────────────────── -->
+          <div class="mc-field-group" style="margin-bottom:28px;">
+            <label class="mc-label" for="materialSelect">Material Type</label>
+            <select class="mc-select" id="materialSelect"
+                    aria-label="Select material type" onchange="onMaterialChange()">
+            </select>
+          </div>
+
+          <!-- ── 4. Depth ────────────────────────────────────── -->
+          <div class="mc-field-group" style="margin-bottom:0;">
+            <label class="mc-label" for="depthInput">Application Depth</label>
+            <input class="mc-input" type="number" id="depthInput"
+                   min="0.25" max="24" step="0.25" placeholder="inches"
+                   aria-label="Application depth in inches" oninput="onDimensionChange()"
+                   style="max-width:180px;"/>
+            <p class="mc-depth-hint" id="depthHint" aria-live="polite">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                   stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+              <span id="depthHintText">Select a material to see the recommended depth.</span>
+            </p>
+          </div>
+
+        </div><!-- /.mc-card -->
+      </div><!-- /.container -->
+    </section>
 
     <!-- ============================================================
          RESULTS SECTION
@@ -434,6 +802,131 @@
       }
 
     };
+
+    /* ============================================================
+       CALCULATOR STATE
+       ============================================================ */
+    var activeTab   = 'mulch';      // 'mulch' | 'compost'
+    var activeShape = 'rect';       // 'rect' | 'circle' | 'irregular'
+
+    /* ============================================================
+       TAB SWITCHING
+       ============================================================ */
+    function switchTab(tab) {
+      activeTab = tab;
+
+      // Update tab button styles
+      document.getElementById('tabMulch').classList.toggle('active',   tab === 'mulch');
+      document.getElementById('tabCompost').classList.toggle('active', tab === 'compost');
+      document.getElementById('tabMulch').setAttribute('aria-selected',   tab === 'mulch');
+      document.getElementById('tabCompost').setAttribute('aria-selected', tab === 'compost');
+
+      // Repopulate the material dropdown for the new tab type
+      populateMaterialDropdown();
+    }
+
+    /* ============================================================
+       SHAPE SELECTION
+       ============================================================ */
+    function selectShape(shape) {
+      activeShape = shape;
+
+      // Toggle card active states
+      ['rect', 'circle', 'irregular'].forEach(function(s) {
+        var card = document.getElementById('shape' + capitalize(s));
+        var isActive = s === shape;
+        card.classList.toggle('active', isActive);
+        card.setAttribute('aria-pressed', isActive);
+      });
+
+      // Show/hide the correct input panel
+      document.getElementById('inputsRect').style.display   = shape === 'rect'      ? '' : 'none';
+      document.getElementById('inputsCircle').style.display = shape === 'circle'    ? '' : 'none';
+      document.getElementById('inputsIrreg').style.display  = shape === 'irregular' ? '' : 'none';
+
+      onDimensionChange();
+    }
+
+    function capitalize(str) {
+      if (str === 'rect')      return 'Rect';
+      if (str === 'circle')    return 'Circle';
+      if (str === 'irregular') return 'Irreg';
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    /* ============================================================
+       MATERIAL DROPDOWN
+       Populates <select> with only the entries matching the active tab type.
+       ============================================================ */
+    function populateMaterialDropdown() {
+      var sel = document.getElementById('materialSelect');
+      var currentVal = sel.value; // preserve selection if re-populating
+      sel.innerHTML = '';
+
+      var type = activeTab; // 'mulch' or 'compost'
+      Object.keys(MATERIAL_DATA).forEach(function(key) {
+        var mat = MATERIAL_DATA[key];
+        if (mat.type !== type) return;
+        var opt = document.createElement('option');
+        opt.value = key;
+        opt.textContent = mat.name;
+        if (key === currentVal) opt.selected = true;
+        sel.appendChild(opt);
+      });
+
+      // Fire change handler to sync depth hint
+      onMaterialChange();
+    }
+
+    /* ============================================================
+       MATERIAL CHANGE → update depth hint
+       ============================================================ */
+    function onMaterialChange() {
+      var key = document.getElementById('materialSelect').value;
+      var mat = MATERIAL_DATA[key];
+      var hintEl = document.getElementById('depthHintText');
+      var depthInput = document.getElementById('depthInput');
+
+      if (!mat) {
+        hintEl.textContent = 'Select a material to see the recommended depth.';
+        return;
+      }
+
+      // Set the depth input to the recommended depth for this material
+      depthInput.value = mat.depth_recommended_inches;
+      depthInput.min   = mat.depth_min_inches;
+      depthInput.max   = mat.depth_max_inches;
+
+      // Build the hint string
+      var typeLabel = mat.type === 'compost' ? 'compost' : 'mulch';
+      var minD = mat.depth_min_inches;
+      var maxD = mat.depth_max_inches;
+      var recD = mat.depth_recommended_inches;
+
+      hintEl.textContent =
+        'Recommended for ' + mat.name + ': ' + recD + '\u201d'
+        + '  (range: ' + minD + '\u2013' + maxD + '\u2033)';
+
+      onDimensionChange();
+    }
+
+    /* ============================================================
+       DIMENSION CHANGE — placeholder for Results section wiring
+       Called whenever any input changes so results stay live.
+       ============================================================ */
+    function onDimensionChange() {
+      // Results section will hook into this in the next build step.
+    }
+
+    /* ============================================================
+       INIT
+       ============================================================ */
+    function initCalculator() {
+      populateMaterialDropdown();
+      selectShape('rect');
+    }
+
+    initCalculator();
 
     /* ============================================================
        LUCIDE ICONS INIT
