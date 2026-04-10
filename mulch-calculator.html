@@ -440,6 +440,179 @@
       top: 16px;
     }
 
+    /* ── Guide section wrapper ───────────────────────────────── */
+    .mc-guide-section { padding: 56px 0 64px; background: var(--white); border-top: 1px solid #e8ede6; }
+
+    /* ── Guide panel (each tab's content) ───────────────────── */
+    .mc-guide-panel { display: none; }
+    .mc-guide-panel.visible { display: block; }
+
+    .mc-guide-heading {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--green-dark);
+      margin: 0 0 6px;
+    }
+    .mc-guide-sub {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin: 0 0 28px;
+    }
+
+    /* ── Comparison table ────────────────────────────────────── */
+    .mc-tbl-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius-md);
+      border: 1px solid #dde5db;
+      margin-bottom: 40px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .mc-tbl {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      min-width: 600px;
+    }
+    .mc-tbl thead th {
+      background: var(--green-dark);
+      color: #fff;
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .mc-tbl thead th:first-child { border-radius: var(--radius-md) 0 0 0; }
+    .mc-tbl thead th:last-child  { border-radius: 0 var(--radius-md) 0 0; }
+    .mc-tbl tbody tr:nth-child(even) td { background: #f7faf6; }
+    .mc-tbl tbody td {
+      padding: 11px 16px;
+      border-bottom: 1px solid #eaede8;
+      vertical-align: top;
+      color: var(--text-dark);
+      line-height: 1.5;
+    }
+    .mc-tbl tbody tr:last-child td { border-bottom: none; }
+    .mc-tbl tbody td:first-child { font-weight: 700; color: var(--green-dark); white-space: nowrap; }
+    .mc-tbl-depth { color: var(--green-dark); font-weight: 700; }
+    .mc-tbl-pro  { color: #166534; }
+    .mc-tbl-con  { color: #9a3412; }
+
+    /* ── How-to steps ────────────────────────────────────────── */
+    .mc-howto {
+      background: var(--cream);
+      border-radius: var(--radius-lg);
+      padding: 32px 36px;
+      margin-bottom: 0;
+    }
+    @media (max-width: 600px) { .mc-howto { padding: 22px 18px; } }
+    .mc-howto-heading {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--green-dark);
+      margin: 0 0 22px;
+    }
+    .mc-steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 16px; }
+    .mc-step  { display: flex; gap: 16px; align-items: flex-start; }
+    .mc-step-num {
+      flex-shrink: 0;
+      width: 32px; height: 32px;
+      background: var(--green-mid);
+      color: #fff;
+      border-radius: 50%;
+      font-weight: 800;
+      font-size: 0.88rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .mc-step-body { padding-top: 5px; font-size: 0.9rem; line-height: 1.6; color: var(--text-dark); }
+    .mc-step-body strong { color: var(--green-dark); }
+
+    /* ── Application rates table ─────────────────────────────── */
+    .mc-app-section { margin-bottom: 36px; }
+    .mc-section-heading {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--green-dark);
+      margin: 0 0 16px;
+    }
+    .mc-app-tbl-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius-md);
+      border: 1px solid #dde5db;
+      -webkit-overflow-scrolling: touch;
+    }
+    .mc-app-tbl { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 460px; }
+    .mc-app-tbl thead th {
+      background: #edf6f1;
+      color: var(--green-dark);
+      padding: 10px 16px;
+      text-align: left;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .mc-app-tbl tbody td {
+      padding: 10px 16px;
+      border-bottom: 1px solid #eaede8;
+      vertical-align: top;
+      line-height: 1.5;
+      color: var(--text-dark);
+    }
+    .mc-app-tbl tbody tr:last-child td { border-bottom: none; }
+    .mc-app-tbl tbody tr:nth-child(even) td { background: #f7faf6; }
+    .mc-app-tbl td:first-child { font-weight: 700; }
+    .mc-app-tbl td:nth-child(2) { color: var(--green-dark); font-weight: 700; }
+
+    /* ── Compost tea calculator ──────────────────────────────── */
+    .mc-tea-section { margin-top: 36px; }
+    .mc-tea-card {
+      background: var(--cream);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      border: 1px solid #d4e8cc;
+    }
+    @media (max-width: 600px) { .mc-tea-card { padding: 20px 16px; } }
+    .mc-tea-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin: 20px 0 0; }
+    .mc-tea-result {
+      margin-top: 20px;
+      display: none;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .mc-tea-result.visible { display: flex; }
+    .mc-tea-result-card {
+      flex: 1;
+      min-width: 160px;
+      background: var(--white);
+      border: 1px solid #c2e0cc;
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+    }
+    .mc-tea-result-label { font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-light); margin-bottom: 4px; }
+    .mc-tea-result-value { font-size: 1.5rem; font-weight: 800; color: var(--green-dark); font-family: var(--font-display); line-height: 1.1; }
+    .mc-tea-result-sub { font-size: 0.78rem; color: var(--text-light); margin-top: 2px; }
+    .mc-tea-calc-btn {
+      padding: 11px 24px;
+      background: var(--green-mid);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.17s;
+      white-space: nowrap;
+    }
+    .mc-tea-calc-btn:hover { background: var(--green-dark); }
+    .mc-tea-note { font-size: 0.8rem; color: var(--text-light); margin-top: 14px; line-height: 1.55; }
+
     /* Print styles */
     @media print {
       .mc-tabs, .mc-calc-btn, .mc-results-actions,
@@ -822,6 +995,213 @@
     <!-- ============================================================
          GUIDE SECTION
          ============================================================ -->
+    <section class="mc-guide-section" id="guideSection" aria-label="Material guides">
+      <div class="container">
+
+        <!-- ── MULCH GUIDE ─────────────────────────────────────── -->
+        <div class="mc-guide-panel visible" id="guideMulch">
+
+          <h2 class="mc-guide-heading">Mulch Comparison Guide</h2>
+          <p class="mc-guide-sub">All seven mulch types side by side — depths, best uses, pros and cons.</p>
+
+          <!-- Comparison table (rows built by JS) -->
+          <div class="mc-tbl-wrap">
+            <table class="mc-tbl" id="mulchGuideTable">
+              <thead>
+                <tr>
+                  <th>Mulch Type</th>
+                  <th>Rec. Depth</th>
+                  <th>Range</th>
+                  <th>Best Uses</th>
+                  <th>Pros</th>
+                  <th>Cons</th>
+                </tr>
+              </thead>
+              <tbody id="mulchGuideTbody"></tbody>
+            </table>
+          </div>
+
+          <!-- How to Apply -->
+          <div class="mc-howto">
+            <h3 class="mc-howto-heading">How to Apply Mulch Correctly</h3>
+            <ol class="mc-steps">
+              <li class="mc-step">
+                <span class="mc-step-num">1</span>
+                <div class="mc-step-body">
+                  <strong>Clear weeds first.</strong> Pull or smother any existing weeds before laying mulch.
+                  Mulch suppresses new weeds but will not kill established ones underneath.
+                </div>
+              </li>
+              <li class="mc-step">
+                <span class="mc-step-num">2</span>
+                <div class="mc-step-body">
+                  <strong>Water the bed.</strong> Thoroughly moisten the soil before applying.
+                  Dry soil under mulch stays dry — mulch locks in whatever moisture is present when you lay it.
+                </div>
+              </li>
+              <li class="mc-step">
+                <span class="mc-step-num">3</span>
+                <div class="mc-step-body">
+                  <strong>Apply at the correct depth.</strong> Spread evenly to your chosen depth
+                  (2–4" for most bark mulches, 3–5" for pine straw, 2" for gravel).
+                  Too shallow and weeds break through; too deep and roots suffocate.
+                </div>
+              </li>
+              <li class="mc-step">
+                <span class="mc-step-num">4</span>
+                <div class="mc-step-body">
+                  <strong>Keep mulch 2–3 inches away from plant stems and tree trunks.</strong>
+                  "Volcano mulching" — piling mulch against bark — traps moisture, causes rot,
+                  and invites pests. Leave a ring of bare soil around every stem.
+                </div>
+              </li>
+              <li class="mc-step">
+                <span class="mc-step-num">5</span>
+                <div class="mc-step-body">
+                  <strong>Refresh annually.</strong> Organic mulches break down and thin out over one season.
+                  Rake existing mulch each spring to break up any matted layers, then top up to the
+                  original depth. This also incorporates the decomposed material into the soil.
+                </div>
+              </li>
+            </ol>
+          </div>
+
+        </div><!-- /#guideMulch -->
+
+        <!-- ── AdSense between guides (always visible) ─────────── -->
+        <div class="ad-section ad-section--center" aria-hidden="true" style="margin: 40px 0;">
+          <div class="ad-slot ad-slot--leaderboard" style="max-width:728px; width:100%;">
+            <!-- Replace with:
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXX"
+                 data-ad-slot="XXXXXXXXXX"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            -->
+            <span class="ad-placeholder-label">Advertisement — 728×90</span>
+          </div>
+        </div>
+
+        <!-- ── COMPOST GUIDE ────────────────────────────────────── -->
+        <div class="mc-guide-panel" id="guideCompost">
+
+          <h2 class="mc-guide-heading">Compost Comparison Guide</h2>
+          <p class="mc-guide-sub">All six compost types — nutrients, application rates, best uses, and what to avoid.</p>
+
+          <!-- Compost comparison table (rows built by JS) -->
+          <div class="mc-tbl-wrap">
+            <table class="mc-tbl" id="compostGuideTable">
+              <thead>
+                <tr>
+                  <th>Compost Type</th>
+                  <th>N-P-K (approx.)</th>
+                  <th>New Bed Rate</th>
+                  <th>Existing Bed Rate</th>
+                  <th>Best For</th>
+                  <th>Avoid For</th>
+                </tr>
+              </thead>
+              <tbody id="compostGuideTbody"></tbody>
+            </table>
+          </div>
+
+          <!-- Application rates by situation -->
+          <div class="mc-app-section">
+            <h3 class="mc-section-heading">Compost Application Rates by Situation</h3>
+            <div class="mc-app-tbl-wrap">
+              <table class="mc-app-tbl">
+                <thead>
+                  <tr>
+                    <th>Situation</th>
+                    <th>Rate / Mix</th>
+                    <th>Method</th>
+                    <th>Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>New raised bed (fill)</td>
+                    <td>50–100% compost</td>
+                    <td>Fill bed entirely, or blend 50/50 with topsoil</td>
+                    <td>100% compost works well for most vegetables; 50/50 is more economical for large beds</td>
+                  </tr>
+                  <tr>
+                    <td>Amending existing bed</td>
+                    <td>2–4 inches</td>
+                    <td>Spread on surface and fork or till into top 6–8"</td>
+                    <td>Do this each spring or fall; improves structure and feeds soil life</td>
+                  </tr>
+                  <tr>
+                    <td>Top dressing established plants</td>
+                    <td>0.5–1 inch</td>
+                    <td>Spread around drip line; do not touch stems</td>
+                    <td>Worms and rain pull nutrients down into the root zone naturally</td>
+                  </tr>
+                  <tr>
+                    <td>Lawn overseeding</td>
+                    <td>¼–½ inch</td>
+                    <td>Rake thinly over seeded area; keep moist</td>
+                    <td>Protects seeds from drying out and provides starter nutrients</td>
+                  </tr>
+                  <tr>
+                    <td>Seed starting mix</td>
+                    <td>30–40% compost</td>
+                    <td>Blend with perlite and coco coir or vermiculite</td>
+                    <td>Use finished compost only — fresh compost can burn seedlings and harbour pathogens</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Compost Tea Calculator -->
+          <div class="mc-tea-section">
+            <div class="mc-tea-card">
+              <h3 class="mc-section-heading" style="margin-bottom:4px;">Compost Tea Ratio Calculator</h3>
+              <p style="font-size:0.86rem; color:var(--text-light); margin:0 0 4px;">
+                Enter your water volume to find how much compost to use for an aerated compost tea (ACT)
+                or a simple steep tea.
+              </p>
+              <div class="mc-tea-row">
+                <div class="mc-field" style="max-width:200px;">
+                  <label class="mc-field-label" for="teaGallons">Water volume (gallons)</label>
+                  <input class="mc-input" type="number" id="teaGallons"
+                         min="0.5" max="10000" step="0.5" placeholder="e.g. 5"
+                         aria-label="Water volume in gallons"/>
+                </div>
+                <button class="mc-tea-calc-btn" onclick="calcCompostTea()">Calculate</button>
+              </div>
+              <div class="mc-tea-result" id="teaResult">
+                <div class="mc-tea-result-card">
+                  <div class="mc-tea-result-label">Aerated Tea (ACT)</div>
+                  <div class="mc-tea-result-value" id="teaACT">—</div>
+                  <div class="mc-tea-result-sub">1:5 ratio · aerate 24–36 hrs</div>
+                </div>
+                <div class="mc-tea-result-card">
+                  <div class="mc-tea-result-label">Steep Tea (simple)</div>
+                  <div class="mc-tea-result-value" id="teaSteep">—</div>
+                  <div class="mc-tea-result-sub">1:10 ratio · steep 24–48 hrs</div>
+                </div>
+              </div>
+              <p class="mc-tea-note">
+                <strong>ACT (1:5):</strong> Use an aquarium pump and airstone to aerate — this multiplies
+                beneficial bacteria and fungi. Apply immediately after brewing, before microbes die off.
+                <br>
+                <strong>Steep tea (1:10):</strong> Place compost in a burlap or mesh bag and steep in water.
+                Simpler, but less biologically active. Use within 4 hours of steeping.
+                <br>
+                Apply at the base of plants or as a foliar spray in the morning. Dilute further (1:1 with water)
+                for sensitive seedlings.
+              </p>
+            </div>
+          </div>
+
+        </div><!-- /#guideCompost -->
+
+      </div><!-- /.container -->
+    </section>
 
   </main>
 
@@ -1460,6 +1840,167 @@
     }
 
     initCalculator();
+
+    /* ============================================================
+       SUPPLEMENTARY GUIDE DATA
+       Pros/cons for mulch; NPK for compost.
+       Keyed to match MATERIAL_DATA keys exactly.
+       ============================================================ */
+    var MULCH_PROS_CONS = {
+      'Hardwood Bark Mulch': {
+        pros: 'Long-lasting (2–4 yrs), enriches soil as it decomposes, widely available, excellent weed suppression',
+        cons: 'Can mat and repel water when wet; fresh chips may temporarily tie up nitrogen near roots'
+      },
+      'Cedar Mulch': {
+        pros: 'Natural oils repel some insects and slugs, slow to decompose, pleasant scent, attractive appearance',
+        cons: 'More expensive than hardwood; strong oils can deter beneficial soil organisms if applied too thick'
+      },
+      'Pine Straw': {
+        pros: 'Needles knit together and resist erosion on slopes; ideal for acid-loving plants; lightweight and easy to spread',
+        cons: 'Must be applied thicker (3–5"); can become a fire hazard when very dry; less available outside the Southeast'
+      },
+      'Rubber Mulch': {
+        pros: 'Permanent — lasts 10+ years; excellent weed suppression; cushioning for play areas; does not harbor insects',
+        cons: 'Does not enrich soil; absorbs and radiates heat; concerns about chemical leaching near edibles'
+      },
+      'Cocoa Hull Mulch': {
+        pros: 'Pleasant chocolate scent; adds a small amount of nitrogen as it breaks down; attractive dark colour',
+        cons: 'Toxic to dogs; can develop surface mold in humid climates; expensive; must keep pets away'
+      },
+      'Straw Mulch': {
+        pros: 'Cheap and widely available; decomposes to add organic matter; great insulator for overwintering',
+        cons: 'Often contains weed seeds; breaks down in a single season; can blow away in exposed sites'
+      },
+      'Gravel / Rock': {
+        pros: 'Permanent and low-maintenance; excellent drainage; ideal for xeriscape and desert plants; will not wash away',
+        cons: 'Does not enrich soil; retains heat (can stress plants in summer); difficult and costly to remove once placed'
+      }
+    };
+
+    var COMPOST_NPK = {
+      'Finished Compost':      '1.5 – 0.5 – 1',
+      'Mushroom Compost':      '2 – 1 – 1.5',
+      'Worm Castings':         '1 – 0.5 – 0.5',
+      'Chicken Manure Compost':'3.5 – 2 – 2',
+      'Cow Manure Compost':    '1 – 0.5 – 0.5',
+      'Peat Moss':             '0.5 – 0 – 0'
+    };
+
+    /* ============================================================
+       RENDER MULCH GUIDE TABLE
+       ============================================================ */
+    function renderMulchGuideTable() {
+      var tbody = document.getElementById('mulchGuideTbody');
+      tbody.innerHTML = '';
+      Object.keys(MATERIAL_DATA).forEach(function(key) {
+        var m = MATERIAL_DATA[key];
+        if (m.type !== 'mulch') return;
+        var g = MULCH_PROS_CONS[key] || { pros: '—', cons: '—' };
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td>' + escHtmlGuide(m.name) + '</td>'
+          + '<td class="mc-tbl-depth">' + m.depth_recommended_inches + '"</td>'
+          + '<td style="white-space:nowrap;">' + m.depth_min_inches + '"–' + m.depth_max_inches + '"</td>'
+          + '<td>' + escHtmlGuide(m.best_for) + '</td>'
+          + '<td class="mc-tbl-pro">' + escHtmlGuide(g.pros) + '</td>'
+          + '<td class="mc-tbl-con">' + escHtmlGuide(g.cons) + '</td>';
+        tbody.appendChild(tr);
+      });
+    }
+
+    /* ============================================================
+       RENDER COMPOST GUIDE TABLE
+       ============================================================ */
+    function renderCompostGuideTable() {
+      var tbody = document.getElementById('compostGuideTbody');
+      tbody.innerHTML = '';
+      Object.keys(MATERIAL_DATA).forEach(function(key) {
+        var m = MATERIAL_DATA[key];
+        if (m.type !== 'compost') return;
+        var npk = COMPOST_NPK[key] || '—';
+        var newRate = m.application_rate_new_bed_inches
+          ? m.application_rate_new_bed_inches + '"'
+          : '—';
+        var existRate = m.application_rate_existing_bed_inches
+          ? m.application_rate_existing_bed_inches + '"'
+          : '—';
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td>' + escHtmlGuide(m.name) + '</td>'
+          + '<td style="white-space:nowrap;font-family:monospace;font-size:0.82rem;">' + npk + '</td>'
+          + '<td class="mc-tbl-depth">' + newRate + '</td>'
+          + '<td class="mc-tbl-depth">' + existRate + '</td>'
+          + '<td>' + escHtmlGuide(m.best_for) + '</td>'
+          + '<td class="mc-tbl-con">' + escHtmlGuide(m.avoid_for || '—') + '</td>';
+        tbody.appendChild(tr);
+      });
+    }
+
+    /* ============================================================
+       GUIDE PANEL VISIBILITY
+       Called from switchTab() — keeps guide in sync with main tabs.
+       ============================================================ */
+    function syncGuidePanels(tab) {
+      document.getElementById('guideMulch').classList.toggle('visible',   tab === 'mulch');
+      document.getElementById('guideCompost').classList.toggle('visible', tab === 'compost');
+    }
+
+    /* ============================================================
+       COMPOST TEA CALCULATOR
+       ACT ratio  1:5  (1 part compost per 5 parts water)
+       Steep ratio 1:10 (1 part compost per 10 parts water)
+       Result expressed in cups, quarts, or gallons depending on size.
+       ============================================================ */
+    function calcCompostTea() {
+      var gal = parseFloat(document.getElementById('teaGallons').value);
+      if (!gal || gal <= 0) {
+        alert('Please enter a valid water volume in gallons.');
+        return;
+      }
+
+      // ACT: 1 part compost per 5 parts water → compost = water / 5
+      var actCups   = (gal / 5) * 16;   // gallons → cups
+      // Steep: 1 part compost per 10 parts water → compost = water / 10
+      var steepCups = (gal / 10) * 16;
+
+      document.getElementById('teaACT').textContent   = fmtVolume(actCups);
+      document.getElementById('teaSteep').textContent = fmtVolume(steepCups);
+      document.getElementById('teaResult').classList.add('visible');
+    }
+
+    function fmtVolume(cups) {
+      if (cups < 1)   return (cups * 16).toFixed(1) + ' tbsp';
+      if (cups < 4)   return cups.toFixed(1) + ' cup' + (cups.toFixed(1) !== '1.0' ? 's' : '');
+      if (cups < 16)  return (cups / 4).toFixed(2).replace(/\.?0+$/, '') + ' qts';
+      return (cups / 16).toFixed(2).replace(/\.?0+$/, '') + ' gal';
+    }
+
+    /* ============================================================
+       SAFE HTML ESCAPE for table content
+       ============================================================ */
+    function escHtmlGuide(str) {
+      if (!str) return '—';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    /* ============================================================
+       PATCH switchTab TO ALSO SYNC GUIDE PANELS
+       ============================================================ */
+    var _origSwitchTab = switchTab;
+    switchTab = function(tab) {
+      _origSwitchTab(tab);
+      syncGuidePanels(tab);
+    };
+
+    /* ============================================================
+       INIT GUIDE TABLES
+       ============================================================ */
+    renderMulchGuideTable();
+    renderCompostGuideTable();
 
     /* ============================================================
        LUCIDE ICONS INIT
