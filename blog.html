@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="GardenCalc Blog — Beginner guides, raised bed gardening, composting, organic pest control, beneficial insects, snakes, and backyard wildlife. Grow smarter with expert tips." />
+  <title>Gardening Blog — Tips, Guides & Growing Advice | GardenCalc</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" />
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossorigin="anonymous"></script> -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="site-logo" aria-label="GardenCalc Home">
+          <div class="logo-icon"><i data-lucide="leaf"></i></div>
+          <span class="logo-text">Garden<span>Calc</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="frost-dates.html" class="nav-link">Frost Date Calculator</a>
+          <a href="seed-starting-schedule.html" class="nav-link">Seed Starting Schedule</a>
+          <a href="companion-planting.html" class="nav-link">Companion Planting</a>
+          <a href="square-foot-planner.html" class="nav-link">Square Foot Planner</a>
+          <a href="mulch-calculator.html" class="nav-link">Mulch Calculator</a>
+          <a href="blog.html" class="nav-link active">Blog</a>
+          <a href="about.html" class="nav-link nav-cta">About</a>
+        </nav>
+        <button class="hamburger" aria-label="Toggle menu" onclick="toggleMobileNav()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="index.html" class="nav-link"><i data-lucide="home"></i> Home</a>
+      <a href="frost-dates.html" class="nav-link"><i data-lucide="snowflake"></i> Frost Date Calculator</a>
+      <a href="seed-starting-schedule.html" class="nav-link"><i data-lucide="sprout"></i> Seed Starting Schedule</a>
+      <a href="companion-planting.html" class="nav-link"><i data-lucide="git-merge"></i> Companion Planting</a>
+      <a href="square-foot-planner.html" class="nav-link"><i data-lucide="layout-grid"></i> Square Foot Planner</a>
+      <a href="mulch-calculator.html" class="nav-link"><i data-lucide="wind"></i> Mulch Calculator</a>
+      <a href="blog.html" class="nav-link active"><i data-lucide="book-open"></i> Blog</a>
+      <a href="about.html" class="nav-link"><i data-lucide="sun"></i> About Us</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <div class="ad-section ad-section--center" aria-hidden="true">
+      <div class="ad-slot ad-slot--leaderboard" style="max-width:728px;width:100%;">
+        <span class="ad-placeholder-label">Advertisement — 728×90</span>
+      </div>
+    </div>
+
+    <section class="page-hero" aria-label="Blog hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a><span>›</span><span>Blog</span>
+        </nav>
+        <h1>The GardenCalc Blog</h1>
+        <p>Beginner guides, raised beds, composting, pest control, and the fascinating wildlife that calls your garden home.</p>
+      </div>
+    </section>
+
+    <!-- BEGINNER GUIDES -->
+    <section class="section" id="beginner" aria-labelledby="beginner-heading">
+      <div class="container">
+        <div class="blog-category-header">
+          <div class="blog-category-icon"><i data-lucide="sprout"></i></div>
+          <div>
+            <span class="section-label">Start Here</span>
+            <h2 class="section-title" id="beginner-heading" style="margin-bottom:0;">Beginner Guides</h2>
+          </div>
+        </div>
+        <p style="color:var(--text-light);margin-bottom:0;max-width:620px;">New to gardening? These guides walk you through everything from picking a location to harvesting your first crop.</p>
+        <div class="blog-grid">
+          <article class="blog-card">
+            <div class="blog-card-thumb"></div>
+            <div class="blog-card-body">
+              <span class="blog-card-tag">Beginner</span>
+              <h3>The Complete Beginner's Guide to Gardening</h3>
+              <p>Everything you need to know to start your first vegetable garden — soil, sunlight, watering, and what to plant first.</p>
+              <a href="blog-beginners-guide.html" class="blog-card-link">Read the guide</a>
+            </div>
+          </article>
+          <article class="blog-card">
+            <div class="blog-card-thumb"></div>
+            <div class="blog-card-body">
+              <span class="blog-card-tag">Beginner</span>
+              <h3>Understanding Your USDA Hardiness Zone</h3>
+              <p>Your zone determines what plants can survive your winters. Learn how to find yours and what it means for your garden.</p>
+              <a href="frost-dates.html" class="blog-card-link">Find your zone</a>
+            </div>
+          </article>
+          <article class="blog-card">
+            <div class="blog-card-thumb"></div>
+            <div class="blog-card-body">
+              <span class="blog-card-tag">Beginner</span>
+              <h3>How to Read a Seed Packet</h3>
+              <p>Seed packets are packed with critical planting info. Here's how to decode days to maturity, spacing, depth, and more.</p>
+              <a href="seed-starting-schedule.html" class="blog-card-link">Try the seed scheduler</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="ad-section ad-section--center" aria-hidden="true">
+      <div class="ad-slot ad-slot--rectangle">
+        <span class="ad-placeholder-label">Advertisement — 336×280</span>
+      </div>
+    </div>
+
+    <!-- RAISED BED GARDENING -->
+    <section class="section section--alt" id="raised-beds" aria-labelledby="raised-heading">
+      <div class="container">
+        <div class="blog-category-header">
+          <div class="blog-category-icon"><i data-lucide="layout-grid"></i></div>
+          <div>
+            <span class="section-label">Beds & Containers</span>
+            <h2 class="section-title" id="raised-heading" style="margin-bottom:0;">Raised Bed Gardening</h2>
+          </div>
+        </div>
+        <p style="color:var(--text-light);margin-bottom:0;max-width:620px;">Raised beds give you control over your soil and extend your growing season. Learn how to build, fill, and plant them right.</p>
+        <div class="blog-grid">
+          <article class="blog-card">
+            <div class="blog-card-thumb blog-card-thumb--earth"></div>
+            <div class="blog-card-body">
+              <span class="blog-card-tag blog-card-tag--earth">Raised Beds</span>
+              <h3>Raised Bed Gardening: A Complete Guide for Home Growers</h3>
+              <p>Materials, dimensions, soil mix, irrigation, and seasonal care — everything you need to build and maintain productive raised beds.</p>
+              <a href="blog-raised-bed-gardening.html" class="blog-card-link">Read the guide</a>
+            </div>
+          </article>
+          <article class="blog-card">
+            <div class="blog-card-thumb blog-card-thumb--earth"></div>
+            <div class="blog-card-body">
+              <span class="blog-card-tag blog-card-tag--earth">Raised Beds</span>
+              <h3>The Best Soil Mix for Raised Beds</h3>
+              <p>Mel's Mix, topsoil blends, and compost ratios explained. Learn what goes in a raised bed for maximum plant health and drainage.</p>
+              <a href="blog-raised-bed-gardening.html#soil" class="blog-card-link">Read section</a>
+            </div>
+          </article>
+          <article class="blog-card">
+            <div class="blog-card-thumb blog-card-thumb--earth"></div>
+            <div class="blog-card-body">
+              <span class="blog-card-tag blog-card-tag--earth">Raised Beds</span>
+              <h3>Square Foot Gardening in Raised Beds</h3>
+              <p>Maximize every inch of your raised bed with the square foot method. No wasted space, no overcrowding, more food per square foot.</p>
+              <a href="square-foot-planner.html" class="blog-card-link">Try the planner</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPOSTING -->
+    <section class="section" id="composting" aria-labelledby="compost-heading">
+      <div class="container">
+        <div class="blog-category-header">
+          <div class="blog-category-icon"><i data-lucide="recycle"></i></div>
+          <div>
+            <span class="section-label">Soil Health</span>
+            <h2 class="section-title" id="compost-heading" style="margin-bottom:0;">Composting & Soil</h2>
+          </div>
+        </div>
+        <p style="color:var(--text-light);margin-bottom:0;max-width:620px;">Healthy soil grows healthy plants. Learn to turn kitchen scraps and yard waste into the best fertilizer money can't buy.</p>
+        <div class="blog-grid">
+          <article class="blog-card">
+            <div class="blog-card-thumb blog-card-thumb--gold"></div>
+            <div class="blog-card-body">
+              <span class="blog-card-tag blog-card-tag--gold">Composting</span>
+              <h3>Composting 101: Turn Kitchen Scraps into Garden Gold</h3>
+              <p>Browns vs greens, hot vs cold composting, troubleshooting common problems, and how to use finished compost in your garden.</p>
+              <a href="blog-composting.html" class="blog-card-link">Read the guide</a>
+            </div>
+          </article>
+          <article class="blog-card">
+            <div class="blog-card-thumb blog-card-thumb--gold"></div>
+            <div class="blog-card-body">
+              <span class="blog-card-tag blog-card-tag--gold">Composting</span>
+              <h3>Vermicomposting: Worm Bins for Small Spaces</h3>
+              <p>No yard? No problem. A worm bin under your kitchen sink produces rich castings that are better than any store-bought fertilizer.</p>
+              <a href="blog-composting.html#vermicomposting" class="blog-card-link">Read section</a>
+            </div>
+          </article>
+          <article class="blog-card">
+            <div class="blog-card-thumb blog-card-thumb--gold"></div>
+            <div class="blog-card-body">
+              <span class="blog-card-tag blog-card-tag--gold">Soil</span>
+              <h3>How to Amend Clay, Sandy, and Compacted Soil</h3>
+              <p>Most gardeners don't start with perfect soil. Learn how to diagnose your soil type and fix it with organic amendments.</p>
+              <a href="blog-composting.html#amending" class="blog-card-link">Read section</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="ad-section ad-section--center" aria-hidden="true">
+      <div class="ad-slot ad-slot--leaderboard" style="max-width:728px;width:100%;">
+        <span class="ad-placeholder-label">Advertisement — 728×90</span>
+      </div>
+    </div>
+
+    <!-- PEST CONTROL -->
+    <section class="section section--alt" id="pest-control" aria-labelledby="pest-heading">
+      <div class="container">
+        <div class="blog-category-header">
+          <div class="blog-category-icon"><i data-lucide="shield"></i></div>
+          <div>
+            <span class="section-label">Organic Methods</span>
+            <h2 class="section-title" id="pest-heading" style="margin-bottom:0;">Organic Pest Control</h2>
+          </div>
+        </div>
+        <p style="color:var(--text-light);margin-bottom:0;max-width:620px;">Keep pests off your plants without harsh chemicals. These organic methods protect your harvest and the beneficial bugs that help you grow.</p>
+        <div class="blog-grid">
+          <article class="blog-card">
+            <div class="blog-card-thumb blog-card-thumb--dark"></div>
+            <div class="blog-card-body">
+              <span class="blog-card-tag">Pest Control</span>
+              <h3>Organic Pest Control: Natural Ways to Protect Your Garden</h3>
+              <p>IPM principles, physical barriers, neem oil, insecticidal soap, and how companion planting keeps pests in check naturally.</p>
+              <a href="blog-organic-pest-control.html" class="blog-card-link">Read the guide</a>
+            </div>
+          </article>
+          <article class="blog-card">
+            <div class="blog-card-thumb blog-card-thumb--dark"></div>
+            <div class="blog-card-body">
+              <span class="blog-card-tag">Pest Management</span>
+              <h3>Garden Pest Identification & Management</h3>
+              <p>Aphids, thrips, hornworms, squash bugs and more. Learn to identify the most common garden pests and stop them organically.</p>
+              <a href="blog-pest-management.html" class="blog-card-link">Read the guide</a>
+            </div>
+          </article>
+          <article class="blog-card">
+            <div class="blog-card-thumb blog-card-thumb--dark"></div>
+            <div class="blog-card-body">
+              <span class="blog-card-tag">Beneficial Insects</span>
+              <h3>Beneficial Insects: Your Garden's Natural Pest Control Team</h3>
+              <p>Ladybugs, lacewings, ground beetles, parasitic wasps — these allies eat your pests. Learn how to attract and keep them.</p>
+              <a href="blog-beneficial-insects.html" class="blog-card-link">Read the guide</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- WILDLIFE -->
+    <section class="section" id="wildlife" aria-labelledby="wildlife-heading">
+      <div class="container">
+        <div class="blog-category-header">
+          <div class="blog-category-icon"><i data-lucide="feather"></i></div>
+          <div>
+            <span class="section-label">Garden Wildlife</span>
+            <h2 class="section-title" id="wildlife-heading" style="margin-bottom:0;">Reptiles, Amphibians & Snakes</h2>
+          </div>
+        </div>
+        <p style="color:var(--text-light);margin-bottom:0;max-width:620px;">The creatures that share your garden are often more helpful than harmful. Learn to identify, understand, and welcome your cold-blooded neighbors.</p>
+        <div class="blog-grid">
+          <article class="blog-card">
+            <div class="blog-card-thumb blog-card-thumb--light"></div>
+            <div class="blog-card-body">
+              <span class="blog-card-tag">Wildlife</span>
+              <h3>Snakes in the Garden: Which Are Helpful and Which to Avoid</h3>
+              <p>Most garden snakes are harmless pest-control specialists. Learn to identify common species, understand which are venomous, and coexist safely.</p>
+              <a href="blog-snakes-in-the-garden.html" class="blog-card-link">Read the guide</a>
+            </div>
+          </article>
+          <article class="blog-card">
+            <div class="blog-card-thumb blog-card-thumb--light"></div>
+            <div class="blog-card-body">
+              <span class="blog-card-tag">Wildlife</span>
+              <h3>Reptiles & Amphibians: Natural Pest Controllers in Your Garden</h3>
+              <p>Toads, skinks, lizards, and salamanders eat thousands of pests each season. Learn what's in your garden and why you want them there.</p>
+              <a href="blog-reptiles-amphibians.html" class="blog-card-link">Read the guide</a>
+            </div>
+          </article>
+          <article class="blog-card">
+            <div class="blog-card-thumb blog-card-thumb--light"></div>
+            <div class="blog-card-body">
+              <span class="blog-card-tag">Wildlife</span>
+              <h3>Beneficial Insects: Pollinators & Predators</h3>
+              <p>From bees to ground beetles, your garden is full of beneficial insects. Here's how to identify them and create habitat that keeps them around.</p>
+              <a href="blog-beneficial-insects.html" class="blog-card-link">Read the guide</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="ad-section ad-section--center" aria-hidden="true">
+      <div class="ad-slot ad-slot--leaderboard" style="max-width:728px;width:100%;">
+        <span class="ad-placeholder-label">Advertisement — 728×90</span>
+      </div>
+    </div>
+
+    <section class="cta-banner" aria-labelledby="blog-cta-heading">
+      <div class="container">
+        <span class="section-label">Free Tools</span>
+        <h2 id="blog-cta-heading">Put Your Knowledge to Work</h2>
+        <p>Use our free calculators to plan your garden with precision — frost dates, seed schedules, companion planting, and more.</p>
+        <div class="cta-actions">
+          <a href="frost-dates.html" class="btn btn-lg" style="background:var(--gold);color:var(--text-dark);border-color:var(--gold);">
+            <i data-lucide="snowflake"></i> Frost Date Calculator
+          </a>
+          <a href="seed-starting-schedule.html" class="btn btn-lg hero-btn-secondary">
+            <i data-lucide="sprout"></i> Seed Starting Schedule
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="site-logo" style="margin-bottom:0;">
+            <div class="logo-icon"><i data-lucide="leaf"></i></div>
+            <span class="logo-text">Garden<span>Calc</span></span>
+          </a>
+          <p class="footer-tagline">Free, accurate gardening tools for every zone, every season.</p>
+          <div class="footer-social">
+            <a href="#" class="social-link" aria-label="Pinterest">Pinterest</a>
+            <a href="#" class="social-link" aria-label="Instagram">Instagram</a>
+            <a href="#" class="social-link" aria-label="Facebook">Facebook</a>
+            <a href="#" class="social-link" aria-label="YouTube">YouTube</a>
+          </div>
+          <p style="font-size:0.8rem;color:rgba(255,255,255,0.5);margin-top:18px;margin-bottom:0;">Get seasonal planting reminders:</p>
+          <form class="newsletter-form" onsubmit="return false;">
+            <input class="newsletter-input" type="email" placeholder="your@email.com" aria-label="Email for newsletter" />
+            <button class="newsletter-btn" type="submit">Join</button>
+          </form>
+        </div>
+        <div class="footer-col">
+          <h5>Tools</h5>
+          <div class="footer-links">
+            <a href="frost-dates.html">Frost Date Calculator</a>
+            <a href="seed-starting-schedule.html">Seed Starting Schedule</a>
+            <a href="companion-planting.html">Companion Planting</a>
+            <a href="square-foot-planner.html">Square Foot Planner</a>
+            <a href="mulch-calculator.html">Mulch Calculator</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Learn</h5>
+          <div class="footer-links">
+            <a href="blog.html" class="active">Blog</a>
+            <a href="blog-beginners-guide.html">Beginner Guides</a>
+            <a href="blog-raised-bed-gardening.html">Raised Bed Gardening</a>
+            <a href="blog-composting.html">Composting</a>
+            <a href="blog-organic-pest-control.html">Organic Pest Control</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <div class="footer-links">
+            <a href="about.html">About GardenCalc</a>
+            <a href="about.html#contact">Contact Us</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Use</a>
+            <a href="sitemap.html">Sitemap</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 GardenCalc. All rights reserved. For informational purposes only.</p>
+        <div class="footer-legal">
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="about.html#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileNav() {
+      const nav = document.getElementById('mobileNav');
+      nav.classList.toggle('open');
+    }
+    document.querySelectorAll('.mobile-nav .nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('mobileNav').classList.remove('open');
+      });
+    });
+    document.addEventListener('click', function(e) {
+      const nav = document.getElementById('mobileNav');
+      const hamburger = document.querySelector('.hamburger');
+      if (nav.classList.contains('open') && !nav.contains(e.target) && !hamburger.contains(e.target)) {
+        nav.classList.remove('open');
+      }
+    });
+  </script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>
