@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- IMPORTANT: Replace https://www.gardencalc.net with your real domain before submitting to Google Search Console -->
-
   <url>
     <loc>https://www.gardencalc.net/</loc>
     <changefreq>monthly</changefreq>
