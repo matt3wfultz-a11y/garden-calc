@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free frost date calculator for Texas, New Mexico, and Oregon. Enter your ZIP code to find your average last spring frost and first fall frost dates." />
+  <title>Frost Date Calculator — GardenCalc</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" />
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossorigin="anonymous"></script> -->
+  <style>
+    /* ── Tool-specific styles ── */
+    .tool-hero { background: linear-gradient(135deg, var(--green-dark) 0%, #2d6a4f 100%); padding: 56px 0 48px; }
+    .tool-hero h1 { color: var(--white); margin-bottom: 10px; }
+    .tool-hero p  { color: rgba(255,255,255,0.8); max-width: 560px; margin: 0 auto 0; font-size: 1.05rem; }
+
+    /* Search card */
+    .search-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 40px 44px;
+      box-shadow: var(--shadow-lg);
+      max-width: 640px;
+      margin: -36px auto 0;
+      position: relative;
+      z-index: 10;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+    .search-card h2 { font-size: 1.25rem; margin-bottom: 6px; }
+    .search-card p  { font-size: 0.88rem; margin-bottom: 20px; }
+    .zip-form { display: flex; gap: 10px; }
+    .zip-input {
+      flex: 1;
+      padding: 14px 18px;
+      border: 2px solid #ddd;
+      border-radius: var(--radius-md);
+      font-size: 1.15rem;
+      font-family: var(--font-sans);
+      letter-spacing: 0.08em;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+    .zip-input:focus { border-color: var(--green-mid); }
+    .zip-input.error { border-color: #e74c3c; }
+    .zip-btn {
+      padding: 14px 28px;
+      background: var(--green-mid);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: var(--font-sans);
+      transition: background var(--transition), transform var(--transition);
+      white-space: nowrap;
+    }
+    .zip-btn:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .zip-error {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: #fef2f2;
+      border: 1px solid #fca5a5;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      color: #991b1b;
+    }
+    .zip-error.visible { display: flex; }
+    .zip-hint { font-size: 0.78rem; color: var(--text-light); margin-top: 10px; }
+
+    /* Results panel */
+    .results-panel { display: none; max-width: 900px; margin: 40px auto 0; }
+    .results-panel.visible { display: block; }
+
+    .result-location {
+      background: var(--green-dark);
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .result-city { font-size: 1.3rem; font-weight: 700; color: var(--white); }
+    .result-state { color: rgba(255,255,255,0.7); font-size: 0.9rem; }
+    .zone-badge {
+      background: var(--green-light);
+      color: var(--white);
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      letter-spacing: 0.04em;
+    }
+    .result-body {
+      background: var(--white);
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      border: 1px solid rgba(0,0,0,0.07);
+      border-top: none;
+      padding: 28px;
+    }
+
+    /* Frost date cards */
+    .frost-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+    .frost-card {
+      border-radius: var(--radius-md);
+      padding: 24px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .frost-card--spring { background: linear-gradient(135deg, #e0f2fe, #bae6fd); border: 1px solid #7dd3fc; }
+    .frost-card--fall   { background: linear-gradient(135deg, #fff7ed, #fed7aa); border: 1px solid #fdba74; }
+    .frost-card-icon  { font-size: 2.2rem; margin-bottom: 8px; }
+    .frost-card-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); margin-bottom: 6px; }
+    .frost-card-date  { font-family: var(--font-display); font-size: 1.9rem; font-weight: bold; color: var(--text-dark); margin-bottom: 4px; }
+    .frost-card-sub   { font-size: 0.8rem; color: var(--text-light); }
+
+    /* Season length */
+    .season-length-bar {
+      background: var(--cream-dark);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .season-length-label { font-size: 0.88rem; color: var(--text-light); }
+    .season-length-days  { font-family: var(--font-display); font-size: 1.5rem; font-weight: bold; color: var(--green-mid); }
+    .season-length-desc  { font-size: 0.82rem; color: var(--text-light); }
+
+    /* 12-month timeline */
+    .timeline-section { margin-bottom: 28px; }
+    .timeline-label { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-light); margin-bottom: 10px; }
+    .timeline-bar { display: flex; border-radius: var(--radius-sm); overflow: hidden; height: 36px; width: 100%; }
+    .timeline-month {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      transition: opacity 0.2s;
+    }
+    .timeline-month--frozen   { background: #cbd5e1; color: #475569; }
+    .timeline-month--shoulder { background: #fde68a; color: #92400e; }
+    .timeline-month--growing  { background: var(--green-light); color: var(--white); }
+    .timeline-legend { display: flex; gap: 16px; margin-top: 8px; flex-wrap: wrap; }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--text-light); }
+    .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+    /* Planting dates */
+    .planting-dates { margin-bottom: 8px; }
+    .planting-dates-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-light); margin-bottom: 12px; }
+    .planting-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    @media (min-width: 600px) { .planting-grid { grid-template-columns: repeat(4, 1fr); } }
+    .planting-item {
+      background: var(--cream-dark);
+      border-radius: var(--radius-sm);
+      padding: 14px 12px;
+      text-align: center;
+      border-left: 3px solid var(--green-mid);
+    }
+    .planting-item--fall { border-left-color: var(--earth-light); }
+    .planting-item-icon  { font-size: 1.4rem; margin-bottom: 6px; }
+    .planting-item-date  { font-weight: 700; font-size: 0.95rem; color: var(--green-dark); margin-bottom: 3px; }
+    .planting-item-label { font-size: 0.72rem; color: var(--text-light); line-height: 1.3; }
+    .planting-item--fall .planting-item-date { color: var(--earth-mid); }
+
+    /* How it works */
+    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 40px; }
+    @media (max-width: 640px) { .steps-grid { grid-template-columns: 1fr; gap: 16px; } }
+    .step-card { text-align: center; }
+    .step-number {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--green-mid);
+      color: var(--white);
+      font-weight: 700; font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 14px;
+    }
+    .step-card h4 { color: var(--green-dark); margin-bottom: 8px; }
+    .step-card p  { font-size: 0.88rem; }
+
+    /* FAQ */
+    .faq-list { margin-top: 36px; display: flex; flex-direction: column; gap: 0; }
+    .faq-item {
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      padding: 0;
+    }
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 18px 0;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--green-dark);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-sans);
+    }
+    .faq-question:hover { color: var(--green-mid); }
+    .faq-arrow { font-size: 0.8rem; transition: transform 0.2s; flex-shrink: 0; }
+    .faq-answer { display: none; padding-bottom: 18px; font-size: 0.92rem; color: var(--text-mid); line-height: 1.7; }
+    .faq-item.open .faq-arrow { transform: rotate(180deg); }
+    .faq-item.open .faq-answer { display: block; }
+
+    @media (max-width: 600px) {
+      .search-card { padding: 28px 20px; margin: -28px 16px 0; }
+      .zip-form { flex-direction: column; }
+      .frost-cards { grid-template-columns: 1fr; }
+      .result-location { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- ============================================================
+       SITE HEADER
+       ============================================================ -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="site-logo" aria-label="GardenCalc Home">
+          <div class="logo-icon"><i data-lucide="leaf"></i></div>
+          <span class="logo-text">Garden<span>Calc</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="frost-dates.html" class="nav-link active">Frost Date Calculator</a>
+          <a href="seed-starting-schedule.html" class="nav-link">Seed Starting Schedule</a>
+          <a href="companion-planting.html" class="nav-link">Companion Planting</a>
+          <a href="square-foot-planner.html" class="nav-link">Square Foot Planner</a>
+          <a href="mulch-calculator.html" class="nav-link">Mulch Calculator</a>
+          <a href="blog.html" class="nav-link">Blog</a>
+          <a href="about.html" class="nav-link nav-cta">About</a>
+        </nav>
+        <button class="hamburger" aria-label="Toggle menu" onclick="toggleMobileNav()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="index.html" class="nav-link"><i data-lucide="home"></i> Home</a>
+      <a href="frost-dates.html" class="nav-link active"><i data-lucide="snowflake"></i> Frost Date Calculator</a>
+      <a href="seed-starting-schedule.html" class="nav-link"><i data-lucide="sprout"></i> Seed Starting Schedule</a>
+      <a href="companion-planting.html" class="nav-link"><i data-lucide="git-merge"></i> Companion Planting</a>
+      <a href="square-foot-planner.html" class="nav-link"><i data-lucide="layout-grid"></i> Square Foot Planner</a>
+      <a href="mulch-calculator.html" class="nav-link"><i data-lucide="wind"></i> Mulch Calculator</a>
+      <a href="blog.html" class="nav-link"><i data-lucide="book-open"></i> Blog</a>
+      <a href="about.html" class="nav-link"><i data-lucide="sun"></i> About Us</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ============================================================
+         PAGE HERO
+         ============================================================ -->
+    <section class="tool-hero text-center">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a><span>›</span><span>Frost Date Calculator</span>
+        </nav>
+        <h1><i data-lucide="snowflake"></i> Frost Date Calculator</h1>
+        <p>Enter your ZIP code to find your average last spring frost and first fall frost dates — plus your full growing season window.</p>
+      </div>
+    </section>
+
+    <!-- ── Search Card (overlaps hero) ── -->
+    <div class="container">
+      <div class="search-card">
+        <h2>Find Your Frost Dates</h2>
+        <p>Covers Texas, New Mexico &amp; Oregon ZIP codes. Results are based on 30-year NOAA climate averages.</p>
+        <form class="zip-form" onsubmit="lookupZip(event)">
+          <input
+            id="zipInput"
+            class="zip-input"
+            type="text"
+            inputmode="numeric"
+            maxlength="5"
+            placeholder="e.g. 78701"
+            aria-label="Enter ZIP code"
+            autocomplete="postal-code"
+          />
+          <button class="zip-btn" type="submit">Find Dates →</button>
+        </form>
+        <div class="zip-error" id="zipError" role="alert">
+          <i data-lucide="alert-triangle"></i> <span id="zipErrorMsg">ZIP code not found. Try a nearby ZIP or check our coverage area below.</span>
+        </div>
+        <p class="zip-hint">Currently covers: Texas · New Mexico · Oregon &nbsp;|&nbsp; More states coming soon</p>
+      </div>
+    </div>
+
+    <!-- ── Results Panel ── -->
+    <div class="container">
+      <div class="results-panel" id="resultsPanel" aria-live="polite">
+
+        <div class="result-location">
+          <div>
+            <div class="result-city" id="resultCity">—</div>
+            <div class="result-state" id="resultState">—</div>
+          </div>
+          <div class="zone-badge" id="resultZone">Zone —</div>
+        </div>
+
+        <div class="result-body">
+
+          <!-- Season length summary -->
+          <div class="season-length-bar">
+            <div>
+              <div class="season-length-label">Frost-Free Growing Season</div>
+              <div class="season-length-desc" id="seasonDesc">—</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="season-length-days" id="seasonDays">— days</div>
+            </div>
+          </div>
+
+          <!-- Frost date cards -->
+          <div class="frost-cards">
+            <div class="frost-card frost-card--spring">
+              <div class="frost-card-icon"><i data-lucide="flower"></i></div>
+              <div class="frost-card-label">Average Last Spring Frost</div>
+              <div class="frost-card-date" id="lastFrostDate">—</div>
+              <div class="frost-card-sub">Safe to plant warm-season crops after this date</div>
+            </div>
+            <div class="frost-card frost-card--fall">
+              <div class="frost-card-icon"><i data-lucide="wind"></i></div>
+              <div class="frost-card-label">Average First Fall Frost</div>
+              <div class="frost-card-date" id="firstFrostDate">—</div>
+              <div class="frost-card-sub">Bring tender plants in or cover before this date</div>
+            </div>
+          </div>
+
+          <!-- 12-month timeline -->
+          <div class="timeline-section">
+            <div class="timeline-label">Your Growing Season at a Glance</div>
+            <div class="timeline-bar" id="timelineBar" role="img" aria-label="Growing season timeline"></div>
+            <div class="timeline-legend">
+              <div class="legend-item"><div class="legend-dot" style="background:#cbd5e1;"></div>Frost risk</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#fde68a;"></div>Shoulder (transition)</div>
+              <div class="legend-item"><div class="legend-dot" style="background:var(--green-light);"></div>Frost-free growing season</div>
+            </div>
+          </div>
+
+          <!-- Planting dates -->
+          <div class="planting-dates">
+            <div class="planting-dates-title">Key Planting Dates Derived from Your Frost Dates</div>
+            <div class="planting-grid">
+              <div class="planting-item">
+                <div class="planting-item-icon"><i data-lucide="thermometer"></i></div>
+                <div class="planting-item-date" id="startIndoors">—</div>
+                <div class="planting-item-label">Start tomatoes &amp; peppers indoors</div>
+              </div>
+              <div class="planting-item">
+                <div class="planting-item-icon"><i data-lucide="leaf"></i></div>
+                <div class="planting-item-date" id="coolSeason">—</div>
+                <div class="planting-item-label">Direct sow cool-season crops</div>
+              </div>
+              <div class="planting-item">
+                <div class="planting-item-icon"><i data-lucide="circle-dot"></i></div>
+                <div class="planting-item-date" id="transplantDate">—</div>
+                <div class="planting-item-label">Safe to transplant warm-season crops</div>
+              </div>
+              <div class="planting-item planting-item--fall">
+                <div class="planting-item-icon"><i data-lucide="cloud-snow"></i></div>
+                <div class="planting-item-date" id="fallPlanting">—</div>
+                <div class="planting-item-label">Start fall cool-season crops</div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /.result-body -->
+
+        <p style="font-size:0.75rem; color:var(--text-light); margin-top:10px; text-align:center;">
+          Dates are 30-year averages (NOAA normals). Actual frost dates vary year to year — always monitor local forecasts.
+        </p>
+
+      </div><!-- /.results-panel -->
+    </div>
+
+    <!-- ============================================================
+         ADSENSE SLOT 1: Leaderboard below tool
+         ============================================================ -->
+    <div class="ad-section ad-section--center" style="margin-top:40px;" aria-hidden="true">
+      <!-- AdSense: Leaderboard — 728×90 (responsive) -->
+      <div class="ad-slot ad-slot--leaderboard" style="max-width:728px;width:100%;">
+        <!-- Replace with:
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+        <span class="ad-placeholder-label">Advertisement — 728×90</span>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         HOW IT WORKS
+         ============================================================ -->
+    <section class="section section--alt" aria-labelledby="how-heading">
+      <div class="container">
+        <div class="text-center">
+          <span class="section-label">How It Works</span>
+          <h2 class="section-title" id="how-heading">Three Steps to a Better Garden</h2>
+          <p class="section-subtitle">No guesswork — just enter your ZIP and get a complete planting picture.</p>
+        </div>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h4>Enter Your ZIP Code</h4>
+            <p>Type your 5-digit ZIP code above. GardenCalc looks it up against 30-year NOAA climate averages for your exact location.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h4>See Your Frost Dates</h4>
+            <p>Instantly see your average last spring frost and first fall frost, your frost-free growing season length, and your USDA hardiness zone.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h4>Plan Your Garden</h4>
+            <p>Use the derived key planting dates — when to start seeds indoors, transplant, sow cool-season crops, and prep for fall.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ADSENSE SLOT 2: Mid-Page Rectangle
+         ============================================================ -->
+    <div class="ad-section ad-section--center" aria-hidden="true">
+      <!-- AdSense: Mid-Page Rectangle — 336×280 -->
+      <div class="ad-slot ad-slot--rectangle">
+        <!-- Replace with:
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="rectangle"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+        <span class="ad-placeholder-label">Advertisement — 336×280</span>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         FAQ
+         ============================================================ -->
+    <section class="section" aria-labelledby="faq-heading">
+      <div class="container" style="max-width:800px;">
+        <div class="text-center">
+          <span class="section-label">Common Questions</span>
+          <h2 class="section-title" id="faq-heading">Frost Date FAQ</h2>
+        </div>
+        <div class="faq-list" role="list">
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+              What is the "last frost date"?
+              <span class="faq-arrow">▼</span>
+            </button>
+            <div class="faq-answer">
+              The last frost date is the average calendar date after which a killing frost (28°F or below) is unlikely in spring. It's calculated from 30 years of NOAA weather station data. There's typically a 50% chance of frost on or before this date — so many gardeners wait 1–2 weeks past it before transplanting frost-sensitive plants like tomatoes.
+            </div>
+          </div>
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+              What is the "first fall frost date"?
+              <span class="faq-arrow">▼</span>
+            </button>
+            <div class="faq-answer">
+              The first fall frost date is the average date when temperatures first dip to 32°F or below in autumn. This signals the end of the warm growing season for frost-tender plants like tomatoes, basil, squash, and peppers. Plan to harvest or cover sensitive crops before this date.
+            </div>
+          </div>
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+              Are these dates guaranteed to be accurate?
+              <span class="faq-arrow">▼</span>
+            </button>
+            <div class="faq-answer">
+              No frost date is a guarantee — they are statistical averages based on historical data. In any given year, the actual frost dates may be earlier or later than the average. For important transplants, monitor local weather forecasts and be prepared to cover plants when frost is predicted. Microclimates (low-lying areas, urban heat islands, proximity to water) also affect local frost timing.
+            </div>
+          </div>
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+              How is the growing season length calculated?
+              <span class="faq-arrow">▼</span>
+            </button>
+            <div class="faq-answer">
+              The growing season is the number of days between the average last spring frost and the average first fall frost. For example, if your last frost is March 15 and your first frost is November 15, your growing season is approximately 245 days. This is the typical frost-free window in which you can grow warm-season crops outdoors without frost protection.
+            </div>
+          </div>
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+              What does the USDA Hardiness Zone mean?
+              <span class="faq-arrow">▼</span>
+            </button>
+            <div class="faq-answer">
+              The USDA Plant Hardiness Zone Map divides North America into 13 zones based on average annual minimum winter temperatures. Each zone represents a 10°F range. Zone 9a, for example, has average annual minimum temperatures between 20°F and 25°F. This zone rating is used on plant tags to indicate whether a perennial plant can survive winter in your area.
+            </div>
+          </div>
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+              When should I start seeds indoors?
+              <span class="faq-arrow">▼</span>
+            </button>
+            <div class="faq-answer">
+              Most warm-season crops (tomatoes, peppers, eggplant) should be started indoors 6–8 weeks before your last frost date. Crops like squash and cucumbers do best started 2–4 weeks before the last frost, or direct sown after it. Use the derived planting dates shown in your results as a starting point, and adjust based on the specific seed packet instructions for each variety.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ADSENSE SLOT 3: In-Content Leaderboard
+         ============================================================ -->
+    <div class="ad-section ad-section--center" aria-hidden="true">
+      <!-- AdSense: In-Content Leaderboard — 728×90 (responsive) -->
+      <div class="ad-slot ad-slot--leaderboard" style="max-width:728px;width:100%;">
+        <!-- Replace with:
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+        <span class="ad-placeholder-label">Advertisement — 728×90</span>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         CTA
+         ============================================================ -->
+    <section class="cta-banner" aria-labelledby="frost-cta-heading">
+      <div class="container">
+        <span class="section-label">What's Next?</span>
+        <h2 id="frost-cta-heading">Build Your Seed Starting Schedule</h2>
+        <p>Now that you know your frost dates, use our Seed Starting Schedule to get a week-by-week calendar for every plant you want to grow.</p>
+        <div class="cta-actions">
+          <a href="seed-starting-schedule.html" class="btn btn-lg" style="background:var(--gold);color:var(--text-dark);border-color:var(--gold);">
+            <i data-lucide="sprout"></i> Build My Seed Schedule
+          </a>
+          <a href="companion-planting.html" class="btn btn-lg hero-btn-secondary">
+            <i data-lucide="git-merge"></i> Companion Planting Guide
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ADSENSE SLOT 4: Bottom Leaderboard
+         ============================================================ -->
+    <div class="ad-section ad-section--center" aria-hidden="true">
+      <!-- AdSense: Bottom Leaderboard — 728×90 (responsive) -->
+      <div class="ad-slot ad-slot--leaderboard" style="max-width:728px;width:100%;">
+        <!-- Replace with:
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+        <span class="ad-placeholder-label">Advertisement — 728×90</span>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ============================================================
+       SITE FOOTER
+       ============================================================ -->
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="site-logo" style="margin-bottom:0;">
+            <div class="logo-icon"><i data-lucide="leaf"></i></div>
+            <span class="logo-text">Garden<span>Calc</span></span>
+          </a>
+          <p class="footer-tagline">Free, accurate gardening tools for every zone, every season.</p>
+          <div class="footer-social">
+            <a href="#" class="social-link" aria-label="Pinterest">Pinterest</a>
+            <a href="#" class="social-link" aria-label="Instagram">Instagram</a>
+            <a href="#" class="social-link" aria-label="Facebook">Facebook</a>
+            <a href="#" class="social-link" aria-label="YouTube">YouTube</a>
+          </div>
+          <p style="font-size:0.8rem;color:rgba(255,255,255,0.5);margin-top:18px;margin-bottom:0;">Get seasonal planting reminders:</p>
+          <form class="newsletter-form" onsubmit="return false;">
+            <input class="newsletter-input" type="email" placeholder="your@email.com" aria-label="Email for newsletter"/>
+            <button class="newsletter-btn" type="submit">Join</button>
+          </form>
+        </div>
+        <div class="footer-col">
+          <h5>Tools</h5>
+          <div class="footer-links">
+            <a href="frost-dates.html">Frost Date Calculator</a>
+            <a href="seed-starting-schedule.html">Seed Starting Schedule</a>
+            <a href="companion-planting.html">Companion Planting</a>
+            <a href="square-foot-planner.html">Square Foot Planner</a>
+            <a href="mulch-calculator.html">Mulch Calculator</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Learn</h5>
+          <div class="footer-links">
+            <a href="blog.html">Blog</a>
+            <a href="blog-beginners-guide.html">Beginner Guides</a>
+            <a href="blog-raised-bed-gardening.html">Raised Bed Gardening</a>
+            <a href="blog-composting.html">Composting</a>
+            <a href="blog-organic-pest-control.html">Organic Pest Control</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <div class="footer-links">
+            <a href="about.html">About GardenCalc</a>
+            <a href="about.html#contact">Contact Us</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Use</a>
+            <a href="sitemap.html">Sitemap</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 GardenCalc. All rights reserved. For informational purposes only.</p>
+        <div class="footer-legal">
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="about.html#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT: ZIP CODE DATABASE + TOOL LOGIC
+       ============================================================ -->
+  <script>
+  // ──────────────────────────────────────────────────────────────
+  //  FROST DATE DATABASE  —  NOAA 30-Year Climate Normals (1991–2020)
+  //  Covers all Texas, New Mexico & Oregon ZIP codes.
+  //  Dates = average last spring frost / first fall frost.
+  // ──────────────────────────────────────────────────────────────
+  const FROST_DATA = (function () {
+    const db = {};
+
+    // range(fromZip, toZip, city, state, zone, lastFrost, firstFrost)
+    function range(from, to, city, state, zone, lf, ff) {
+      const d = { city, state, zone, lastFrost: lf, firstFrost: ff };
+      for (let i = from; i <= to; i++) db[String(i).padStart(5, '0')] = d;
+    }
+    // zips([list], city, state, zone, lastFrost, firstFrost)  — specific overrides
+    function zips(list, city, state, zone, lf, ff) {
+      const d = { city, state, zone, lastFrost: lf, firstFrost: ff };
+      list.forEach(z => db[String(z).padStart(5, '0')] = d);
+    }
+
+    // ════════════════════════════════════════════════════════════
+    //  STEP 1 — BROAD STATE DEFAULTS  (applied first; overridden below)
+    // ════════════════════════════════════════════════════════════
+    range(75001, 75999, 'North Texas',    'TX', '8a', 'Mar 15', 'Nov 15');
+    range(76001, 76999, 'Central Texas',  'TX', '8a', 'Mar 15', 'Nov 15');
+    range(77001, 77999, 'SE Texas',       'TX', '9a', 'Feb 1',  'Dec 5');
+    range(78001, 78999, 'South Texas',    'TX', '8b', 'Feb 20', 'Dec 1');
+    range(79001, 79999, 'West Texas',     'TX', '7b', 'Mar 20', 'Nov 10');
+    range(87001, 87999, 'New Mexico',     'NM', '7b', 'Apr 15', 'Oct 15');
+    range(88001, 88999, 'New Mexico',     'NM', '8a', 'Mar 15', 'Nov 15');
+    range(97001, 97999, 'Oregon',         'OR', '8b', 'Mar 20', 'Nov 10');
+
+    // ════════════════════════════════════════════════════════════
+    //  STEP 2 — CITY & REGIONAL OVERRIDES  (later calls win)
+    // ════════════════════════════════════════════════════════════
+
+    // ── TX 75xxx  Dallas · NE Texas · East Texas ─────────────────
+
+    // Dallas city
+    range(75201, 75399, 'Dallas', 'TX', '8a', 'Mar 15', 'Nov 15');
+
+    // Inner Dallas suburbs (Zone 8a — same dates)
+    range(75001, 75002, 'Addison',                    'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75006, 75007, 'Carrollton',                 'TX', '8a', 'Mar 15', 'Nov 15');
+    zips([75010,75011],  'Carrollton',                'TX', '8a', 'Mar 15', 'Nov 15');
+    zips([75013],        'Allen',                     'TX', '8a', 'Mar 15', 'Nov 15');
+    zips([75019,75020],  'Coppell',                   'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75022, 75029, 'Flower Mound / Lewisville',  'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75033, 75036, 'Frisco',                     'TX', '8a', 'Mar 15', 'Nov 15');
+    zips([75038,75039],  'Irving',                    'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75040, 75044, 'Garland',                    'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75048, 75054, 'Grand Prairie',              'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75056, 75057, 'The Colony',                 'TX', '8a', 'Mar 15', 'Nov 15');
+    zips([75060,75061,75062,75063], 'Irving',         'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75065, 75068, 'Lake Dallas / Little Elm',   'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75069, 75072, 'McKinney',                   'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75074, 75075, 'Plano',                      'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75077, 75078, 'Lewisville / Prosper',       'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75080, 75083, 'Richardson',                 'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75085, 75098, 'Rowlett / Wylie / Sachse',   'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75101, 75180, 'South Dallas Suburbs',       'TX', '8a', 'Mar 15', 'Nov 15');
+
+    // NE Texas
+    range(75401, 75460, 'Greenville / Hunt County',   'TX', '8a', 'Mar 15', 'Nov 15');
+    range(75461, 75499, 'Paris / Lamar County',       'TX', '7b', 'Mar 20', 'Nov 10');
+    range(75501, 75507, 'Texarkana',                  'TX', '7b', 'Mar 20', 'Nov 10');
+    range(75550, 75599, 'NE Texas Rural',             'TX', '7b', 'Mar 20', 'Nov 10');
+
+    // East Texas
+    range(75601, 75672, 'Longview / Marshall',              'TX', '8a', 'Mar 10', 'Nov 20');
+    range(75701, 75799, 'Tyler',                            'TX', '8a', 'Mar 10', 'Nov 20');
+    range(75801, 75860, 'Athens / Palestine',               'TX', '8a', 'Mar 10', 'Nov 20');
+    range(75861, 75979, 'Lufkin / Nacogdoches / Piney Woods','TX','8b', 'Mar 5',  'Nov 25');
+
+    // ── TX 76xxx  Fort Worth · Waco · Abilene · San Angelo ───────
+
+    range(76001, 76099, 'Arlington',                  'TX', '8a', 'Mar 15', 'Nov 15');
+    range(76100, 76180, 'Fort Worth',                 'TX', '8a', 'Mar 15', 'Nov 15');
+    range(76200, 76266, 'Denton',                     'TX', '8a', 'Mar 15', 'Nov 15');
+    range(76267, 76299, 'Gainesville / Sherman',      'TX', '8a', 'Mar 20', 'Nov 10');
+    range(76300, 76399, 'Wichita Falls',              'TX', '7b', 'Mar 25', 'Nov 5');
+    range(76400, 76499, 'Stephenville / Graham',      'TX', '7b', 'Mar 20', 'Nov 10');
+    range(76500, 76599, 'Temple / Killeen / Belton',  'TX', '8a', 'Mar 10', 'Nov 20');
+    range(76600, 76712, 'Waco',                       'TX', '8a', 'Mar 10', 'Nov 20');
+    range(76800, 76876, 'Brownwood / Brady',          'TX', '7b', 'Mar 20', 'Nov 10');
+    range(76900, 76979, 'San Angelo',                 'TX', '7b', 'Mar 20', 'Nov 10');
+
+    // ── TX 77xxx  Houston Metro · Beaumont · Bryan/CS · Victoria ─
+
+    range(77001, 77099, 'Houston',                         'TX', '9a', 'Feb 1',  'Dec 5');
+    range(77201, 77212, 'Houston',                         'TX', '9a', 'Feb 1',  'Dec 5');
+    range(77301, 77320, 'Conroe',                          'TX', '9a', 'Feb 10', 'Dec 1');
+    range(77325, 77347, 'Humble / Kingwood',               'TX', '9a', 'Feb 1',  'Dec 5');
+    range(77350, 77372, 'Livingston / Coldspring',         'TX', '8b', 'Feb 15', 'Nov 25');
+    range(77373, 77396, 'Spring / Klein',                  'TX', '9a', 'Feb 1',  'Dec 5');
+    range(77400, 77499, 'Katy / Richmond / Sugar Land',    'TX', '9a', 'Feb 1',  'Dec 5');
+    range(77501, 77536, 'Pasadena / Deer Park / League City','TX','9a','Feb 1',  'Dec 5');
+    range(77539, 77598, 'Galveston / Pearland / Friendswood','TX','9a','Feb 1',  'Dec 5');
+    range(77600, 77720, 'Beaumont / Port Arthur',          'TX', '9a', 'Feb 1',  'Dec 5');
+    range(77800, 77880, 'Bryan / College Station',         'TX', '8b', 'Mar 1',  'Nov 25');
+    range(77900, 77979, 'Victoria',                        'TX', '9a', 'Feb 10', 'Dec 1');
+
+    // ── TX 78xxx  SA · Austin · South TX · Corpus · RGV ─────────
+
+    // SW Texas deep south & Laredo
+    range(78001, 78039, 'Southwest Texas',           'TX', '9a', 'Feb 1',  'Dec 5');
+    range(78040, 78046, 'Laredo',                    'TX', '9a', 'Jan 25', 'Dec 10');
+    range(78047, 78099, 'Southwest Texas',           'TX', '9a', 'Feb 1',  'Dec 5');
+
+    // San Antonio
+    range(78100, 78199, 'San Antonio Suburbs',       'TX', '8b', 'Feb 20', 'Dec 1');
+    range(78200, 78299, 'San Antonio',               'TX', '8b', 'Feb 20', 'Dec 1');
+
+    // South TX / Corpus
+    range(78300, 78399, 'South Texas / Coastal Bend','TX', '9a', 'Feb 1',  'Dec 5');
+    range(78401, 78418, 'Corpus Christi',            'TX', '9a', 'Feb 1',  'Dec 5');
+
+    // RGV broad (9b) — then override specific cities below
+    range(78419, 78599, 'Rio Grande Valley',         'TX', '9b', 'Jan 15', 'Dec 15');
+    range(78520, 78526, 'Brownsville',               'TX','10a', 'Jan 5',  'Dec 25');
+    range(78550, 78558, 'Harlingen',                 'TX', '9b', 'Jan 15', 'Dec 15');
+    range(78500, 78519, 'McAllen',                   'TX', '9b', 'Jan 15', 'Dec 15');
+
+    // Austin area 786xx — broad fallback first, then city names
+    range(78600, 78699, 'Austin Area',               'TX', '8b', 'Feb 15', 'Dec 1');
+    range(78700, 78799, 'Austin',                    'TX', '8b', 'Feb 15', 'Dec 1');
+
+    // Austin-area city name overrides (applied after broad ranges above)
+    zips([78610],                  'Buda',             'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78613,78630],            'Cedar Park',       'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78619],                  'Driftwood',        'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78620],                  'Dripping Springs', 'TX', '8b', 'Feb 28', 'Nov 28');
+    zips([78621],                  'Elgin',            'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78624,78625],            'Fredericksburg',   'TX', '8a', 'Mar 15', 'Nov 15');
+    zips([78626,78627,78628,78633],'Georgetown',       'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78634],                  'Hutto',            'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78635,78636],            'Johnson City / Hye','TX','8a','Mar 15', 'Nov 15');
+    zips([78639,78643,78657],      'Lake LBJ / Llano', 'TX', '8a', 'Mar 15', 'Nov 15');
+    zips([78640],                  'Kyle',             'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78641,78646],            'Leander',          'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78642],                  'Liberty Hill',     'TX', '8a', 'Mar 1',  'Nov 20');
+    zips([78644],                  'Lockhart',         'TX', '8b', 'Feb 20', 'Dec 1');
+    zips([78645],                  'Lago Vista',       'TX', '8b', 'Feb 20', 'Nov 28');
+    zips([78648],                  'Luling',           'TX', '8b', 'Feb 20', 'Dec 1');
+    zips([78650],                  'McDade',           'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78651,78652],            'Manchaca',         'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78653],                  'Manor',            'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78654],                  'Marble Falls',     'TX', '8a', 'Mar 1',  'Nov 20');
+    zips([78660],                  'Pflugerville',     'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78691],                  'Pflugerville',     'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78664,78665,78680,78681,78682],'Round Rock', 'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78666,78667],            'San Marcos',       'TX', '8b', 'Feb 15', 'Dec 1');
+    zips([78669],                  'Spicewood',        'TX', '8b', 'Feb 20', 'Nov 28');
+    zips([78676],                  'Wimberley',        'TX', '8b', 'Feb 20', 'Nov 28');
+    zips([78717,78718,78719,78720,78721,78722,78723,78724,78725,78726,78727,
+          78728,78729,78730,78731,78732,78733,78734,78735,78736,78737,78738,
+          78739,78741,78742,78744,78745,78746,78747,78748,78749,78750,78751,
+          78752,78753,78754,78756,78757,78758,78759], 'Austin', 'TX', '8b', 'Feb 15', 'Dec 1');
+
+    // Del Rio / Eagle Pass
+    range(78800, 78879, 'Del Rio / Eagle Pass',      'TX', '8b', 'Feb 1',  'Dec 5');
+    range(78880, 78899, 'Pecos / Fort Stockton',     'TX', '7b', 'Mar 20', 'Nov 10');
+
+    // South Central TX (Gonzales, Cuero, Seguin, Shiner area)
+    range(78900, 78999, 'South Central Texas',       'TX', '8b', 'Feb 20', 'Dec 1');
+
+    // ── TX 79xxx  Panhandle · Lubbock · Abilene · Midland · El Paso
+
+    range(79001, 79099, 'Texas Panhandle',           'TX', '7a', 'Apr 15', 'Oct 28');
+    range(79100, 79124, 'Amarillo',                  'TX', '7a', 'Apr 15', 'Oct 28');
+    range(79200, 79261, 'Rolling Plains',            'TX', '7a', 'Apr 10', 'Nov 1');
+    range(79300, 79399, 'Lubbock Area',              'TX', '7a', 'Apr 1',  'Nov 1');
+    range(79400, 79424, 'Lubbock',                   'TX', '7a', 'Apr 1',  'Nov 1');
+    range(79500, 79607, 'Abilene',                   'TX', '7b', 'Mar 20', 'Nov 10');
+    range(79700, 79799, 'Midland / Odessa',          'TX', '7b', 'Mar 20', 'Nov 10');
+    range(79800, 79899, 'Big Bend / Trans-Pecos',    'TX', '7a', 'Mar 25', 'Nov 5');
+    range(79900, 79999, 'El Paso',                   'TX', '8a', 'Mar 15', 'Nov 15');
+
+    // ── NM 87xxx ─────────────────────────────────────────────────
+
+    range(87001, 87099, 'North Central New Mexico',  'NM', '6b', 'May 1',  'Oct 10');
+    range(87100, 87199, 'Albuquerque',               'NM', '7b', 'Apr 15', 'Oct 15');
+    zips([87124,87144],            'Rio Rancho',       'NM', '7b', 'Apr 15', 'Oct 15');
+    zips([87004,87031,87068],      'Bernalillo / Los Lunas','NM','7b','Apr 15','Oct 15');
+    range(87300, 87399, 'Gallup',                    'NM', '6a', 'May 1',  'Oct 5');
+    range(87400, 87499, 'Farmington',                'NM', '6a', 'May 10', 'Oct 5');
+    range(87500, 87509, 'Santa Fe',                  'NM', '6b', 'May 1',  'Oct 10');
+    zips([87544,87545],            'Los Alamos',       'NM', '6a', 'May 1',  'Oct 10');
+    zips([87532,87533],            'Española',         'NM', '6b', 'May 1',  'Oct 10');
+    range(87510, 87599, 'Northern New Mexico',        'NM', '5b', 'May 20', 'Sep 25');
+    zips([87571,87529,87514,87519,87523,87524,87564],'Taos','NM','5b','May 20','Sep 25');
+    range(87700, 87799, 'NE New Mexico / Raton',     'NM', '6a', 'May 5',  'Oct 5');
+    range(87800, 87839, 'Socorro',                   'NM', '7b', 'Apr 10', 'Oct 25');
+    range(87840, 87899, 'Southwest New Mexico',      'NM', '7a', 'Apr 15', 'Oct 20');
+    range(87900, 87999, 'Truth or Consequences',     'NM', '8a', 'Mar 20', 'Nov 5');
+
+    // ── NM 88xxx ─────────────────────────────────────────────────
+
+    range(88001, 88099, 'Las Cruces',                'NM', '8a', 'Mar 15', 'Nov 15');
+    range(88030, 88033, 'Deming',                    'NM', '8a', 'Mar 20', 'Nov 5');
+    range(88100, 88109, 'Clovis',                    'NM', '7a', 'Apr 10', 'Oct 25');
+    range(88110, 88199, 'Portales / East NM',        'NM', '7a', 'Apr 10', 'Oct 25');
+    range(88200, 88209, 'Roswell',                   'NM', '7b', 'Apr 5',  'Oct 28');
+    range(88210, 88219, 'Artesia',                   'NM', '7b', 'Apr 1',  'Oct 30');
+    range(88220, 88239, 'Carlsbad',                  'NM', '8a', 'Mar 20', 'Nov 5');
+    range(88240, 88279, 'Hobbs',                     'NM', '7b', 'Mar 25', 'Nov 1');
+    range(88300, 88319, 'Alamogordo',                'NM', '7b', 'Apr 5',  'Oct 28');
+    range(88320, 88399, 'Ruidoso / Lincoln County',  'NM', '6a', 'May 1',  'Oct 10');
+    range(88400, 88499, 'Tucumcari',                 'NM', '7a', 'Apr 8',  'Oct 25');
+    zips([88061,88062,88065],      'Silver City',      'NM', '7a', 'Apr 15', 'Oct 20');
+    range(88500, 88599, 'El Paso (Fort Bliss)',       'TX', '8a', 'Mar 15', 'Nov 15');
+
+    // ── OR  Oregon ────────────────────────────────────────────────
+
+    // Coastal Oregon (97100–97199)
+    range(97100, 97199, 'Coastal Oregon',              'OR', '9a', 'Mar 1',  'Dec 1');
+
+    // Portland Metro (97201–97299)
+    range(97201, 97299, 'Portland',                    'OR', '9a', 'Mar 15', 'Nov 15');
+
+    // Salem (97301–97399)
+    range(97301, 97399, 'Salem',                       'OR', '8b', 'Mar 20', 'Nov 10');
+
+    // Eugene (97401–97499)
+    range(97401, 97499, 'Eugene',                      'OR', '8b', 'Mar 25', 'Nov 5');
+
+    // Southern Oregon / Medford (97501–97599)
+    range(97501, 97599, 'Medford / Southern Oregon',   'OR', '8a', 'Apr 1',  'Nov 1');
+
+    // Bend / Central Oregon (97701–97799)
+    range(97701, 97799, 'Bend / Central Oregon',       'OR', '5b', 'May 15', 'Sep 25');
+
+    // Eastern Oregon (97801–97999)
+    range(97801, 97999, 'Eastern Oregon',              'OR', '6a', 'May 1',  'Oct 1');
+
+    return db;
+  })();
+
+  // ──────────────────────────────────────────────────────────────
+  //  DATE UTILITIES
+  // ──────────────────────────────────────────────────────────────
+  const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const MONTH_IDX   = { Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11 };
+
+  function parseDate(str) {
+    // "Mar 15" → {month: 2, day: 15}
+    const [m, d] = str.split(' ');
+    return { month: MONTH_IDX[m], day: parseInt(d, 10) };
+  }
+
+  function dayOfYear(month, day) {
+    const daysInMonth = [31,29,31,30,31,30,31,31,30,31,30,31];
+    let doy = day;
+    for (let i = 0; i < month; i++) doy += daysInMonth[i];
+    return doy;
+  }
+
+  function addDays(dateStr, days) {
+    const { month, day } = parseDate(dateStr);
+    const dt = new Date(2024, month, day + days);
+    return MONTH_NAMES[dt.getMonth()] + ' ' + dt.getDate();
+  }
+
+  function daysBetween(dateStr1, dateStr2) {
+    const d1 = parseDate(dateStr1);
+    const d2 = parseDate(dateStr2);
+    const dt1 = new Date(2024, d1.month, d1.day);
+    const dt2 = new Date(2024, d2.month, d2.day);
+    return Math.round((dt2 - dt1) / 86400000);
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  //  TIMELINE BUILDER
+  // ──────────────────────────────────────────────────────────────
+  const MONTH_ABBR = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const DAYS_PER_MONTH = [31,28,31,30,31,30,31,31,30,31,30,31];
+
+  function buildTimeline(lastFrostStr, firstFrostStr) {
+    const lf = parseDate(lastFrostStr);
+    const ff = parseDate(firstFrostStr);
+    const lfDoy = dayOfYear(lf.month, lf.day);
+    const ffDoy = dayOfYear(ff.month, ff.day);
+    const bar   = document.getElementById('timelineBar');
+    bar.innerHTML = '';
+
+    let doy = 0;
+    MONTH_ABBR.forEach((abbr, i) => {
+      const monthStart = doy + 1;
+      const monthEnd   = doy + DAYS_PER_MONTH[i];
+      const midDoy     = doy + Math.round(DAYS_PER_MONTH[i] / 2);
+
+      let cls;
+      if (midDoy < lfDoy - 7 || midDoy > ffDoy + 7) {
+        cls = 'timeline-month--frozen';   // clear frost season
+      } else if (midDoy >= lfDoy + 7 && midDoy <= ffDoy - 7) {
+        cls = 'timeline-month--growing';  // well inside frost-free window
+      } else {
+        cls = 'timeline-month--shoulder'; // transition zone
+      }
+
+      const seg = document.createElement('div');
+      seg.className = 'timeline-month ' + cls;
+      seg.textContent = abbr;
+      seg.title = abbr + ': ' + (cls === 'timeline-month--growing' ? 'Frost-free' : cls === 'timeline-month--shoulder' ? 'Frost transition' : 'Frost risk');
+      bar.appendChild(seg);
+      doy += DAYS_PER_MONTH[i];
+    });
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  //  MAIN LOOKUP
+  // ──────────────────────────────────────────────────────────────
+  function lookupZip(e) {
+    e.preventDefault();
+    const input   = document.getElementById('zipInput');
+    const errorEl = document.getElementById('zipError');
+    const msgEl   = document.getElementById('zipErrorMsg');
+    const zip     = input.value.trim().replace(/\D/g, '').padStart(5, '0');
+
+    input.classList.remove('error');
+    errorEl.classList.remove('visible');
+
+    if (zip.length !== 5) {
+      input.classList.add('error');
+      msgEl.textContent = 'Please enter a valid 5-digit ZIP code.';
+      errorEl.classList.add('visible');
+      return;
+    }
+
+    const data = FROST_DATA[zip];
+    if (!data) {
+      input.classList.add('error');
+      msgEl.textContent = 'ZIP code ' + zip + ' not found. GardenCalc currently covers Texas, New Mexico, and Oregon. Try a nearby ZIP code from a major city.';
+      errorEl.classList.add('visible');
+      document.getElementById('resultsPanel').classList.remove('visible');
+      return;
+    }
+
+    // Fill location header
+    document.getElementById('resultCity').textContent  = data.city + ', ' + data.state;
+    document.getElementById('resultState').textContent = 'ZIP ' + zip + ' · ' + data.state;
+    document.getElementById('resultZone').textContent  = 'USDA Zone ' + data.zone;
+
+    // Fill frost dates
+    document.getElementById('lastFrostDate').textContent  = data.lastFrost;
+    document.getElementById('firstFrostDate').textContent = data.firstFrost;
+
+    // Growing season
+    const days = daysBetween(data.lastFrost, data.firstFrost);
+    document.getElementById('seasonDays').textContent = days + ' days';
+    document.getElementById('seasonDesc').textContent =
+      data.lastFrost + ' → ' + data.firstFrost + ' (last spring frost to first fall frost)';
+
+    // Derived planting dates
+    document.getElementById('startIndoors').textContent  = addDays(data.lastFrost, -56);  // 8 wks before
+    document.getElementById('coolSeason').textContent    = addDays(data.lastFrost, -28);  // 4 wks before
+    document.getElementById('transplantDate').textContent = data.lastFrost;
+    document.getElementById('fallPlanting').textContent  = addDays(data.firstFrost, -56); // 8 wks before
+
+    // Build timeline
+    buildTimeline(data.lastFrost, data.firstFrost);
+
+    // Show results
+    const panel = document.getElementById('resultsPanel');
+    panel.classList.add('visible');
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // Only allow digits in ZIP field
+  document.getElementById('zipInput').addEventListener('input', function () {
+    this.value = this.value.replace(/\D/g, '').slice(0, 5);
+  });
+
+  // ──────────────────────────────────────────────────────────────
+  //  UI HELPERS
+  // ──────────────────────────────────────────────────────────────
+  function toggleMobileNav() {
+    document.getElementById('mobileNav').classList.toggle('open');
+  }
+  document.querySelectorAll('.mobile-nav .nav-link').forEach(l =>
+    l.addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open'))
+  );
+  document.addEventListener('click', function (e) {
+    const nav = document.getElementById('mobileNav');
+    const btn = document.querySelector('.hamburger');
+    if (nav.classList.contains('open') && !nav.contains(e.target) && !btn.contains(e.target))
+      nav.classList.remove('open');
+  });
+
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+    btn.setAttribute('aria-expanded', !isOpen);
+  }
+  </script>
+
+  <script>lucide.createIcons();</script>
+</body>
+</html>

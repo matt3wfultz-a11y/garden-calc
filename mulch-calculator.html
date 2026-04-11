@@ -1,0 +1,2034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free mulch and compost calculator for garden beds. Calculate cubic yards, cubic feet, bags, and weight needed for rectangular, circular, and irregular shaped beds." />
+  <title>Mulch &amp; Compost Calculator — GardenCalc</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" />
+
+  <!-- ============================================================
+       ADSENSE: Publisher Script
+       Replace ca-pub-XXXXXXXXXX with your Publisher ID
+       ============================================================ -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossorigin="anonymous"></script> -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* ── Mulch Calculator page styles ────────────────────────── */
+
+    /* ── Calculator wrapper ──────────────────────────────────── */
+    .mc-section {
+      padding: 48px 0 56px;
+      background: var(--cream);
+    }
+
+    /* ── Tab bar ─────────────────────────────────────────────── */
+    .mc-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid #e0e7df;
+      margin-bottom: 32px;
+    }
+    .mc-tab {
+      position: relative;
+      padding: 14px 28px;
+      font-size: 0.97rem;
+      font-weight: 600;
+      font-family: inherit;
+      color: var(--text-light);
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color 0.18s;
+      border-radius: 0;
+      outline: none;
+    }
+    .mc-tab::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: -2px;
+      height: 3px;
+      background: var(--green-mid);
+      border-radius: 2px 2px 0 0;
+      opacity: 0;
+      transition: opacity 0.18s;
+    }
+    .mc-tab.active {
+      color: var(--green-dark);
+      font-weight: 800;
+    }
+    .mc-tab.active::after { opacity: 1; }
+    .mc-tab:hover:not(.active) { color: var(--green-mid); }
+
+    /* ── Calculator card ─────────────────────────────────────── */
+    .mc-card {
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.07);
+      border-radius: var(--radius-lg);
+      padding: 36px 40px 40px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      max-width: 780px;
+    }
+    @media (max-width: 600px) {
+      .mc-card { padding: 24px 18px 28px; }
+    }
+
+    .mc-field-group { margin-bottom: 28px; }
+    .mc-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 12px;
+    }
+
+    /* ── Shape cards ─────────────────────────────────────────── */
+    .mc-shape-cards {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .mc-shape-card {
+      flex: 1;
+      min-width: 110px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 18px 12px 14px;
+      background: var(--cream);
+      border: 2px solid #dde5db;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      transition: border-color 0.17s, background 0.17s, box-shadow 0.17s;
+    }
+    .mc-shape-card svg { display: block; }
+    .mc-shape-card:hover {
+      border-color: var(--green-light);
+      background: #f0faf4;
+    }
+    .mc-shape-card.active {
+      border-color: var(--green-mid);
+      background: #edf6f1;
+      box-shadow: 0 0 0 3px rgba(45,134,83,0.12);
+      color: var(--green-dark);
+    }
+
+    /* ── Shape-specific inputs ───────────────────────────────── */
+    .mc-shape-inputs { margin-bottom: 28px; }
+    .mc-input-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .mc-input-row .mc-field { flex: 1; min-width: 130px; }
+
+    .mc-field { margin-bottom: 0; }
+    .mc-field-label {
+      display: block;
+      font-size: 0.87rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 7px;
+    }
+    .mc-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #dde0db;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-family: inherit;
+      color: var(--text-dark);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.17s, box-shadow 0.17s;
+      box-sizing: border-box;
+    }
+    .mc-input:focus {
+      border-color: var(--green-mid);
+      box-shadow: 0 0 0 3px rgba(45,134,83,0.1);
+    }
+    /* hide number spinner */
+    .mc-input[type="number"]::-webkit-inner-spin-button,
+    .mc-input[type="number"]::-webkit-outer-spin-button { opacity: 0.4; }
+
+    /* ── Irregular bed hint box ──────────────────────────────── */
+    .mc-irreg-hint {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      background: #f8faf7;
+      border: 1px solid #d4e8cc;
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+    .mc-irreg-diagram { flex-shrink: 0; }
+    .mc-irreg-text {
+      font-size: 0.84rem;
+      color: var(--text-light);
+      line-height: 1.55;
+    }
+    .mc-irreg-text strong { color: var(--text-dark); }
+
+    /* ── Select ──────────────────────────────────────────────── */
+    .mc-select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #dde0db;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-family: inherit;
+      color: var(--text-dark);
+      background: var(--white);
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+      box-sizing: border-box;
+      transition: border-color 0.17s, box-shadow 0.17s;
+    }
+    .mc-select:focus {
+      border-color: var(--green-mid);
+      box-shadow: 0 0 0 3px rgba(45,134,83,0.1);
+    }
+
+    /* ── Depth hint ──────────────────────────────────────────── */
+    .mc-depth-hint {
+      margin-top: 8px;
+      font-size: 0.82rem;
+      color: var(--green-dark);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 1.2em;
+    }
+    .mc-depth-hint svg { flex-shrink: 0; }
+
+    /* ── Divider between field groups ────────────────────────── */
+    .mc-divider {
+      border: none;
+      border-top: 1px solid #eaede9;
+      margin: 28px 0;
+    }
+
+    /* ── Calculate button ────────────────────────────────────── */
+    .mc-calc-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 32px;
+      padding: 14px 36px;
+      background: var(--green-mid);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.18s, transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 2px 8px rgba(45,134,83,0.25);
+    }
+    .mc-calc-btn:hover {
+      background: var(--green-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(45,134,83,0.3);
+    }
+    .mc-calc-btn svg { flex-shrink: 0; }
+
+    /* ── Results section ─────────────────────────────────────── */
+    .mc-results-section {
+      display: none;
+      padding: 0 0 60px;
+      background: var(--cream);
+    }
+    .mc-results-section.visible { display: block; }
+
+    .mc-results-layout {
+      display: grid;
+      grid-template-columns: 1fr 336px;
+      gap: 40px;
+      align-items: start;
+    }
+    @media (max-width: 960px) {
+      .mc-results-layout { grid-template-columns: 1fr; }
+      .mc-results-ad { order: 10; }
+    }
+
+    /* Results header row */
+    .mc-results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+    .mc-results-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--green-dark);
+      margin: 0;
+    }
+    .mc-results-meta {
+      font-size: 0.82rem;
+      color: var(--text-light);
+      margin: 0 0 22px;
+    }
+    .mc-results-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Buffer toggle */
+    .mc-toggle-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      cursor: pointer;
+      user-select: none;
+      padding: 8px 14px;
+      background: var(--white);
+      border: 1.5px solid #dde0db;
+      border-radius: 50px;
+      transition: border-color 0.15s;
+    }
+    .mc-toggle-label:has(input:checked) {
+      border-color: var(--green-mid);
+      color: var(--green-dark);
+    }
+    .mc-toggle-label input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      accent-color: var(--green-mid);
+      cursor: pointer;
+      margin: 0;
+    }
+
+    /* Action buttons */
+    .mc-recalc-btn,
+    .mc-print-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-size: 0.83rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .mc-recalc-btn {
+      background: var(--white);
+      color: var(--green-dark);
+      border: 1.5px solid var(--green-dark);
+    }
+    .mc-recalc-btn:hover { background: #edf6f1; }
+    .mc-print-btn {
+      background: var(--white);
+      color: var(--text-dark);
+      border: 1.5px solid #ccc;
+    }
+    .mc-print-btn:hover { background: #f5f5f5; }
+
+    /* Result cards grid */
+    .mc-result-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 600px) {
+      .mc-result-cards { grid-template-columns: repeat(2, 1fr); }
+    }
+    .mc-result-card {
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.07);
+      border-radius: var(--radius-md);
+      padding: 20px 14px 16px;
+      text-align: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .mc-result-card--accent {
+      border-color: var(--green-light);
+      background: #f0faf4;
+    }
+    .mc-result-value {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--green-dark);
+      font-family: var(--font-display);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .mc-result-label {
+      font-size: 0.73rem;
+      color: var(--text-light);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+    .mc-result-sub {
+      font-size: 0.74rem;
+      color: var(--text-light);
+      margin-top: 3px;
+    }
+
+    /* Cost estimate */
+    .mc-cost-section {
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.07);
+      border-radius: var(--radius-md);
+      padding: 22px 26px 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .mc-cost-heading {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-light);
+      margin-bottom: 10px;
+    }
+    .mc-cost-range {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .mc-cost-low  { font-size: 1.9rem; font-weight: 800; color: var(--green-dark); font-family: var(--font-display); }
+    .mc-cost-sep  { font-size: 1rem; color: var(--text-light); }
+    .mc-cost-high { font-size: 1.9rem; font-weight: 800; color: var(--text-dark); font-family: var(--font-display); }
+    .mc-cost-note { font-size: 0.8rem; color: var(--text-light); line-height: 1.5; margin: 0; }
+
+    /* Shopping tip */
+    .mc-tip-box {
+      background: #f2faf5;
+      border: 1px solid #c2e0cc;
+      border-left: 4px solid var(--green-mid);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      font-size: 0.86rem;
+      color: var(--text-dark);
+      line-height: 1.65;
+    }
+    .mc-tip-box strong { color: var(--green-dark); }
+
+    /* Ad slot in results */
+    .mc-results-ad {
+      position: sticky;
+      top: 16px;
+    }
+
+    /* ── Guide section wrapper ───────────────────────────────── */
+    .mc-guide-section { padding: 56px 0 64px; background: var(--white); border-top: 1px solid #e8ede6; }
+
+    /* ── Guide panel (each tab's content) ───────────────────── */
+    .mc-guide-panel { display: none; }
+    .mc-guide-panel.visible { display: block; }
+
+    .mc-guide-heading {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--green-dark);
+      margin: 0 0 6px;
+    }
+    .mc-guide-sub {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin: 0 0 28px;
+    }
+
+    /* ── Comparison table ────────────────────────────────────── */
+    .mc-tbl-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius-md);
+      border: 1px solid #dde5db;
+      margin-bottom: 40px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .mc-tbl {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      min-width: 600px;
+    }
+    .mc-tbl thead th {
+      background: var(--green-dark);
+      color: #fff;
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .mc-tbl thead th:first-child { border-radius: var(--radius-md) 0 0 0; }
+    .mc-tbl thead th:last-child  { border-radius: 0 var(--radius-md) 0 0; }
+    .mc-tbl tbody tr:nth-child(even) td { background: #f7faf6; }
+    .mc-tbl tbody td {
+      padding: 11px 16px;
+      border-bottom: 1px solid #eaede8;
+      vertical-align: top;
+      color: var(--text-dark);
+      line-height: 1.5;
+    }
+    .mc-tbl tbody tr:last-child td { border-bottom: none; }
+    .mc-tbl tbody td:first-child { font-weight: 700; color: var(--green-dark); white-space: nowrap; }
+    .mc-tbl-depth { color: var(--green-dark); font-weight: 700; }
+    .mc-tbl-pro  { color: #166534; }
+    .mc-tbl-con  { color: #9a3412; }
+
+    /* ── How-to steps ────────────────────────────────────────── */
+    .mc-howto {
+      background: var(--cream);
+      border-radius: var(--radius-lg);
+      padding: 32px 36px;
+      margin-bottom: 0;
+    }
+    @media (max-width: 600px) { .mc-howto { padding: 22px 18px; } }
+    .mc-howto-heading {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--green-dark);
+      margin: 0 0 22px;
+    }
+    .mc-steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 16px; }
+    .mc-step  { display: flex; gap: 16px; align-items: flex-start; }
+    .mc-step-num {
+      flex-shrink: 0;
+      width: 32px; height: 32px;
+      background: var(--green-mid);
+      color: #fff;
+      border-radius: 50%;
+      font-weight: 800;
+      font-size: 0.88rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .mc-step-body { padding-top: 5px; font-size: 0.9rem; line-height: 1.6; color: var(--text-dark); }
+    .mc-step-body strong { color: var(--green-dark); }
+
+    /* ── Application rates table ─────────────────────────────── */
+    .mc-app-section { margin-bottom: 36px; }
+    .mc-section-heading {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--green-dark);
+      margin: 0 0 16px;
+    }
+    .mc-app-tbl-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius-md);
+      border: 1px solid #dde5db;
+      -webkit-overflow-scrolling: touch;
+    }
+    .mc-app-tbl { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 460px; }
+    .mc-app-tbl thead th {
+      background: #edf6f1;
+      color: var(--green-dark);
+      padding: 10px 16px;
+      text-align: left;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .mc-app-tbl tbody td {
+      padding: 10px 16px;
+      border-bottom: 1px solid #eaede8;
+      vertical-align: top;
+      line-height: 1.5;
+      color: var(--text-dark);
+    }
+    .mc-app-tbl tbody tr:last-child td { border-bottom: none; }
+    .mc-app-tbl tbody tr:nth-child(even) td { background: #f7faf6; }
+    .mc-app-tbl td:first-child { font-weight: 700; }
+    .mc-app-tbl td:nth-child(2) { color: var(--green-dark); font-weight: 700; }
+
+    /* ── Compost tea calculator ──────────────────────────────── */
+    .mc-tea-section { margin-top: 36px; }
+    .mc-tea-card {
+      background: var(--cream);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      border: 1px solid #d4e8cc;
+    }
+    @media (max-width: 600px) { .mc-tea-card { padding: 20px 16px; } }
+    .mc-tea-row { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin: 20px 0 0; }
+    .mc-tea-result {
+      margin-top: 20px;
+      display: none;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .mc-tea-result.visible { display: flex; }
+    .mc-tea-result-card {
+      flex: 1;
+      min-width: 160px;
+      background: var(--white);
+      border: 1px solid #c2e0cc;
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+    }
+    .mc-tea-result-label { font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-light); margin-bottom: 4px; }
+    .mc-tea-result-value { font-size: 1.5rem; font-weight: 800; color: var(--green-dark); font-family: var(--font-display); line-height: 1.1; }
+    .mc-tea-result-sub { font-size: 0.78rem; color: var(--text-light); margin-top: 2px; }
+    .mc-tea-calc-btn {
+      padding: 11px 24px;
+      background: var(--green-mid);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.17s;
+      white-space: nowrap;
+    }
+    .mc-tea-calc-btn:hover { background: var(--green-dark); }
+    .mc-tea-note { font-size: 0.8rem; color: var(--text-light); margin-top: 14px; line-height: 1.55; }
+
+    /* ── Mobile responsiveness ───────────────────────────────── */
+    @media (max-width: 480px) {
+      /* Shape cards: 3-across is tight at 320px, wrap gracefully */
+      .mc-shape-cards { gap: 8px; }
+      .mc-shape-card  { min-width: 88px; padding: 14px 8px 10px; font-size: 0.82rem; }
+      /* Stack input row fields full-width */
+      .mc-input-row { flex-direction: column; gap: 14px; }
+      .mc-input-row .mc-field { min-width: 0; width: 100%; }
+      /* Full-width inputs */
+      .mc-input, .mc-select { font-size: 1rem; }
+      /* Results cards 2-col already set at 600px — keep on mobile */
+      .mc-result-value { font-size: 1.5rem; }
+      /* Cost figures */
+      .mc-cost-low, .mc-cost-high { font-size: 1.5rem; }
+      /* Tea row: stack vertically */
+      .mc-tea-row { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* Print styles */
+    @media print {
+      .mc-tabs, .mc-calc-btn, .mc-results-actions,
+      .mc-results-ad, .ad-section, .site-header, .site-footer,
+      .page-hero { display: none !important; }
+      .mc-results-section { display: block !important; }
+      .mc-results-layout { grid-template-columns: 1fr; }
+      .mc-section { background: none; padding: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner container">
+
+      <!-- Logo -->
+      <a href="index.html" class="site-logo" aria-label="GardenCalc Home">
+        <div class="logo-icon"><i data-lucide="leaf"></i></div>
+        <span class="logo-text">Garden<span>Calc</span></span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="frost-dates.html" class="nav-link">Frost Date Calculator</a>
+        <a href="seed-starting-schedule.html" class="nav-link">Seed Starting Schedule</a>
+        <a href="companion-planting.html" class="nav-link">Companion Planting</a>
+        <a href="square-foot-planner.html" class="nav-link">Square Foot Planner</a>
+        <a href="mulch-calculator.html" class="nav-link active">Mulch Calculator</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+        <a href="about.html" class="nav-link nav-cta">About</a>
+      </nav>
+
+      <!-- Mobile hamburger -->
+      <button class="hamburger" aria-label="Toggle menu" onclick="toggleMobileNav()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Mobile Nav Drawer -->
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="index.html" class="nav-link"><i data-lucide="home"></i> Home</a>
+      <a href="frost-dates.html" class="nav-link"><i data-lucide="snowflake"></i> Frost Date Calculator</a>
+      <a href="seed-starting-schedule.html" class="nav-link"><i data-lucide="sprout"></i> Seed Starting Schedule</a>
+      <a href="companion-planting.html" class="nav-link"><i data-lucide="git-merge"></i> Companion Planting</a>
+      <a href="square-foot-planner.html" class="nav-link"><i data-lucide="layout-grid"></i> Square Foot Planner</a>
+      <a href="mulch-calculator.html" class="nav-link active"><i data-lucide="wind"></i> Mulch Calculator</a>
+      <a href="blog.html" class="nav-link"><i data-lucide="book-open"></i> Blog</a>
+      <a href="about.html" class="nav-link"><i data-lucide="sun"></i> About Us</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ============================================================
+         PAGE HERO
+         ============================================================ -->
+    <section class="page-hero" aria-label="Mulch and Compost Calculator hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <span>›</span>
+          <span>Mulch &amp; Compost Calculator</span>
+        </nav>
+        <h1>Mulch &amp; Compost Calculator</h1>
+        <p>Calculate exactly how much mulch or compost you need — no waste, no guesswork.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ADSENSE SLOT 1: Leaderboard Banner (below hero)
+         Format: 728×90 desktop / responsive mobile
+         ============================================================ -->
+    <div class="ad-section ad-section--center" aria-hidden="true">
+      <!-- AdSense: Top Leaderboard — 728×90 (responsive) -->
+      <div class="ad-slot ad-slot--leaderboard" style="max-width:728px; width:100%;">
+        <!-- Replace with:
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+        <span class="ad-placeholder-label">Advertisement — 728×90</span>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         TAB + CALCULATOR SECTION
+         ============================================================ -->
+    <section class="mc-section" id="calculatorSection">
+      <div class="container">
+
+        <!-- Tab bar -->
+        <div class="mc-tabs" role="tablist" aria-label="Calculator type">
+          <button class="mc-tab active" id="tabMulch" role="tab" aria-selected="true"
+                  aria-controls="calcPanel" onclick="switchTab('mulch')">
+            Mulch Calculator
+          </button>
+          <button class="mc-tab" id="tabCompost" role="tab" aria-selected="false"
+                  aria-controls="calcPanel" onclick="switchTab('compost')">
+            Compost Calculator
+          </button>
+        </div>
+
+        <!-- Calculator card -->
+        <div class="mc-card" id="calcPanel" role="tabpanel">
+
+          <!-- ── 1. Bed Shape ──────────────────────────────── -->
+          <div class="mc-field-group">
+            <span class="mc-label">Bed Shape</span>
+            <div class="mc-shape-cards" role="group" aria-label="Select bed shape">
+
+              <!-- Rectangular -->
+              <button class="mc-shape-card active" id="shapeRect"
+                      onclick="selectShape('rect')" aria-pressed="true">
+                <svg width="64" height="44" viewBox="0 0 64 44" fill="none"
+                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <rect x="4" y="6" width="56" height="32" rx="3"
+                        fill="#d1ead9" stroke="#2d8653" stroke-width="2.2"/>
+                  <line x1="4" y1="22" x2="60" y2="22"
+                        stroke="#2d8653" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
+                  <line x1="32" y1="6" x2="32" y2="38"
+                        stroke="#2d8653" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
+                </svg>
+                Rectangular
+              </button>
+
+              <!-- Circular -->
+              <button class="mc-shape-card" id="shapeCircle"
+                      onclick="selectShape('circle')" aria-pressed="false">
+                <svg width="64" height="44" viewBox="0 0 64 44" fill="none"
+                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <circle cx="32" cy="22" r="18"
+                          fill="#d1ead9" stroke="#2d8653" stroke-width="2.2"/>
+                  <line x1="14" y1="22" x2="50" y2="22"
+                        stroke="#2d8653" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
+                </svg>
+                Circular
+              </button>
+
+              <!-- Irregular -->
+              <button class="mc-shape-card" id="shapeIrreg"
+                      onclick="selectShape('irregular')" aria-pressed="false">
+                <svg width="64" height="44" viewBox="0 0 64 44" fill="none"
+                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <polygon points="8,36 4,16 18,6 40,8 60,14 58,36 38,40 16,38"
+                           fill="#d1ead9" stroke="#2d8653" stroke-width="2.2"
+                           stroke-linejoin="round"/>
+                </svg>
+                Irregular
+              </button>
+
+            </div>
+          </div>
+
+          <!-- ── 2. Shape-specific inputs ───────────────────── -->
+
+          <!-- Rectangular inputs -->
+          <div class="mc-shape-inputs" id="inputsRect">
+            <div class="mc-input-row">
+              <div class="mc-field">
+                <label class="mc-field-label" for="rectLength">Length (ft)</label>
+                <input class="mc-input" type="number" id="rectLength"
+                       min="0.5" max="999" step="0.5" placeholder="e.g. 8"
+                       aria-label="Bed length in feet" oninput="onDimensionChange()"/>
+              </div>
+              <div class="mc-field">
+                <label class="mc-field-label" for="rectWidth">Width (ft)</label>
+                <input class="mc-input" type="number" id="rectWidth"
+                       min="0.5" max="999" step="0.5" placeholder="e.g. 4"
+                       aria-label="Bed width in feet" oninput="onDimensionChange()"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- Circular inputs -->
+          <div class="mc-shape-inputs" id="inputsCircle" style="display:none;">
+            <div class="mc-field">
+              <label class="mc-field-label" for="circleDiameter">Diameter (ft)</label>
+              <input class="mc-input" type="number" id="circleDiameter"
+                     min="0.5" max="999" step="0.5" placeholder="e.g. 6"
+                     aria-label="Bed diameter in feet" oninput="onDimensionChange()"
+                     style="max-width:260px;"/>
+            </div>
+          </div>
+
+          <!-- Irregular inputs -->
+          <div class="mc-shape-inputs" id="inputsIrreg" style="display:none;">
+            <div class="mc-irreg-hint">
+              <!-- Diagram: L-shaped bed split into two labelled rectangles -->
+              <div class="mc-irreg-diagram" aria-hidden="true">
+                <svg width="96" height="90" viewBox="0 0 96 90" fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+                  <!-- Section A (top-left rectangle) -->
+                  <rect x="2" y="2" width="44" height="36" rx="2"
+                        fill="#d1ead9" stroke="#2d8653" stroke-width="1.8"/>
+                  <text x="24" y="23" text-anchor="middle" font-size="11"
+                        fill="#2d6a4f" font-family="sans-serif" font-weight="800">A</text>
+                  <!-- Section B (bottom full-width rectangle) -->
+                  <rect x="2" y="50" width="92" height="36" rx="2"
+                        fill="#b7dfc3" stroke="#2d8653" stroke-width="1.8"/>
+                  <text x="48" y="72" text-anchor="middle" font-size="11"
+                        fill="#2d6a4f" font-family="sans-serif" font-weight="800">B</text>
+                  <!-- Dashed dividing line showing where A and B meet -->
+                  <line x1="2" y1="50" x2="46" y2="50"
+                        stroke="#2d8653" stroke-width="1.2" stroke-dasharray="3 2"/>
+                  <!-- "+" label between A and B -->
+                  <text x="52" y="27" text-anchor="start" font-size="13"
+                        fill="#6b7280" font-family="sans-serif" font-weight="700">+</text>
+                  <!-- Area formula labels -->
+                  <text x="24" y="34" text-anchor="middle" font-size="7"
+                        fill="#2d6a4f" font-family="sans-serif">L×W</text>
+                  <text x="48" y="83" text-anchor="middle" font-size="7"
+                        fill="#2d6a4f" font-family="sans-serif">L×W</text>
+                </svg>
+              </div>
+              <p class="mc-irreg-text">
+                <strong>How to measure an irregular bed:</strong><br>
+                Divide your bed into rectangles (A, B, …). Calculate
+                <em>length × width</em> for each section, then add the areas together.
+                Enter the total square footage below.
+              </p>
+            </div>
+            <div class="mc-field">
+              <label class="mc-field-label" for="irregArea">Total Area (sq ft)</label>
+              <input class="mc-input" type="number" id="irregArea"
+                     min="0.5" max="99999" step="0.5" placeholder="e.g. 48"
+                     aria-label="Total bed area in square feet" oninput="onDimensionChange()"
+                     style="max-width:260px;"/>
+            </div>
+          </div>
+
+          <hr class="mc-divider"/>
+
+          <!-- ── 3. Material type ────────────────────────────── -->
+          <div class="mc-field-group" style="margin-bottom:28px;">
+            <label class="mc-label" for="materialSelect">Material Type</label>
+            <select class="mc-select" id="materialSelect"
+                    aria-label="Select material type" onchange="onMaterialChange()">
+            </select>
+          </div>
+
+          <!-- ── 4. Depth ────────────────────────────────────── -->
+          <div class="mc-field-group" style="margin-bottom:0;">
+            <label class="mc-label" for="depthInput">Application Depth</label>
+            <input class="mc-input" type="number" id="depthInput"
+                   min="0.25" max="24" step="0.25" placeholder="inches"
+                   aria-label="Application depth in inches" oninput="onDimensionChange()"
+                   style="max-width:180px;"/>
+            <p class="mc-depth-hint" id="depthHint" aria-live="polite">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                   stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+              <span id="depthHintText">Select a material to see the recommended depth.</span>
+            </p>
+          </div>
+
+          <!-- ── Calculate button ───────────────────────────── -->
+          <button class="mc-calc-btn" onclick="calculate()" aria-label="Calculate material needed">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="4" y="2" width="16" height="20" rx="2"/>
+              <line x1="8" y1="8" x2="16" y2="8"/>
+              <line x1="8" y1="12" x2="16" y2="12"/>
+              <line x1="8" y1="16" x2="12" y2="16"/>
+            </svg>
+            Calculate
+          </button>
+
+        </div><!-- /.mc-card -->
+      </div><!-- /.container -->
+    </section>
+
+    <!-- ============================================================
+         RESULTS SECTION
+         ============================================================ -->
+    <section class="mc-results-section" id="resultsSection" aria-label="Calculation results" aria-live="polite">
+      <div class="container">
+
+        <!-- Results header: title + buffer toggle + action buttons -->
+        <div class="mc-results-header">
+          <div>
+            <h2 class="mc-results-title">Your Results</h2>
+            <p class="mc-results-meta" id="resultsMeta"></p>
+          </div>
+          <div class="mc-results-actions">
+            <label class="mc-toggle-label" title="Adds 10% extra to account for uneven spreading and waste">
+              <input type="checkbox" id="bufferToggle" checked onchange="renderResults()"/>
+              Add 10% buffer
+            </label>
+            <button class="mc-recalc-btn" onclick="recalculate()" aria-label="Go back to inputs">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="15 18 9 12 15 6"/>
+              </svg>
+              Recalculate
+            </button>
+            <button class="mc-print-btn" onclick="window.print()" aria-label="Print results">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="6 9 6 2 18 2 18 9"/>
+                <path d="M6 18H4a2 2 0 0 1-2-2V11a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                <rect x="6" y="14" width="12" height="8"/>
+              </svg>
+              Print Results
+            </button>
+          </div>
+        </div>
+
+        <div class="mc-results-layout">
+          <!-- Left: main results -->
+          <div class="mc-results-main">
+
+            <!-- Result cards -->
+            <div class="mc-result-cards">
+              <div class="mc-result-card mc-result-card--accent">
+                <div class="mc-result-value" id="resCuYd">—</div>
+                <div class="mc-result-label">Cubic Yards</div>
+              </div>
+              <div class="mc-result-card mc-result-card--accent">
+                <div class="mc-result-value" id="resCuFt">—</div>
+                <div class="mc-result-label">Cubic Feet</div>
+              </div>
+              <div class="mc-result-card">
+                <div class="mc-result-value" id="resBags2">—</div>
+                <div class="mc-result-label">2 cu ft Bags</div>
+                <div class="mc-result-sub">standard size</div>
+              </div>
+              <div class="mc-result-card">
+                <div class="mc-result-value" id="resBags3">—</div>
+                <div class="mc-result-label">3 cu ft Bags</div>
+                <div class="mc-result-sub">large size</div>
+              </div>
+              <div class="mc-result-card">
+                <div class="mc-result-value" id="resLbs">—</div>
+                <div class="mc-result-label">Weight (lbs)</div>
+              </div>
+              <div class="mc-result-card">
+                <div class="mc-result-value" id="resTons">—</div>
+                <div class="mc-result-label">Weight (tons)</div>
+              </div>
+            </div>
+
+            <!-- Cost estimate -->
+            <div class="mc-cost-section">
+              <div class="mc-cost-heading">Estimated Cost</div>
+              <div class="mc-cost-range">
+                <span class="mc-cost-low" id="costLow">—</span>
+                <span class="mc-cost-sep">–</span>
+                <span class="mc-cost-high" id="costHigh">—</span>
+              </div>
+              <p class="mc-cost-note" id="costNote"></p>
+            </div>
+
+            <!-- Shopping tip -->
+            <div class="mc-tip-box" id="shoppingTip"></div>
+
+          </div><!-- /.mc-results-main -->
+
+          <!-- Right: AdSense 336×280 -->
+          <div class="mc-results-ad">
+            <div class="ad-section" aria-hidden="true" style="padding:0;">
+              <!-- AdSense: Results Panel — 336×280
+              <ins class="adsbygoogle"
+                   style="display:inline-block;width:336px;height:280px"
+                   data-ad-client="ca-pub-XXXXXXXXXX"
+                   data-ad-slot="XXXXXXXXXX"></ins>
+              <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+              -->
+              <div class="ad-slot" style="width:336px;height:280px;max-width:100%;">
+                <span class="ad-placeholder-label">Advertisement — 336×280</span>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /.mc-results-layout -->
+      </div><!-- /.container -->
+    </section>
+
+    <!-- ============================================================
+         GUIDE SECTION
+         ============================================================ -->
+    <section class="mc-guide-section" id="guideSection" aria-label="Material guides">
+      <div class="container">
+
+        <!-- ── MULCH GUIDE ─────────────────────────────────────── -->
+        <div class="mc-guide-panel visible" id="guideMulch">
+
+          <h2 class="mc-guide-heading">Mulch Comparison Guide</h2>
+          <p class="mc-guide-sub">All seven mulch types side by side — depths, best uses, pros and cons.</p>
+
+          <!-- Comparison table (rows built by JS) -->
+          <div class="mc-tbl-wrap">
+            <table class="mc-tbl" id="mulchGuideTable">
+              <thead>
+                <tr>
+                  <th>Mulch Type</th>
+                  <th>Rec. Depth</th>
+                  <th>Range</th>
+                  <th>Best Uses</th>
+                  <th>Pros</th>
+                  <th>Cons</th>
+                </tr>
+              </thead>
+              <tbody id="mulchGuideTbody"></tbody>
+            </table>
+          </div>
+
+          <!-- How to Apply -->
+          <div class="mc-howto">
+            <h3 class="mc-howto-heading">How to Apply Mulch Correctly</h3>
+            <ol class="mc-steps">
+              <li class="mc-step">
+                <span class="mc-step-num">1</span>
+                <div class="mc-step-body">
+                  <strong>Clear weeds first.</strong> Pull or smother any existing weeds before laying mulch.
+                  Mulch suppresses new weeds but will not kill established ones underneath.
+                </div>
+              </li>
+              <li class="mc-step">
+                <span class="mc-step-num">2</span>
+                <div class="mc-step-body">
+                  <strong>Water the bed.</strong> Thoroughly moisten the soil before applying.
+                  Dry soil under mulch stays dry — mulch locks in whatever moisture is present when you lay it.
+                </div>
+              </li>
+              <li class="mc-step">
+                <span class="mc-step-num">3</span>
+                <div class="mc-step-body">
+                  <strong>Apply at the correct depth.</strong> Spread evenly to your chosen depth
+                  (2–4" for most bark mulches, 3–5" for pine straw, 2" for gravel).
+                  Too shallow and weeds break through; too deep and roots suffocate.
+                </div>
+              </li>
+              <li class="mc-step">
+                <span class="mc-step-num">4</span>
+                <div class="mc-step-body">
+                  <strong>Keep mulch 2–3 inches away from plant stems and tree trunks.</strong>
+                  "Volcano mulching" — piling mulch against bark — traps moisture, causes rot,
+                  and invites pests. Leave a ring of bare soil around every stem.
+                </div>
+              </li>
+              <li class="mc-step">
+                <span class="mc-step-num">5</span>
+                <div class="mc-step-body">
+                  <strong>Refresh annually.</strong> Organic mulches break down and thin out over one season.
+                  Rake existing mulch each spring to break up any matted layers, then top up to the
+                  original depth. This also incorporates the decomposed material into the soil.
+                </div>
+              </li>
+            </ol>
+          </div>
+
+        </div><!-- /#guideMulch -->
+
+        <!-- ── AdSense between guides (always visible) ─────────── -->
+        <div class="ad-section ad-section--center" aria-hidden="true" style="margin: 40px 0;">
+          <div class="ad-slot ad-slot--leaderboard" style="max-width:728px; width:100%;">
+            <!-- Replace with:
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXX"
+                 data-ad-slot="XXXXXXXXXX"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            -->
+            <span class="ad-placeholder-label">Advertisement — 728×90</span>
+          </div>
+        </div>
+
+        <!-- ── COMPOST GUIDE ────────────────────────────────────── -->
+        <div class="mc-guide-panel" id="guideCompost">
+
+          <h2 class="mc-guide-heading">Compost Comparison Guide</h2>
+          <p class="mc-guide-sub">All six compost types — nutrients, application rates, best uses, and what to avoid.</p>
+
+          <!-- Compost comparison table (rows built by JS) -->
+          <div class="mc-tbl-wrap">
+            <table class="mc-tbl" id="compostGuideTable">
+              <thead>
+                <tr>
+                  <th>Compost Type</th>
+                  <th>N-P-K (approx.)</th>
+                  <th>New Bed Rate</th>
+                  <th>Existing Bed Rate</th>
+                  <th>Best For</th>
+                  <th>Avoid For</th>
+                </tr>
+              </thead>
+              <tbody id="compostGuideTbody"></tbody>
+            </table>
+          </div>
+
+          <!-- Application rates by situation -->
+          <div class="mc-app-section">
+            <h3 class="mc-section-heading">Compost Application Rates by Situation</h3>
+            <div class="mc-app-tbl-wrap">
+              <table class="mc-app-tbl">
+                <thead>
+                  <tr>
+                    <th>Situation</th>
+                    <th>Rate / Mix</th>
+                    <th>Method</th>
+                    <th>Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>New raised bed (fill)</td>
+                    <td>50–100% compost</td>
+                    <td>Fill bed entirely, or blend 50/50 with topsoil</td>
+                    <td>100% compost works well for most vegetables; 50/50 is more economical for large beds</td>
+                  </tr>
+                  <tr>
+                    <td>Amending existing bed</td>
+                    <td>2–4 inches</td>
+                    <td>Spread on surface and fork or till into top 6–8"</td>
+                    <td>Do this each spring or fall; improves structure and feeds soil life</td>
+                  </tr>
+                  <tr>
+                    <td>Top dressing established plants</td>
+                    <td>0.5–1 inch</td>
+                    <td>Spread around drip line; do not touch stems</td>
+                    <td>Worms and rain pull nutrients down into the root zone naturally</td>
+                  </tr>
+                  <tr>
+                    <td>Lawn overseeding</td>
+                    <td>¼–½ inch</td>
+                    <td>Rake thinly over seeded area; keep moist</td>
+                    <td>Protects seeds from drying out and provides starter nutrients</td>
+                  </tr>
+                  <tr>
+                    <td>Seed starting mix</td>
+                    <td>30–40% compost</td>
+                    <td>Blend with perlite and coco coir or vermiculite</td>
+                    <td>Use finished compost only — fresh compost can burn seedlings and harbour pathogens</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Compost Tea Calculator -->
+          <div class="mc-tea-section">
+            <div class="mc-tea-card">
+              <h3 class="mc-section-heading" style="margin-bottom:4px;">Compost Tea Ratio Calculator</h3>
+              <p style="font-size:0.86rem; color:var(--text-light); margin:0 0 4px;">
+                Enter your water volume to find how much compost to use for an aerated compost tea (ACT)
+                or a simple steep tea.
+              </p>
+              <div class="mc-tea-row">
+                <div class="mc-field" style="max-width:200px;">
+                  <label class="mc-field-label" for="teaGallons">Water volume (gallons)</label>
+                  <input class="mc-input" type="number" id="teaGallons"
+                         min="0.5" max="10000" step="0.5" placeholder="e.g. 5"
+                         aria-label="Water volume in gallons"/>
+                </div>
+                <button class="mc-tea-calc-btn" onclick="calcCompostTea()">Calculate</button>
+              </div>
+              <div class="mc-tea-result" id="teaResult">
+                <div class="mc-tea-result-card">
+                  <div class="mc-tea-result-label">Aerated Tea (ACT)</div>
+                  <div class="mc-tea-result-value" id="teaACT">—</div>
+                  <div class="mc-tea-result-sub">1:5 ratio · aerate 24–36 hrs</div>
+                </div>
+                <div class="mc-tea-result-card">
+                  <div class="mc-tea-result-label">Steep Tea (simple)</div>
+                  <div class="mc-tea-result-value" id="teaSteep">—</div>
+                  <div class="mc-tea-result-sub">1:10 ratio · steep 24–48 hrs</div>
+                </div>
+              </div>
+              <p class="mc-tea-note">
+                <strong>ACT (1:5):</strong> Use an aquarium pump and airstone to aerate — this multiplies
+                beneficial bacteria and fungi. Apply immediately after brewing, before microbes die off.
+                <br>
+                <strong>Steep tea (1:10):</strong> Place compost in a burlap or mesh bag and steep in water.
+                Simpler, but less biologically active. Use within 4 hours of steeping.
+                <br>
+                Apply at the base of plants or as a foliar spray in the morning. Dilute further (1:1 with water)
+                for sensitive seedlings.
+              </p>
+            </div>
+          </div>
+
+        </div><!-- /#guideCompost -->
+
+      </div><!-- /.container -->
+    </section>
+
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <a href="index.html" class="site-logo" style="margin-bottom:0;">
+            <div class="logo-icon"><i data-lucide="leaf"></i></div>
+            <span class="logo-text">Garden<span>Calc</span></span>
+          </a>
+          <p class="footer-tagline">
+            Free, accurate gardening tools for every zone, every season.
+          </p>
+          <div class="footer-social">
+            <a href="#" class="social-link" aria-label="Pinterest">Pinterest</a>
+            <a href="#" class="social-link" aria-label="Instagram">Instagram</a>
+            <a href="#" class="social-link" aria-label="Facebook">Facebook</a>
+            <a href="#" class="social-link" aria-label="YouTube">YouTube</a>
+          </div>
+          <p style="font-size:0.8rem; color:rgba(255,255,255,0.5); margin-top:18px; margin-bottom:8px;">Get seasonal planting reminders:</p>
+          <a href="https://forms.gle/dfamR4Msp9jFP5uw9" target="_blank" rel="noopener noreferrer" class="newsletter-btn" style="display:inline-block; text-align:center; text-decoration:none;">Join →</a>
+        </div>
+
+        <!-- Tools Column -->
+        <div class="footer-col">
+          <h5>Tools</h5>
+          <div class="footer-links">
+            <a href="frost-dates.html">Frost Date Calculator</a>
+            <a href="seed-starting-schedule.html">Seed Starting Schedule</a>
+            <a href="companion-planting.html">Companion Planting</a>
+            <a href="square-foot-planner.html">Square Foot Planner</a>
+            <a href="mulch-calculator.html">Mulch Calculator</a>
+          </div>
+        </div>
+
+        <!-- Learn Column -->
+        <div class="footer-col">
+          <h5>Learn</h5>
+          <div class="footer-links">
+            <a href="blog.html">Blog</a>
+            <a href="blog-beginners-guide.html">Beginner Guides</a>
+            <a href="blog-raised-bed-gardening.html">Raised Bed Gardening</a>
+            <a href="blog-composting.html">Composting</a>
+            <a href="blog-organic-pest-control.html">Organic Pest Control</a>
+          </div>
+        </div>
+
+        <!-- Company Column -->
+        <div class="footer-col">
+          <h5>Company</h5>
+          <div class="footer-links">
+            <a href="about.html">About GardenCalc</a>
+            <a href="about.html#contact">Contact Us</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Use</a>
+            <a href="sitemap.html">Sitemap</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 GardenCalc. All rights reserved. For informational purposes only.</p>
+        <div class="footer-legal">
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="about.html#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ============================================================
+       MOBILE NAV
+       ============================================================ */
+    function toggleMobileNav() {
+      const nav = document.getElementById('mobileNav');
+      nav.classList.toggle('open');
+    }
+    document.querySelectorAll('.mobile-nav .nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('mobileNav').classList.remove('open');
+      });
+    });
+
+    /* ============================================================
+       MATERIAL DATA
+       All coverage and density values sourced from cooperative
+       extension publications and manufacturer specifications.
+
+       Cubic yard coverage formula:
+         sq ft covered = (27 cu ft / depth_ft)
+         e.g. 3" depth → 27 / 0.25 = 108 sq ft per cu yd
+
+       density_lbs_per_cubic_yard: air-dry bulk density
+       bag_size_cubic_feet: standard retail bag size
+       cost_per_bag_low / high: USD, typical retail range (2024)
+       ============================================================ */
+    var MATERIAL_DATA = {
+
+      /* ── MULCH TYPES ──────────────────────────────────────── */
+
+      'Hardwood Bark Mulch': {
+        type: 'mulch',
+        name: 'Hardwood Bark Mulch',
+        density_lbs_per_cubic_yard: 800,
+        coverage_notes: '1 cu yd covers ~108 sq ft at 3" depth. Breaks down slowly and enriches soil as it decomposes.',
+        best_for: 'Perennial beds, trees, shrubs, foundation plantings',
+        depth_min_inches: 2,
+        depth_max_inches: 4,
+        depth_recommended_inches: 3,
+        cost_per_bag_low: 4,
+        cost_per_bag_high: 7,
+        bag_size_cubic_feet: 2
+      },
+
+      'Cedar Mulch': {
+        type: 'mulch',
+        name: 'Cedar Mulch',
+        density_lbs_per_cubic_yard: 700,
+        coverage_notes: '1 cu yd covers ~108 sq ft at 3" depth. Natural oils repel some insects and slow decomposition.',
+        best_for: 'Ornamental beds, paths, areas with pest pressure; natural moth and insect deterrent',
+        depth_min_inches: 2,
+        depth_max_inches: 4,
+        depth_recommended_inches: 3,
+        cost_per_bag_low: 5,
+        cost_per_bag_high: 9,
+        bag_size_cubic_feet: 2
+      },
+
+      'Pine Straw': {
+        type: 'mulch',
+        name: 'Pine Straw',
+        density_lbs_per_cubic_yard: 200,
+        coverage_notes: '1 standard bale covers ~35–50 sq ft at 3" depth. Lightweight; needles knit together and resist washing.',
+        best_for: 'Acid-loving plants: blueberries, azaleas, camellias, rhododendrons; sloped beds prone to erosion',
+        depth_min_inches: 3,
+        depth_max_inches: 5,
+        depth_recommended_inches: 3,
+        cost_per_bag_low: 4,
+        cost_per_bag_high: 7,
+        bag_size_cubic_feet: 2.5
+      },
+
+
+      'Cocoa Hull Mulch': {
+        type: 'mulch',
+        name: 'Cocoa Hull Mulch',
+        density_lbs_per_cubic_yard: 600,
+        coverage_notes: '1 cu yd covers ~162 sq ft at 2" depth. Pleasant chocolate scent; adds nitrogen as it breaks down. Toxic to dogs — keep pets away.',
+        best_for: 'Vegetable gardens, annual flower beds, raised beds; adds minor nutrients as it decomposes',
+        depth_min_inches: 1,
+        depth_max_inches: 3,
+        depth_recommended_inches: 2,
+        cost_per_bag_low: 8,
+        cost_per_bag_high: 14,
+        bag_size_cubic_feet: 2
+      },
+
+      'Straw Mulch': {
+        type: 'mulch',
+        name: 'Straw Mulch',
+        density_lbs_per_cubic_yard: 200,
+        coverage_notes: '1 standard bale (~2–3 cu ft) covers ~100 sq ft at 3" depth. Breaks down in one season; adds organic matter.',
+        best_for: 'Vegetable gardens, strawberry beds, winter protection for perennials, newly seeded lawns',
+        depth_min_inches: 3,
+        depth_max_inches: 6,
+        depth_recommended_inches: 4,
+        cost_per_bag_low: 6,
+        cost_per_bag_high: 12,
+        bag_size_cubic_feet: 3.5
+      },
+
+      'Gravel / Rock': {
+        type: 'mulch',
+        name: 'Gravel / Rock',
+        density_lbs_per_cubic_yard: 2700,
+        coverage_notes: '1 cu yd covers ~162 sq ft at 2" depth. Permanent; does not break down or add nutrients.',
+        best_for: 'Xeriscaping, desert-style gardens, permanent paths, drainage areas, cactus and succulent beds',
+        depth_min_inches: 2,
+        depth_max_inches: 4,
+        depth_recommended_inches: 2,
+        cost_per_bag_low: 5,
+        cost_per_bag_high: 10,
+        bag_size_cubic_feet: 0.5
+      },
+
+      /* ── COMPOST TYPES ────────────────────────────────────── */
+
+      'Finished Compost': {
+        type: 'compost',
+        name: 'Finished Compost',
+        density_lbs_per_cubic_yard: 1000,
+        coverage_notes: '1 cu yd covers ~324 sq ft at 1" depth as a topdress. Work into top 6–8" when prepping new beds.',
+        best_for: 'All gardens and all plants; universal soil conditioner and nutrient source',
+        avoid_for: 'No significant restrictions — safe for all plants when fully decomposed',
+        depth_min_inches: 1,
+        depth_max_inches: 4,
+        depth_recommended_inches: 2,
+        cost_per_bag_low: 5,
+        cost_per_bag_high: 9,
+        bag_size_cubic_feet: 1,
+        nitrogen_ratio: '1.5–2.5% N (varies by feedstock)',
+        carbon_ratio: '25:1 C:N (finished, stable)',
+        application_rate_new_bed_inches: 3,
+        application_rate_existing_bed_inches: 1
+      },
+
+      'Mushroom Compost': {
+        type: 'compost',
+        name: 'Mushroom Compost',
+        density_lbs_per_cubic_yard: 900,
+        coverage_notes: '1 cu yd covers ~324 sq ft at 1" depth. Spent substrate from mushroom production; high in nutrients and may slightly raise soil pH.',
+        best_for: 'Heavy feeders: corn, tomatoes, squash, brassicas; improving clay soils',
+        avoid_for: 'Acid-loving plants (blueberries, azaleas); salt-sensitive plants; seedlings (dilute with regular compost)',
+        depth_min_inches: 1,
+        depth_max_inches: 3,
+        depth_recommended_inches: 2,
+        cost_per_bag_low: 5,
+        cost_per_bag_high: 10,
+        bag_size_cubic_feet: 1,
+        nitrogen_ratio: '1.5–3% N',
+        carbon_ratio: '13:1 C:N',
+        application_rate_new_bed_inches: 3,
+        application_rate_existing_bed_inches: 1
+      },
+
+      'Worm Castings': {
+        type: 'compost',
+        name: 'Worm Castings',
+        density_lbs_per_cubic_yard: 1200,
+        coverage_notes: 'Premium amendment; typically mixed into soil or potting mix rather than applied as a thick topdress. A little goes a long way.',
+        best_for: 'Seedlings, transplants, container plants, potting mixes; highly bioavailable micronutrients',
+        avoid_for: 'No plant restrictions — safe for all plants; use sparingly given cost',
+        depth_min_inches: 0.25,
+        depth_max_inches: 1,
+        depth_recommended_inches: 0.5,
+        cost_per_bag_low: 12,
+        cost_per_bag_high: 25,
+        bag_size_cubic_feet: 0.5,
+        nitrogen_ratio: '1–2% N',
+        carbon_ratio: '15:1 C:N',
+        application_rate_new_bed_inches: 1,
+        application_rate_existing_bed_inches: 0.5
+      },
+
+      'Chicken Manure Compost': {
+        type: 'compost',
+        name: 'Chicken Manure Compost',
+        density_lbs_per_cubic_yard: 1100,
+        coverage_notes: '1 cu yd covers ~324 sq ft at 1" depth. High-nitrogen amendment; must be fully composted to prevent root burn.',
+        best_for: 'Heavy nitrogen feeders: corn, leafy greens, brassicas, squash; depleted soils needing a boost',
+        avoid_for: 'Root vegetables (excess N causes forking); avoid applying fresh or uncomposted manure near edibles',
+        depth_min_inches: 1,
+        depth_max_inches: 2,
+        depth_recommended_inches: 1,
+        cost_per_bag_low: 6,
+        cost_per_bag_high: 10,
+        bag_size_cubic_feet: 1,
+        nitrogen_ratio: '3–5% N (composted)',
+        carbon_ratio: '10:1 C:N',
+        application_rate_new_bed_inches: 2,
+        application_rate_existing_bed_inches: 0.5
+      },
+
+      'Cow Manure Compost': {
+        type: 'compost',
+        name: 'Cow Manure Compost',
+        density_lbs_per_cubic_yard: 1000,
+        coverage_notes: '1 cu yd covers ~324 sq ft at 1" depth. Mild, balanced amendment; excellent for building long-term soil structure.',
+        best_for: 'General vegetable gardens, perennial beds, lawns; improving sandy or clay soils',
+        avoid_for: 'Purchase from reputable sources to minimize weed seed contamination; not suitable for high-salt-sensitive plants in quantity',
+        depth_min_inches: 1,
+        depth_max_inches: 3,
+        depth_recommended_inches: 2,
+        cost_per_bag_low: 4,
+        cost_per_bag_high: 8,
+        bag_size_cubic_feet: 1,
+        nitrogen_ratio: '1–2% N',
+        carbon_ratio: '20:1 C:N',
+        application_rate_new_bed_inches: 3,
+        application_rate_existing_bed_inches: 1
+      },
+
+      'Peat Moss': {
+        type: 'compost',
+        name: 'Peat Moss',
+        density_lbs_per_cubic_yard: 500,
+        coverage_notes: '1 cu yd covers ~162 sq ft at 2" depth. Exceptional water retention; lowers soil pH. Always pre-wet before incorporating — dry peat repels water.',
+        best_for: 'Acid-loving plants: blueberries, azaleas, rhododendrons; seed-starting mixes; improving drainage in clay',
+        avoid_for: 'Alkaline-preferring plants (lavender, clematis, brassicas); do not use as a standalone amendment — mix with compost',
+        depth_min_inches: 1,
+        depth_max_inches: 3,
+        depth_recommended_inches: 2,
+        cost_per_bag_low: 10,
+        cost_per_bag_high: 20,
+        bag_size_cubic_feet: 2.2,
+        nitrogen_ratio: '~0.5–1% N (very low)',
+        carbon_ratio: '50:1 C:N (very high — can temporarily tie up available nitrogen)',
+        application_rate_new_bed_inches: 2,
+        application_rate_existing_bed_inches: 1
+      }
+
+    };
+
+    /* ============================================================
+       CALCULATOR STATE
+       ============================================================ */
+    var activeTab   = 'mulch';      // 'mulch' | 'compost'
+    var activeShape = 'rect';       // 'rect' | 'circle' | 'irregular'
+
+    // Remembers the last material selected for each tab type so switching
+    // tabs and back restores the user's previous selection.
+    var tabMemory   = { mulch: null, compost: null };
+
+    /* ============================================================
+       TAB SWITCHING
+       ============================================================ */
+    function switchTab(tab) {
+      activeTab = tab;
+
+      // Update tab button styles
+      document.getElementById('tabMulch').classList.toggle('active',   tab === 'mulch');
+      document.getElementById('tabCompost').classList.toggle('active', tab === 'compost');
+      document.getElementById('tabMulch').setAttribute('aria-selected',   tab === 'mulch');
+      document.getElementById('tabCompost').setAttribute('aria-selected', tab === 'compost');
+
+      // Repopulate the material dropdown for the new tab type
+      populateMaterialDropdown();
+    }
+
+    /* ============================================================
+       SHAPE SELECTION
+       ============================================================ */
+    function selectShape(shape) {
+      activeShape = shape;
+
+      // Toggle card active states
+      ['rect', 'circle', 'irregular'].forEach(function(s) {
+        var card = document.getElementById('shape' + capitalize(s));
+        var isActive = s === shape;
+        card.classList.toggle('active', isActive);
+        card.setAttribute('aria-pressed', isActive);
+      });
+
+      // Show/hide the correct input panel
+      document.getElementById('inputsRect').style.display   = shape === 'rect'      ? '' : 'none';
+      document.getElementById('inputsCircle').style.display = shape === 'circle'    ? '' : 'none';
+      document.getElementById('inputsIrreg').style.display  = shape === 'irregular' ? '' : 'none';
+
+      onDimensionChange();
+    }
+
+    function capitalize(str) {
+      if (str === 'rect')      return 'Rect';
+      if (str === 'circle')    return 'Circle';
+      if (str === 'irregular') return 'Irreg';
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    /* ============================================================
+       MATERIAL DROPDOWN
+       Populates <select> with only the entries matching the active tab type.
+       ============================================================ */
+    function populateMaterialDropdown() {
+      var sel      = document.getElementById('materialSelect');
+      var restoreKey = tabMemory[activeTab]; // last selection for this tab type
+      sel.innerHTML = '';
+
+      var firstKey = null;
+      Object.keys(MATERIAL_DATA).forEach(function(key) {
+        var mat = MATERIAL_DATA[key];
+        if (mat.type !== activeTab) return;
+        if (!firstKey) firstKey = key;
+        var opt = document.createElement('option');
+        opt.value = key;
+        opt.textContent = mat.name;
+        if (key === restoreKey) opt.selected = true;
+        sel.appendChild(opt);
+      });
+
+      // If no saved selection for this tab, default to first option
+      if (!restoreKey || !MATERIAL_DATA[restoreKey] || MATERIAL_DATA[restoreKey].type !== activeTab) {
+        sel.value = firstKey;
+      }
+
+      // Fire change handler to sync depth hint
+      onMaterialChange();
+    }
+
+    /* ============================================================
+       MATERIAL CHANGE → update depth hint
+       ============================================================ */
+    function onMaterialChange() {
+      var key = document.getElementById('materialSelect').value;
+      var mat = MATERIAL_DATA[key];
+      var hintEl = document.getElementById('depthHintText');
+      var depthInput = document.getElementById('depthInput');
+
+      if (!mat) {
+        hintEl.textContent = 'Select a material to see the recommended depth.';
+        return;
+      }
+
+      // Set the depth input to the recommended depth for this material
+      depthInput.value = mat.depth_recommended_inches;
+      depthInput.min   = mat.depth_min_inches;
+      depthInput.max   = mat.depth_max_inches;
+
+      // Build the hint string
+      var typeLabel = mat.type === 'compost' ? 'compost' : 'mulch';
+      var minD = mat.depth_min_inches;
+      var maxD = mat.depth_max_inches;
+      var recD = mat.depth_recommended_inches;
+
+      hintEl.textContent =
+        'Recommended for ' + mat.name + ': ' + recD + '\u201d'
+        + '  (range: ' + minD + '\u2013' + maxD + '\u2033)';
+
+      onDimensionChange();
+    }
+
+    /* ============================================================
+       CALCULATION STATE — stored so renderResults() can re-run
+       on buffer toggle without re-reading inputs
+       ============================================================ */
+    var lastCalc = null; // { cuFtRaw, matKey, sqFt, depthIn }
+
+    /* ============================================================
+       DIMENSION CHANGE
+       Hides stale results whenever inputs change after a calc.
+       ============================================================ */
+    function onDimensionChange() {
+      if (lastCalc !== null) {
+        document.getElementById('resultsSection').classList.remove('visible');
+        lastCalc = null;
+      }
+    }
+
+    /* ============================================================
+       SQUARE FOOTAGE from current shape inputs
+       Returns null if inputs are incomplete/invalid.
+       ============================================================ */
+    function getSqFt() {
+      if (activeShape === 'rect') {
+        var l = parseFloat(document.getElementById('rectLength').value);
+        var w = parseFloat(document.getElementById('rectWidth').value);
+        if (!l || !w || l <= 0 || w <= 0) return null;
+        return l * w;
+      }
+      if (activeShape === 'circle') {
+        var d = parseFloat(document.getElementById('circleDiameter').value);
+        if (!d || d <= 0) return null;
+        var r = d / 2;
+        return Math.PI * r * r;
+      }
+      if (activeShape === 'irregular') {
+        var a = parseFloat(document.getElementById('irregArea').value);
+        if (!a || a <= 0) return null;
+        return a;
+      }
+      return null;
+    }
+
+    /* ============================================================
+       CALCULATE — triggered by the Calculate button
+       ============================================================ */
+    function calculate() {
+      var sqFt = getSqFt();
+      if (sqFt === null) {
+        alert('Please fill in all dimension fields before calculating.');
+        return;
+      }
+
+      var depthIn = parseFloat(document.getElementById('depthInput').value);
+      if (!depthIn || depthIn <= 0) {
+        alert('Please enter a depth in inches before calculating.');
+        return;
+      }
+
+      var matKey = document.getElementById('materialSelect').value;
+      if (!matKey || !MATERIAL_DATA[matKey]) {
+        alert('Please select a material type before calculating.');
+        return;
+      }
+
+      // Raw cubic feet (no buffer yet)
+      var depthFt  = depthIn / 12;
+      var cuFtRaw  = sqFt * depthFt;
+
+      lastCalc = { cuFtRaw: cuFtRaw, matKey: matKey, sqFt: sqFt, depthIn: depthIn };
+      renderResults();
+
+      // Smooth-scroll to results
+      document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    /* ============================================================
+       RENDER RESULTS
+       Called by calculate() and by the buffer toggle.
+       ============================================================ */
+    function renderResults() {
+      if (!lastCalc) return;
+
+      var mat      = MATERIAL_DATA[lastCalc.matKey];
+      var buffer   = document.getElementById('bufferToggle').checked ? 1.10 : 1.00;
+      var cuFt     = lastCalc.cuFtRaw * buffer;
+      var cuYd     = cuFt / 27;
+      var bags2    = Math.ceil(cuFt / 2);
+      var bags3    = Math.ceil(cuFt / 3);
+      var weightLb = cuYd * mat.density_lbs_per_cubic_yard;
+      var weightTn = weightLb / 2000;
+
+      // Bags based on actual retail bag size from MATERIAL_DATA
+      var bagSz    = mat.bag_size_cubic_feet;
+      var bagsReal = Math.ceil(cuFt / bagSz);
+
+      // Cost estimate (based on actual bag size)
+      var costLow  = bagsReal * mat.cost_per_bag_low;
+      var costHigh = bagsReal * mat.cost_per_bag_high;
+
+      // ── Fill result cards ────────────────────────────────────
+      document.getElementById('resCuYd').textContent  = fmtNum(cuYd,  2);
+      document.getElementById('resCuFt').textContent  = fmtNum(cuFt,  1);
+      document.getElementById('resBags2').textContent = bags2;
+      document.getElementById('resBags3').textContent = bags3;
+      document.getElementById('resLbs').textContent   = fmtNum(weightLb, 0);
+      document.getElementById('resTons').textContent  = fmtNum(weightTn, 2);
+
+      // ── Meta line ────────────────────────────────────────────
+      var shapeLabel = { rect: 'rectangular', circle: 'circular', irregular: 'irregular' }[activeShape];
+      document.getElementById('resultsMeta').textContent =
+        fmtNum(lastCalc.sqFt, 1) + ' sq ft ' + shapeLabel + ' bed  ·  '
+        + lastCalc.depthIn + '" ' + mat.name
+        + (buffer > 1 ? '  ·  +10% buffer included' : '');
+
+      // ── Cost ─────────────────────────────────────────────────
+      document.getElementById('costLow').textContent  = '$' + Math.round(costLow);
+      document.getElementById('costHigh').textContent = '$' + Math.round(costHigh);
+      document.getElementById('costNote').textContent =
+        'Based on ' + bagsReal + ' × ' + bagSz + ' cu ft bags at $'
+        + mat.cost_per_bag_low + '–$' + mat.cost_per_bag_high + ' per bag. '
+        + 'Prices vary by region and retailer.';
+
+      // ── Shopping tip ─────────────────────────────────────────
+      var tipHtml = buildShoppingTip(mat, cuFt, cuYd, bagsReal, bagSz);
+      document.getElementById('shoppingTip').innerHTML = tipHtml;
+
+      // Show section
+      document.getElementById('resultsSection').classList.add('visible');
+    }
+
+    /* ============================================================
+       SHOPPING TIP builder
+       ============================================================ */
+    function buildShoppingTip(mat, cuFt, cuYd, bagsReal, bagSz) {
+      var typeLabel  = mat.type === 'compost' ? 'compost' : 'mulch';
+      var cuYdRound  = Math.ceil(cuYd * 4) / 4; // round up to nearest 0.25 yd
+      var bulkThresh = 15; // bags — below this, bagged is usually easier
+
+      var tip = '<strong>Shopping tip:</strong> ';
+
+      if (mat.type === 'mulch') {
+        tip += mat.name + ' is sold at home improvement stores in '
+            + bagSz + ' cu ft bags. '
+            + 'For this project you\'ll need approximately <strong>'
+            + bagsReal + ' bag' + (bagsReal !== 1 ? 's' : '') + '</strong>. ';
+
+        if (bagsReal >= bulkThresh) {
+          tip += 'At ' + bagsReal + ' bags, ordering <strong>'
+              + fmtNum(cuYdRound, 2) + ' cubic yard'
+              + (cuYdRound !== 1 ? 's' : '') + ' in bulk</strong> from a local landscape supplier '
+              + 'is often cheaper and saves multiple trips — bulk delivery typically breaks even around 10–15 bags.';
+        } else {
+          tip += 'Bagged ' + typeLabel + ' is the most convenient option at this quantity. '
+              + 'Bulk delivery typically becomes cost-effective at 10–15 bags or more.';
+        }
+      } else {
+        // Compost
+        tip += mat.name + ' is sold at garden centers in '
+            + bagSz + ' cu ft bags. '
+            + 'For this project you\'ll need approximately <strong>'
+            + bagsReal + ' bag' + (bagsReal !== 1 ? 's' : '') + '</strong>. ';
+
+        if (mat.application_rate_new_bed_inches) {
+          tip += 'For a <em>new bed</em>, work ' + mat.application_rate_new_bed_inches
+              + '" into the top 6–8" of soil. '
+              + 'For an <em>existing bed</em>, a ' + mat.application_rate_existing_bed_inches
+              + '" topdress each season is typical. ';
+        }
+
+        if (bagsReal >= bulkThresh) {
+          tip += 'At this quantity, ask a local landscape supplier about bulk cubic yard pricing — '
+              + 'you\'d need about <strong>' + fmtNum(cuYdRound, 2) + ' cubic yard'
+              + (cuYdRound !== 1 ? 's' : '') + '</strong>, which is often cheaper in bulk.';
+        }
+      }
+
+      // Best-for note
+      if (mat.best_for) {
+        tip += ' <em>Best for: ' + mat.best_for + '.</em>';
+      }
+
+      return tip;
+    }
+
+    /* ============================================================
+       RECALCULATE — scroll back to the inputs
+       ============================================================ */
+    function recalculate() {
+      document.getElementById('calculatorSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    /* ============================================================
+       NUMBER FORMATTING HELPER
+       ============================================================ */
+    function fmtNum(n, decimals) {
+      if (n === null || isNaN(n)) return '—';
+      return parseFloat(n.toFixed(decimals)).toLocaleString();
+    }
+
+    /* ============================================================
+       INIT
+       ============================================================ */
+    function initCalculator() {
+      populateMaterialDropdown();
+      selectShape('rect');
+    }
+
+    initCalculator();
+
+    /* ============================================================
+       SUPPLEMENTARY GUIDE DATA
+       Pros/cons for mulch; NPK for compost.
+       Keyed to match MATERIAL_DATA keys exactly.
+       ============================================================ */
+    var MULCH_PROS_CONS = {
+      'Hardwood Bark Mulch': {
+        pros: 'Long-lasting (2–4 yrs), enriches soil as it decomposes, widely available, excellent weed suppression',
+        cons: 'Can mat and repel water when wet; fresh chips may temporarily tie up nitrogen near roots'
+      },
+      'Cedar Mulch': {
+        pros: 'Natural oils repel some insects and slugs, slow to decompose, pleasant scent, attractive appearance',
+        cons: 'More expensive than hardwood; strong oils can deter beneficial soil organisms if applied too thick'
+      },
+      'Pine Straw': {
+        pros: 'Needles knit together and resist erosion on slopes; ideal for acid-loving plants; lightweight and easy to spread',
+        cons: 'Must be applied thicker (3–5"); can become a fire hazard when very dry; less available outside the Southeast'
+      },
+
+      'Cocoa Hull Mulch': {
+        pros: 'Pleasant chocolate scent; adds a small amount of nitrogen as it breaks down; attractive dark colour',
+        cons: 'Toxic to dogs; can develop surface mold in humid climates; expensive; must keep pets away'
+      },
+      'Straw Mulch': {
+        pros: 'Cheap and widely available; decomposes to add organic matter; great insulator for overwintering',
+        cons: 'Often contains weed seeds; breaks down in a single season; can blow away in exposed sites'
+      },
+      'Gravel / Rock': {
+        pros: 'Permanent and low-maintenance; excellent drainage; ideal for xeriscape and desert plants; will not wash away',
+        cons: 'Does not enrich soil; retains heat (can stress plants in summer); difficult and costly to remove once placed'
+      }
+    };
+
+    var COMPOST_NPK = {
+      'Finished Compost':      '1.5 – 0.5 – 1',
+      'Mushroom Compost':      '2 – 1 – 1.5',
+      'Worm Castings':         '1 – 0.5 – 0.5',
+      'Chicken Manure Compost':'3.5 – 2 – 2',
+      'Cow Manure Compost':    '1 – 0.5 – 0.5',
+      'Peat Moss':             '0.5 – 0 – 0'
+    };
+
+    /* ============================================================
+       RENDER MULCH GUIDE TABLE
+       ============================================================ */
+    function renderMulchGuideTable() {
+      var tbody = document.getElementById('mulchGuideTbody');
+      tbody.innerHTML = '';
+      Object.keys(MATERIAL_DATA).forEach(function(key) {
+        var m = MATERIAL_DATA[key];
+        if (m.type !== 'mulch') return;
+        var g = MULCH_PROS_CONS[key] || { pros: '—', cons: '—' };
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td>' + escHtmlGuide(m.name) + '</td>'
+          + '<td class="mc-tbl-depth">' + m.depth_recommended_inches + '"</td>'
+          + '<td style="white-space:nowrap;">' + m.depth_min_inches + '"–' + m.depth_max_inches + '"</td>'
+          + '<td>' + escHtmlGuide(m.best_for) + '</td>'
+          + '<td class="mc-tbl-pro">' + escHtmlGuide(g.pros) + '</td>'
+          + '<td class="mc-tbl-con">' + escHtmlGuide(g.cons) + '</td>';
+        tbody.appendChild(tr);
+      });
+    }
+
+    /* ============================================================
+       RENDER COMPOST GUIDE TABLE
+       ============================================================ */
+    function renderCompostGuideTable() {
+      var tbody = document.getElementById('compostGuideTbody');
+      tbody.innerHTML = '';
+      Object.keys(MATERIAL_DATA).forEach(function(key) {
+        var m = MATERIAL_DATA[key];
+        if (m.type !== 'compost') return;
+        var npk = COMPOST_NPK[key] || '—';
+        var newRate = m.application_rate_new_bed_inches
+          ? m.application_rate_new_bed_inches + '"'
+          : '—';
+        var existRate = m.application_rate_existing_bed_inches
+          ? m.application_rate_existing_bed_inches + '"'
+          : '—';
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td>' + escHtmlGuide(m.name) + '</td>'
+          + '<td style="white-space:nowrap;font-family:monospace;font-size:0.82rem;">' + npk + '</td>'
+          + '<td class="mc-tbl-depth">' + newRate + '</td>'
+          + '<td class="mc-tbl-depth">' + existRate + '</td>'
+          + '<td>' + escHtmlGuide(m.best_for) + '</td>'
+          + '<td class="mc-tbl-con">' + escHtmlGuide(m.avoid_for || '—') + '</td>';
+        tbody.appendChild(tr);
+      });
+    }
+
+    /* ============================================================
+       GUIDE PANEL VISIBILITY
+       Called from switchTab() — keeps guide in sync with main tabs.
+       ============================================================ */
+    function syncGuidePanels(tab) {
+      document.getElementById('guideMulch').classList.toggle('visible',   tab === 'mulch');
+      document.getElementById('guideCompost').classList.toggle('visible', tab === 'compost');
+    }
+
+    /* ============================================================
+       COMPOST TEA CALCULATOR
+       ACT ratio  1:5  (1 part compost per 5 parts water)
+       Steep ratio 1:10 (1 part compost per 10 parts water)
+       Result expressed in cups, quarts, or gallons depending on size.
+       ============================================================ */
+    function calcCompostTea() {
+      var gal = parseFloat(document.getElementById('teaGallons').value);
+      if (!gal || gal <= 0) {
+        alert('Please enter a valid water volume in gallons.');
+        return;
+      }
+
+      // ACT: 1 part compost per 5 parts water → compost = water / 5
+      var actCups   = (gal / 5) * 16;   // gallons → cups
+      // Steep: 1 part compost per 10 parts water → compost = water / 10
+      var steepCups = (gal / 10) * 16;
+
+      document.getElementById('teaACT').textContent   = fmtVolume(actCups);
+      document.getElementById('teaSteep').textContent = fmtVolume(steepCups);
+      document.getElementById('teaResult').classList.add('visible');
+    }
+
+    function fmtVolume(cups) {
+      if (cups < 1)   return (cups * 16).toFixed(1) + ' tbsp';
+      if (cups < 4)   return cups.toFixed(1) + ' cup' + (cups.toFixed(1) !== '1.0' ? 's' : '');
+      if (cups < 16)  return (cups / 4).toFixed(2).replace(/\.?0+$/, '') + ' qts';
+      return (cups / 16).toFixed(2).replace(/\.?0+$/, '') + ' gal';
+    }
+
+    /* ============================================================
+       SAFE HTML ESCAPE for table content
+       ============================================================ */
+    function escHtmlGuide(str) {
+      if (!str) return '—';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    /* ============================================================
+       PATCH switchTab TO ALSO SYNC GUIDE PANELS
+       ============================================================ */
+    var _origSwitchTab = switchTab;
+    switchTab = function(tab) {
+      // Save the current material selection before changing tabs
+      var sel = document.getElementById('materialSelect');
+      if (sel.value) tabMemory[activeTab] = sel.value;
+      _origSwitchTab(tab);
+      syncGuidePanels(tab);
+    };
+
+    /* ============================================================
+       INIT GUIDE TABLES
+       ============================================================ */
+    renderMulchGuideTable();
+    renderCompostGuideTable();
+
+    /* ============================================================
+       LUCIDE ICONS INIT
+       ============================================================ */
+    if (window.lucide) lucide.createIcons();
+  </script>
+
+</body>
+</html>
