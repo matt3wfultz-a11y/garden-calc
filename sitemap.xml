@@ -1,108 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- IMPORTANT: Replace https://matt3wfultz-a11y.github.io/garden-calc with your real domain before submitting to Google Search Console -->
+  <!-- IMPORTANT: Replace https://www.gardencalc.net with your real domain before submitting to Google Search Console -->
 
   <url>
-    <loc>https://matt3wfultz-a11y.github.io/garden-calc/</loc>
+    <loc>https://www.gardencalc.net/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <!-- Tools -->
   <url>
-    <loc>https://matt3wfultz-a11y.github.io/garden-calc/frost-dates.html</loc>
+    <loc>https://www.gardencalc.net/frost-dates.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://matt3wfultz-a11y.github.io/garden-calc/seed-starting-schedule.html</loc>
+    <loc>https://www.gardencalc.net/seed-starting-schedule.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://matt3wfultz-a11y.github.io/garden-calc/companion-planting.html</loc>
+    <loc>https://www.gardencalc.net/companion-planting.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://matt3wfultz-a11y.github.io/garden-calc/square-foot-planner.html</loc>
+    <loc>https://www.gardencalc.net/square-foot-planner.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://matt3wfultz-a11y.github.io/garden-calc/mulch-calculator.html</loc>
+    <loc>https://www.gardencalc.net/mulch-calculator.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- Blog hub -->
   <url>
-    <loc>https://matt3wfultz-a11y.github.io/garden-calc/blog.html</loc>
+    <loc>https://www.gardencalc.net/blog.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- Blog articles -->
   <url>
-    <loc>https://matt3wfultz-a11y.github.io/garden-calc/blog-beginners-guide.html</loc>
+    <loc>https://www.gardencalc.net/blog-beginners-guide.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://matt3wfultz-a11y.github.io/garden-calc/blog-raised-bed-gardening.html</loc>
+    <loc>https://www.gardencalc.net/blog-raised-bed-gardening.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://matt3wfultz-a11y.github.io/garden-calc/blog-composting.html</loc>
+    <loc>https://www.gardencalc.net/blog-composting.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://matt3wfultz-a11y.github.io/garden-calc/blog-organic-pest-control.html</loc>
+    <loc>https://www.gardencalc.net/blog-organic-pest-control.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://matt3wfultz-a11y.github.io/garden-calc/blog-pest-management.html</loc>
+    <loc>https://www.gardencalc.net/blog-pest-management.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://matt3wfultz-a11y.github.io/garden-calc/blog-beneficial-insects.html</loc>
+    <loc>https://www.gardencalc.net/blog-beneficial-insects.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://matt3wfultz-a11y.github.io/garden-calc/blog-snakes-in-the-garden.html</loc>
+    <loc>https://www.gardencalc.net/blog-snakes-in-the-garden.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://matt3wfultz-a11y.github.io/garden-calc/blog-reptiles-amphibians.html</loc>
+    <loc>https://www.gardencalc.net/blog-reptiles-amphibians.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <!-- Static pages -->
   <url>
-    <loc>https://matt3wfultz-a11y.github.io/garden-calc/about.html</loc>
+    <loc>https://www.gardencalc.net/about.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://matt3wfultz-a11y.github.io/garden-calc/privacy.html</loc>
+    <loc>https://www.gardencalc.net/privacy.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://matt3wfultz-a11y.github.io/garden-calc/terms.html</loc>
+    <loc>https://www.gardencalc.net/terms.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://matt3wfultz-a11y.github.io/garden-calc/sitemap.html</loc>
+    <loc>https://www.gardencalc.net/sitemap.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
