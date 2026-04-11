@@ -233,22 +233,8 @@ p  { color: var(--text-mid); }
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--cream-dark);
-  border: 1px dashed #ccc;
-  border-radius: var(--radius-sm);
   overflow: hidden;
   position: relative;
-}
-.ad-slot--leaderboard { min-height: 90px; }   /* 728×90 */
-.ad-slot--rectangle   { min-height: 250px; max-width: 336px; } /* 300×250 or 336×280 */
-.ad-slot--banner      { min-height: 60px; }    /* 320×50 mobile */
-.ad-slot--skyscraper  { min-height: 600px; max-width: 160px; } /* 160×600 */
-.ad-placeholder-label {
-  font-size: 0.7rem;
-  color: #aaa;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  pointer-events: none;
 }
 .ad-section { padding: 16px 0; }
 .ad-section--center { display: flex; justify-content: center; }
