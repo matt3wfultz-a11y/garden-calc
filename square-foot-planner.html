@@ -1214,7 +1214,7 @@
         <div class="sfp-faq-list" role="list" style="margin-top:36px;">
 
           <div class="sfp-faq-item" role="listitem" style="border-bottom:1px solid rgba(0,0,0,0.08); padding:0;">
-            <button class="sfp-faq-btn" onclick="var i=this.closest('.sfp-faq-item'); i.classList.toggle('sfp-open'); this.setAttribute('aria-expanded', i.classList.contains('sfp-open'))" aria-expanded="false" style="width:100%;background:none;border:none;text-align:left;padding:18px 0;font-size:1rem;font-weight:600;color:var(--green-dark);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;font-family:inherit;">
+            <button class="sfp-faq-btn" aria-expanded="false" style="width:100%;background:none;border:none;text-align:left;padding:18px 0;font-size:1rem;font-weight:600;color:var(--green-dark);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;font-family:inherit;">
               What size raised bed is best for square foot gardening?
               <span style="font-size:0.8rem;transition:transform 0.2s;flex-shrink:0;" class="sfp-arrow">▼</span>
             </button>
@@ -1224,7 +1224,7 @@
           </div>
 
           <div class="sfp-faq-item" role="listitem" style="border-bottom:1px solid rgba(0,0,0,0.08); padding:0;">
-            <button class="sfp-faq-btn" onclick="var i=this.closest('.sfp-faq-item'); i.classList.toggle('sfp-open'); this.setAttribute('aria-expanded', i.classList.contains('sfp-open'))" aria-expanded="false" style="width:100%;background:none;border:none;text-align:left;padding:18px 0;font-size:1rem;font-weight:600;color:var(--green-dark);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;font-family:inherit;">
+            <button class="sfp-faq-btn" aria-expanded="false" style="width:100%;background:none;border:none;text-align:left;padding:18px 0;font-size:1rem;font-weight:600;color:var(--green-dark);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;font-family:inherit;">
               Can I use square foot gardening in containers?
               <span style="font-size:0.8rem;transition:transform 0.2s;flex-shrink:0;" class="sfp-arrow">▼</span>
             </button>
@@ -1234,7 +1234,7 @@
           </div>
 
           <div class="sfp-faq-item" role="listitem" style="border-bottom:1px solid rgba(0,0,0,0.08); padding:0;">
-            <button class="sfp-faq-btn" onclick="var i=this.closest('.sfp-faq-item'); i.classList.toggle('sfp-open'); this.setAttribute('aria-expanded', i.classList.contains('sfp-open'))" aria-expanded="false" style="width:100%;background:none;border:none;text-align:left;padding:18px 0;font-size:1rem;font-weight:600;color:var(--green-dark);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;font-family:inherit;">
+            <button class="sfp-faq-btn" aria-expanded="false" style="width:100%;background:none;border:none;text-align:left;padding:18px 0;font-size:1rem;font-weight:600;color:var(--green-dark);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;font-family:inherit;">
               Do I need to rotate crops in a square foot garden?
               <span style="font-size:0.8rem;transition:transform 0.2s;flex-shrink:0;" class="sfp-arrow">▼</span>
             </button>
@@ -1244,7 +1244,7 @@
           </div>
 
           <div class="sfp-faq-item" role="listitem" style="border-bottom:1px solid rgba(0,0,0,0.08); padding:0;">
-            <button class="sfp-faq-btn" onclick="var i=this.closest('.sfp-faq-item'); i.classList.toggle('sfp-open'); this.setAttribute('aria-expanded', i.classList.contains('sfp-open'))" aria-expanded="false" style="width:100%;background:none;border:none;text-align:left;padding:18px 0;font-size:1rem;font-weight:600;color:var(--green-dark);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;font-family:inherit;">
+            <button class="sfp-faq-btn" aria-expanded="false" style="width:100%;background:none;border:none;text-align:left;padding:18px 0;font-size:1rem;font-weight:600;color:var(--green-dark);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;font-family:inherit;">
               How deep should a square foot garden bed be?
               <span style="font-size:0.8rem;transition:transform 0.2s;flex-shrink:0;" class="sfp-arrow">▼</span>
             </button>
@@ -1254,7 +1254,7 @@
           </div>
 
           <div class="sfp-faq-item" role="listitem" style="border-bottom:1px solid rgba(0,0,0,0.08); padding:0;">
-            <button class="sfp-faq-btn" onclick="var i=this.closest('.sfp-faq-item'); i.classList.toggle('sfp-open'); this.setAttribute('aria-expanded', i.classList.contains('sfp-open'))" aria-expanded="false" style="width:100%;background:none;border:none;text-align:left;padding:18px 0;font-size:1rem;font-weight:600;color:var(--green-dark);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;font-family:inherit;">
+            <button class="sfp-faq-btn" aria-expanded="false" style="width:100%;background:none;border:none;text-align:left;padding:18px 0;font-size:1rem;font-weight:600;color:var(--green-dark);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;font-family:inherit;">
               What's the best material for raised bed frames?
               <span style="font-size:0.8rem;transition:transform 0.2s;flex-shrink:0;" class="sfp-arrow">▼</span>
             </button>
@@ -2289,13 +2289,15 @@
 
   <script>lucide.createIcons();</script>
   <script>
-    // SFP FAQ toggle — adds sfp-open class to parent item to show answer
+    // SFP FAQ toggle
     document.querySelectorAll('.sfp-faq-item').forEach(function(item) {
+      var btn    = item.querySelector('.sfp-faq-btn');
       var answer = item.querySelector('.sfp-faq-answer');
       var arrow  = item.querySelector('.sfp-arrow');
-      item.querySelector('.sfp-faq-btn').addEventListener('click', function() {
+      btn.addEventListener('click', function() {
         var isOpen = item.classList.toggle('sfp-open');
         answer.style.display = isOpen ? 'block' : 'none';
+        btn.setAttribute('aria-expanded', isOpen);
         if (arrow) arrow.style.transform = isOpen ? 'rotate(180deg)' : '';
       });
     });
