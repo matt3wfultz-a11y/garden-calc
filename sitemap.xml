@@ -73,6 +73,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.gardencalc.net/blog-spider-mites.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.gardencalc.net/blog-beneficial-insects.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
