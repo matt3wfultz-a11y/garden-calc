@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# Block nothing — this is a fully public informational site.
+
+Sitemap: https://gardencalc.net/sitemap.xml

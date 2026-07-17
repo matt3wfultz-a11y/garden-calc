@@ -5,6 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="GardenCalc — Free gardening tools for Texas, New Mexico, and Oregon gardeners. Frost date calculator, seed starting schedule, companion planting guide, square foot planner, and mulch calculator." />
   <title>GardenCalc — Smart Gardening Tools for Every Season</title>
+  <link rel="canonical" href="https://gardencalc.net/" />
+
+  <!-- Open Graph / social sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="GardenCalc" />
+  <meta property="og:title" content="GardenCalc — Smart Gardening Tools for Every Season" />
+  <meta property="og:description" content="GardenCalc — Free gardening tools for Texas, New Mexico, and Oregon gardeners. Frost date calculator, seed starting schedule, companion planting guide, square foot planner, and mulch calculator." />
+  <meta property="og:url" content="https://gardencalc.net/" />
+  <meta property="og:image" content="https://gardencalc.net/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="GardenCalc — Smart Gardening Tools for Every Season" />
+  <meta name="twitter:description" content="GardenCalc — Free gardening tools for Texas, New Mexico, and Oregon gardeners. Frost date calculator, seed starting schedule, companion planting guide, square foot planner, and mulch calculator." />
+  <meta name="twitter:image" content="https://gardencalc.net/og-image.png" />
+
   <link rel="stylesheet" href="styles.css" />
   <!-- Favicon placeholder -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" />
@@ -21,13 +39,13 @@
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "GardenCalc",
-    "url": "https://www.gardencalc.net",
+    "url": "https://gardencalc.net",
     "description": "Free gardening tools including frost date calculator, seed starting schedule, companion planting guide, square foot planner, and mulch calculator.",
     "potentialAction": {
       "@type": "SearchAction",
       "target": {
         "@type": "EntryPoint",
-        "urlTemplate": "https://www.gardencalc.net/blog.html?q={search_term_string}"
+        "urlTemplate": "https://gardencalc.net/blog.html?q={search_term_string}"
       },
       "query-input": "required name=search_term_string"
     }
@@ -38,13 +56,13 @@
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "GardenCalc",
-    "url": "https://www.gardencalc.net",
+    "url": "https://gardencalc.net",
     "description": "GardenCalc provides free, accurate gardening calculators and guides for home gardeners, homesteaders, and market growers.",
     "sameAs": [],
     "contactPoint": {
       "@type": "ContactPoint",
       "contactType": "customer support",
-      "url": "https://www.gardencalc.net/about.html#contact"
+      "url": "https://gardencalc.net/about.html#contact"
     }
   }
   </script>
@@ -287,14 +305,12 @@
          ============================================================ -->
     <div class="seasons-bar" aria-label="Current season planting tips">
       <div class="container">
-        <h2>It's Spring — Time to Plant!</h2>
-        <p>Based on most zones in April, here's what you should be doing right now:</p>
-        <div class="season-chips">
+        <h2 id="seasonHeading">Your Seasonal Garden Checklist</h2>
+        <p id="seasonIntro">Here's what you should be doing in the garden right now:</p>
+        <div class="season-chips" id="seasonChips">
           <span class="season-chip active"><i data-lucide="thermometer"></i> Check Frost Dates</span>
-          <span class="season-chip"><i data-lucide="leaf"></i> Direct Sow Cool Crops</span>
-          <span class="season-chip"><i data-lucide="circle-dot"></i> Start Tomatoes Indoors</span>
-          <span class="season-chip"><i data-lucide="leaf"></i> Prepare Raised Beds</span>
-          <span class="season-chip"><i data-lucide="sprout"></i> Amend with Compost</span>
+          <span class="season-chip"><i data-lucide="sprout"></i> Plan Your Beds</span>
+          <span class="season-chip"><i data-lucide="leaf"></i> Amend with Compost</span>
         </div>
         <a href="frost-dates.html" class="btn btn-lg" style="background:var(--white); color:var(--earth-mid);">
           Find Your Planting Window →
@@ -501,7 +517,7 @@
       </div>
 
       <div class="footer-bottom">
-        <p>© 2025 GardenCalc. All rights reserved. For informational purposes only.</p>
+        <p>© 2026 GardenCalc. All rights reserved. For informational purposes only.</p>
         <div class="footer-legal">
           <a href="privacy.html">Privacy</a>
           <a href="terms.html">Terms</a>
@@ -531,6 +547,76 @@
         nav.classList.remove('open');
       }
     });
+  </script>
+
+  <!-- Auto-updating seasonal checklist (Northern Hemisphere) -->
+  <script>
+    (function () {
+      var SEASONS = {
+        spring: {
+          heading: "It's Spring — Time to Plant!",
+          intro: "Warming soil and lengthening days — here's what to do in the garden right now:",
+          chips: [
+            ["thermometer", "Check Your Frost Dates"],
+            ["sprout", "Start Warm-Season Seeds"],
+            ["leaf", "Direct Sow Cool Crops"],
+            ["layout-grid", "Prepare Raised Beds"],
+            ["circle-dot", "Harden Off Seedlings"]
+          ]
+        },
+        summer: {
+          heading: "It's Summer — Keep Things Growing",
+          intro: "Peak growing season. Focus on water, harvest, and succession planting:",
+          chips: [
+            ["droplet", "Deep-Water in the Morning"],
+            ["scissors", "Harvest Often to Boost Yields"],
+            ["sprout", "Succession Sow Beans & Greens"],
+            ["bug", "Scout for Pests Weekly"],
+            ["layers", "Mulch to Hold Moisture"]
+          ]
+        },
+        fall: {
+          heading: "It's Fall — Plant, Harvest & Prep",
+          intro: "Cooler weather is ideal for cool-season crops and putting beds to rest:",
+          chips: [
+            ["thermometer", "Check First Frost Date"],
+            ["leaf", "Sow Garlic & Cover Crops"],
+            ["scissors", "Harvest Before Frost"],
+            ["layers", "Add Compost to Beds"],
+            ["sprout", "Plant Cool-Season Greens"]
+          ]
+        },
+        winter: {
+          heading: "It's Winter — Plan Your Best Season Yet",
+          intro: "The quiet season to plan, order seeds, and get a jump on spring:",
+          chips: [
+            ["book-open", "Plan Next Year's Layout"],
+            ["circle-dot", "Order Seeds Early"],
+            ["sprout", "Start Onions & Leeks Indoors"],
+            ["layout-grid", "Sketch Your Square-Foot Beds"],
+            ["thermometer", "Review Your Frost Dates"]
+          ]
+        }
+      };
+      function seasonForMonth(m) {
+        if (m >= 2 && m <= 4) return "spring";   // Mar–May
+        if (m >= 5 && m <= 7) return "summer";    // Jun–Aug
+        if (m >= 8 && m <= 10) return "fall";     // Sep–Nov
+        return "winter";                          // Dec–Feb
+      }
+      var s = SEASONS[seasonForMonth(new Date().getMonth())];
+      var h = document.getElementById("seasonHeading");
+      var p = document.getElementById("seasonIntro");
+      var c = document.getElementById("seasonChips");
+      if (h && p && c && s) {
+        h.textContent = s.heading;
+        p.textContent = s.intro;
+        c.innerHTML = s.chips.map(function (chip, i) {
+          return '<span class="season-chip' + (i === 0 ? ' active' : '') +
+                 '"><i data-lucide="' + chip[0] + '"></i> ' + chip[1] + '</span>';
+        }).join("");
+      }
+    })();
   </script>
 
   <script>lucide.createIcons();</script>
