@@ -1184,6 +1184,253 @@
     range(97501,97599,'Medford / Southern Oregon','OR','8a','Apr 1','Nov 1');
     range(97701,97799,'Bend / Central Oregon','OR','5b','May 15','Sep 25');
     range(97801,97999,'Eastern Oregon','OR','6a','May 1','Oct 1');
+
+    // ════════════════════════════════════════════════════════════
+    //  STEP 3 — NATIONWIDE COVERAGE  (all 50 states)
+    //  Broad state defaults first, then metro refinements.
+    //  Dates are ~50% NOAA climate normals; zones per 2023 USDA map.
+    // ════════════════════════════════════════════════════════════
+
+    // ── NEW ENGLAND ──────────────────────────────────────────────
+    range( 1000,  2799, 'Massachusetts',    'MA', '6a', 'Apr 25', 'Oct 20');
+    range( 2100,  2299, 'Boston',           'MA', '6b', 'Apr 8',  'Nov 5');
+    range( 1600,  1699, 'Worcester',        'MA', '5b', 'May 5',  'Oct 8');
+    range( 1000,  1299, 'Springfield',      'MA', '6a', 'Apr 25', 'Oct 15');
+    range( 2600,  2699, 'Cape Cod',         'MA', '7a', 'Apr 18', 'Oct 28');
+    range( 2800,  2999, 'Rhode Island',     'RI', '6b', 'Apr 15', 'Oct 25');
+    range( 3000,  3899, 'New Hampshire',    'NH', '5a', 'May 15', 'Sep 25');
+    range( 3100,  3199, 'Manchester NH',    'NH', '5b', 'May 8',  'Oct 1');
+    range( 3800,  3899, 'Portsmouth NH',    'NH', '6a', 'May 1',  'Oct 8');
+    range( 3900,  4999, 'Maine',            'ME', '5a', 'May 15', 'Sep 25');
+    range( 4100,  4109, 'Portland ME',      'ME', '5b', 'May 5',  'Oct 5');
+    range( 4400,  4499, 'Bangor',           'ME', '4b', 'May 22', 'Sep 22');
+    range( 5000,  5999, 'Vermont',          'VT', '4b', 'May 20', 'Sep 22');
+    range( 5400,  5499, 'Burlington',       'VT', '5a', 'May 10', 'Oct 2');
+    range( 6000,  6999, 'Connecticut',      'CT', '6b', 'Apr 22', 'Oct 18');
+    range( 6100,  6199, 'Hartford',         'CT', '6a', 'Apr 25', 'Oct 12');
+    range( 6500,  6999, 'New Haven / Coast','CT', '7a', 'Apr 12', 'Oct 25');
+
+    // ── NEW YORK ─────────────────────────────────────────────────
+    range(10000, 14999, 'New York',         'NY', '6a', 'Apr 28', 'Oct 12');
+    range(10000, 10499, 'New York City',    'NY', '7b', 'Apr 1',  'Nov 12');
+    range(10500, 10999, 'Westchester',      'NY', '6b', 'Apr 20', 'Oct 22');
+    range(11000, 11999, 'Long Island',      'NY', '7a', 'Apr 10', 'Nov 5');
+    range(12000, 12399, 'Albany',           'NY', '5b', 'May 5',  'Oct 3');
+    range(13000, 13299, 'Syracuse',         'NY', '5b', 'May 5',  'Oct 5');
+    range(13600, 13699, 'Watertown',        'NY', '4b', 'May 18', 'Sep 25');
+    range(14200, 14399, 'Buffalo',          'NY', '6a', 'May 3',  'Oct 12');
+    range(14600, 14699, 'Rochester',        'NY', '6a', 'May 1',  'Oct 10');
+    range(13700, 13999, 'Binghamton',       'NY', '5b', 'May 10', 'Oct 1');
+
+    // ── NEW JERSEY ───────────────────────────────────────────────
+    range( 7000,  8999, 'New Jersey',       'NJ', '7a', 'Apr 15', 'Oct 22');
+    range( 7100,  7199, 'Newark',           'NJ', '7a', 'Apr 10', 'Oct 28');
+    range( 8200,  8499, 'Atlantic City',    'NJ', '7b', 'Apr 5',  'Nov 1');
+
+    // ── PENNSYLVANIA ─────────────────────────────────────────────
+    range(15000, 19699, 'Pennsylvania',     'PA', '6a', 'May 1',  'Oct 8');
+    range(15200, 15299, 'Pittsburgh',       'PA', '6b', 'Apr 20', 'Oct 20');
+    range(19100, 19199, 'Philadelphia',     'PA', '7b', 'Apr 3',  'Nov 5');
+    range(17000, 17199, 'Harrisburg',       'PA', '6b', 'Apr 20', 'Oct 18');
+    range(18400, 18599, 'Scranton',         'PA', '6a', 'May 5',  'Oct 5');
+    range(16500, 16599, 'Erie',             'PA', '6a', 'May 1',  'Oct 15');
+
+    // ── DELAWARE / DC / MARYLAND ─────────────────────────────────
+    range(19700, 19999, 'Delaware',         'DE', '7a', 'Apr 12', 'Oct 28');
+    range(20000, 20599, 'Washington DC',    'DC', '7b', 'Apr 5',  'Nov 5');
+    range(20600, 21999, 'Maryland',         'MD', '7a', 'Apr 15', 'Oct 22');
+    range(21200, 21299, 'Baltimore',        'MD', '7b', 'Apr 10', 'Oct 28');
+
+    // ── VIRGINIA / WEST VIRGINIA ─────────────────────────────────
+    range(22000, 24699, 'Virginia',         'VA', '7a', 'Apr 18', 'Oct 22');
+    range(22000, 22399, 'Northern Virginia','VA', '7b', 'Apr 12', 'Oct 25');
+    range(23200, 23299, 'Richmond',         'VA', '7b', 'Apr 10', 'Oct 28');
+    range(23300, 23599, 'Virginia Beach',   'VA', '8a', 'Mar 25', 'Nov 12');
+    range(24000, 24099, 'Roanoke',          'VA', '7a', 'Apr 20', 'Oct 18');
+    range(24700, 26899, 'West Virginia',    'WV', '6b', 'Apr 25', 'Oct 12');
+    range(25300, 25399, 'Charleston WV',    'WV', '6b', 'Apr 18', 'Oct 18');
+
+    // ── NORTH & SOUTH CAROLINA ───────────────────────────────────
+    range(27000, 28999, 'North Carolina',   'NC', '7b', 'Apr 10', 'Oct 25');
+    range(28200, 28299, 'Charlotte',        'NC', '8a', 'Apr 1',  'Nov 5');
+    range(27600, 27699, 'Raleigh',          'NC', '7b', 'Apr 8',  'Oct 28');
+    range(27400, 27499, 'Greensboro',       'NC', '7b', 'Apr 12', 'Oct 25');
+    range(28400, 28499, 'Wilmington NC',    'NC', '8a', 'Mar 25', 'Nov 12');
+    range(28700, 28899, 'Asheville',        'NC', '7a', 'Apr 22', 'Oct 15');
+    range(29000, 29999, 'South Carolina',   'SC', '8a', 'Mar 28', 'Nov 8');
+    range(29200, 29299, 'Columbia SC',      'SC', '8a', 'Mar 25', 'Nov 10');
+    range(29400, 29499, 'Charleston SC',    'SC', '8b', 'Mar 10', 'Nov 25');
+    range(29600, 29699, 'Greenville SC',    'SC', '8a', 'Apr 1',  'Nov 5');
+
+    // ── GEORGIA ──────────────────────────────────────────────────
+    range(30000, 31999, 'Georgia',          'GA', '8a', 'Mar 30', 'Nov 10');
+    range(39800, 39999, 'Southwest Georgia','GA', '8b', 'Mar 18', 'Nov 18');
+    range(30300, 30399, 'Atlanta',          'GA', '8a', 'Apr 1',  'Nov 10');
+    range(31400, 31499, 'Savannah',         'GA', '8b', 'Mar 10', 'Nov 25');
+    range(30900, 30999, 'Augusta',          'GA', '8a', 'Mar 25', 'Nov 12');
+    range(31200, 31299, 'Macon',            'GA', '8a', 'Mar 25', 'Nov 12');
+    range(31900, 31999, 'Columbus GA',      'GA', '8b', 'Mar 20', 'Nov 15');
+
+    // ── FLORIDA ──────────────────────────────────────────────────
+    range(32000, 34999, 'Florida',          'FL', '9a', 'Feb 20', 'Dec 5');
+    range(32200, 32299, 'Jacksonville',     'FL', '8b', 'Mar 5',  'Nov 28');
+    range(32300, 32399, 'Tallahassee',      'FL', '8b', 'Mar 10', 'Nov 25');
+    range(32800, 32899, 'Orlando',          'FL', '9b', 'Feb 5',  'Dec 15');
+    range(33600, 33699, 'Tampa',            'FL', '9b', 'Feb 1',  'Dec 20');
+    range(33100, 33299, 'Miami',            'FL','10b', 'Jan 5',  'Dec 28');
+    range(33300, 33499, 'Fort Lauderdale',  'FL','10b', 'Jan 8',  'Dec 25');
+    range(33900, 33999, 'Fort Myers',       'FL','10a', 'Jan 20', 'Dec 22');
+    range(32900, 32999, 'Melbourne FL',     'FL', '9b', 'Feb 5',  'Dec 15');
+
+    // ── ALABAMA / MISSISSIPPI ────────────────────────────────────
+    range(35000, 36999, 'Alabama',          'AL', '8a', 'Mar 25', 'Nov 8');
+    range(35200, 35299, 'Birmingham',       'AL', '8a', 'Mar 25', 'Nov 10');
+    range(35800, 35899, 'Huntsville',       'AL', '7b', 'Apr 5',  'Nov 1');
+    range(36100, 36199, 'Montgomery',       'AL', '8b', 'Mar 15', 'Nov 18');
+    range(36500, 36699, 'Mobile',           'AL', '9a', 'Feb 20', 'Dec 5');
+    range(38600, 39799, 'Mississippi',      'MS', '8a', 'Mar 22', 'Nov 10');
+    range(39200, 39299, 'Jackson MS',       'MS', '8a', 'Mar 20', 'Nov 12');
+    range(39500, 39599, 'Gulfport',         'MS', '9a', 'Feb 25', 'Dec 5');
+
+    // ── TENNESSEE / KENTUCKY ─────────────────────────────────────
+    range(37000, 38599, 'Tennessee',        'TN', '7a', 'Apr 8',  'Oct 25');
+    range(37200, 37299, 'Nashville',        'TN', '7a', 'Apr 10', 'Oct 25');
+    range(38100, 38199, 'Memphis',          'TN', '8a', 'Mar 28', 'Nov 8');
+    range(37900, 37999, 'Knoxville',        'TN', '7a', 'Apr 5',  'Oct 28');
+    range(37400, 37499, 'Chattanooga',      'TN', '7b', 'Apr 1',  'Nov 2');
+    range(40000, 42799, 'Kentucky',         'KY', '6b', 'Apr 20', 'Oct 18');
+    range(40200, 40299, 'Louisville',       'KY', '6b', 'Apr 15', 'Oct 25');
+    range(40500, 40599, 'Lexington',        'KY', '6b', 'Apr 20', 'Oct 20');
+
+    // ── OHIO / INDIANA / MICHIGAN ────────────────────────────────
+    range(43000, 45999, 'Ohio',             'OH', '6a', 'Apr 28', 'Oct 12');
+    range(43200, 43299, 'Columbus OH',      'OH', '6a', 'Apr 25', 'Oct 15');
+    range(44100, 44199, 'Cleveland',        'OH', '6b', 'Apr 25', 'Oct 20');
+    range(45200, 45299, 'Cincinnati',       'OH', '6b', 'Apr 15', 'Oct 25');
+    range(43600, 43699, 'Toledo',           'OH', '6a', 'Apr 28', 'Oct 12');
+    range(46000, 47999, 'Indiana',          'IN', '6a', 'Apr 25', 'Oct 15');
+    range(46200, 46299, 'Indianapolis',     'IN', '6a', 'Apr 22', 'Oct 18');
+    range(46800, 46899, 'Fort Wayne',       'IN', '5b', 'Apr 28', 'Oct 12');
+    range(47700, 47799, 'Evansville',       'IN', '6b', 'Apr 12', 'Oct 25');
+    range(48000, 49999, 'Michigan',         'MI', '5b', 'May 10', 'Oct 3');
+    range(48200, 48299, 'Detroit',          'MI', '6a', 'Apr 25', 'Oct 18');
+    range(49500, 49599, 'Grand Rapids',     'MI', '6a', 'May 5',  'Oct 8');
+    range(48900, 48999, 'Lansing',          'MI', '5b', 'May 10', 'Oct 3');
+    range(49800, 49999, 'Upper Peninsula',  'MI', '4b', 'May 25', 'Sep 22');
+
+    // ── UPPER MIDWEST ────────────────────────────────────────────
+    range(60000, 62999, 'Illinois',         'IL', '5b', 'Apr 25', 'Oct 12');
+    range(60600, 60699, 'Chicago',          'IL', '6a', 'Apr 22', 'Oct 20');
+    range(62700, 62799, 'Springfield IL',   'IL', '6a', 'Apr 20', 'Oct 15');
+    range(61600, 61699, 'Peoria',           'IL', '5b', 'Apr 25', 'Oct 12');
+    range(61100, 61199, 'Rockford',         'IL', '5b', 'May 1',  'Oct 8');
+    range(53000, 54999, 'Wisconsin',        'WI', '4b', 'May 15', 'Sep 28');
+    range(53200, 53299, 'Milwaukee',        'WI', '5b', 'May 5',  'Oct 10');
+    range(53700, 53799, 'Madison',          'WI', '5a', 'May 8',  'Oct 3');
+    range(54300, 54399, 'Green Bay',        'WI', '5a', 'May 12', 'Sep 30');
+    range(55000, 56799, 'Minnesota',        'MN', '4a', 'May 15', 'Sep 25');
+    range(55400, 55599, 'Minneapolis',      'MN', '5a', 'May 5',  'Oct 3');
+    range(55100, 55199, 'St Paul',          'MN', '5a', 'May 5',  'Oct 3');
+    range(55800, 55899, 'Duluth',           'MN', '4b', 'May 20', 'Sep 22');
+    range(50000, 52899, 'Iowa',             'IA', '5a', 'May 1',  'Oct 5');
+    range(50300, 50399, 'Des Moines',       'IA', '5b', 'Apr 25', 'Oct 10');
+    range(52400, 52499, 'Cedar Rapids',     'IA', '5a', 'May 1',  'Oct 5');
+    range(57000, 57799, 'South Dakota',     'SD', '4a', 'May 15', 'Sep 22');
+    range(57100, 57199, 'Sioux Falls',      'SD', '4b', 'May 10', 'Sep 28');
+    range(57700, 57799, 'Rapid City',       'SD', '4b', 'May 15', 'Sep 25');
+    range(58000, 58899, 'North Dakota',     'ND', '3b', 'May 18', 'Sep 20');
+    range(58100, 58199, 'Fargo',            'ND', '4a', 'May 15', 'Sep 22');
+    range(58500, 58599, 'Bismarck',         'ND', '4a', 'May 15', 'Sep 20');
+
+    // ── MISSOURI / KANSAS / NEBRASKA ─────────────────────────────
+    range(63000, 65899, 'Missouri',         'MO', '6a', 'Apr 20', 'Oct 15');
+    range(63100, 63199, 'St Louis',         'MO', '6b', 'Apr 12', 'Oct 22');
+    range(64100, 64199, 'Kansas City MO',   'MO', '6a', 'Apr 15', 'Oct 20');
+    range(65800, 65899, 'Springfield MO',   'MO', '6b', 'Apr 15', 'Oct 20');
+    range(66000, 67999, 'Kansas',           'KS', '6a', 'Apr 20', 'Oct 15');
+    range(67200, 67299, 'Wichita',          'KS', '6b', 'Apr 12', 'Oct 22');
+    range(66600, 66699, 'Topeka',           'KS', '6a', 'Apr 18', 'Oct 15');
+    range(68000, 69399, 'Nebraska',         'NE', '5a', 'May 1',  'Oct 5');
+    range(68100, 68199, 'Omaha',            'NE', '5b', 'Apr 22', 'Oct 12');
+    range(68500, 68599, 'Lincoln',          'NE', '5b', 'Apr 25', 'Oct 10');
+
+    // ── LOUISIANA / ARKANSAS / OKLAHOMA ──────────────────────────
+    range(70000, 71499, 'Louisiana',        'LA', '8b', 'Mar 5',  'Nov 20');
+    range(70100, 70199, 'New Orleans',      'LA', '9a', 'Feb 20', 'Dec 5');
+    range(70800, 70899, 'Baton Rouge',      'LA', '8b', 'Mar 5',  'Nov 25');
+    range(71100, 71199, 'Shreveport',       'LA', '8a', 'Mar 15', 'Nov 15');
+    range(71600, 72999, 'Arkansas',         'AR', '7b', 'Apr 1',  'Nov 1');
+    range(72200, 72299, 'Little Rock',      'AR', '8a', 'Mar 25', 'Nov 8');
+    range(72700, 72799, 'Fayetteville AR',  'AR', '7a', 'Apr 10', 'Oct 25');
+    range(73000, 74999, 'Oklahoma',         'OK', '7a', 'Apr 8',  'Oct 28');
+    range(73100, 73199, 'Oklahoma City',    'OK', '7a', 'Apr 5',  'Nov 1');
+    range(74100, 74199, 'Tulsa',            'OK', '7a', 'Apr 5',  'Nov 1');
+
+    // ── MOUNTAIN WEST ────────────────────────────────────────────
+    range(80000, 81699, 'Colorado',         'CO', '5b', 'May 12', 'Sep 28');
+    range(80200, 80299, 'Denver',           'CO', '6a', 'May 5',  'Oct 5');
+    range(80300, 80399, 'Boulder',          'CO', '6a', 'May 5',  'Oct 5');
+    range(80900, 80999, 'Colorado Springs', 'CO', '5b', 'May 10', 'Oct 1');
+    range(80500, 80599, 'Fort Collins',     'CO', '5b', 'May 10', 'Sep 30');
+    range(81500, 81599, 'Grand Junction',   'CO', '7a', 'Apr 20', 'Oct 15');
+    range(82000, 83199, 'Wyoming',          'WY', '4a', 'May 25', 'Sep 15');
+    range(82000, 82099, 'Cheyenne',         'WY', '5b', 'May 15', 'Sep 25');
+    range(82600, 82699, 'Casper',           'WY', '4b', 'May 20', 'Sep 18');
+    range(83200, 83899, 'Idaho',            'ID', '6a', 'May 15', 'Sep 25');
+    range(83700, 83799, 'Boise',            'ID', '7a', 'May 5',  'Oct 10');
+    range(83400, 83499, 'Idaho Falls',      'ID', '5a', 'May 25', 'Sep 15');
+    range(84000, 84799, 'Utah',             'UT', '6b', 'May 5',  'Oct 8');
+    range(84100, 84199, 'Salt Lake City',   'UT', '7a', 'Apr 25', 'Oct 20');
+    range(84600, 84699, 'Provo',            'UT', '6b', 'May 1',  'Oct 12');
+    range(84700, 84799, 'St George',        'UT', '8b', 'Mar 20', 'Nov 15');
+    range(59000, 59999, 'Montana',          'MT', '4a', 'May 20', 'Sep 15');
+    range(59100, 59199, 'Billings',         'MT', '5a', 'May 15', 'Sep 25');
+    range(59800, 59899, 'Missoula',         'MT', '5a', 'May 15', 'Sep 20');
+    range(59400, 59499, 'Great Falls',      'MT', '4b', 'May 18', 'Sep 18');
+
+    // ── NEVADA / ARIZONA ─────────────────────────────────────────
+    range(88900, 89899, 'Nevada',           'NV', '7a', 'May 1',  'Oct 10');
+    range(88900, 89199, 'Las Vegas',        'NV', '9a', 'Mar 5',  'Nov 20');
+    range(89500, 89599, 'Reno',             'NV', '7a', 'May 10', 'Oct 5');
+    range(85000, 86599, 'Arizona',          'AZ', '9a', 'Feb 15', 'Dec 1');
+    range(85000, 85099, 'Phoenix',          'AZ', '9b', 'Feb 5',  'Dec 10');
+    range(85200, 85299, 'Mesa / Scottsdale','AZ', '9b', 'Feb 5',  'Dec 10');
+    range(85600, 85799, 'Tucson',           'AZ', '9a', 'Feb 20', 'Nov 30');
+    range(86000, 86099, 'Flagstaff',        'AZ', '6a', 'May 20', 'Sep 25');
+    range(85300, 85399, 'Yuma',             'AZ','10a', 'Jan 20', 'Dec 20');
+
+    // ── CALIFORNIA ───────────────────────────────────────────────
+    range(90000, 96199, 'California',        'CA', '9b', 'Feb 15', 'Dec 1');
+    range(90000, 90899, 'Los Angeles',       'CA','10a', 'Jan 15', 'Dec 15');
+    range(90700, 90899, 'Long Beach',        'CA','10b', 'Jan 10', 'Dec 20');
+    range(91900, 92199, 'San Diego',         'CA','10b', 'Jan 5',  'Dec 28');
+    range(92600, 92899, 'Orange County',     'CA','10a', 'Jan 15', 'Dec 20');
+    range(92300, 92599, 'Riverside / Inland','CA', '9b', 'Feb 15', 'Dec 1');
+    range(93100, 93199, 'Santa Barbara',     'CA','10a', 'Jan 20', 'Dec 15');
+    range(93300, 93399, 'Bakersfield',       'CA', '9a', 'Feb 15', 'Nov 30');
+    range(93600, 93799, 'Fresno',            'CA', '9a', 'Feb 15', 'Nov 30');
+    range(95000, 95199, 'San Jose',          'CA', '9b', 'Feb 15', 'Dec 1');
+    range(94100, 94199, 'San Francisco',     'CA','10b', 'Jan 10', 'Dec 25');
+    range(94500, 94699, 'Oakland / East Bay','CA', '9b', 'Feb 1',  'Dec 10');
+    range(95800, 95899, 'Sacramento',        'CA', '9b', 'Feb 10', 'Dec 1');
+    range(95200, 95399, 'Stockton / Modesto','CA', '9a', 'Feb 20', 'Nov 25');
+    range(96000, 96099, 'Redding',           'CA', '9a', 'Mar 1',  'Nov 20');
+
+    // ── WASHINGTON ───────────────────────────────────────────────
+    range(98000, 99499, 'Washington',        'WA', '7b', 'Apr 15', 'Oct 20');
+    range(98100, 98199, 'Seattle',           'WA', '8b', 'Mar 20', 'Nov 15');
+    range(98400, 98499, 'Tacoma',            'WA', '8b', 'Mar 25', 'Nov 10');
+    range(98600, 98699, 'Vancouver WA',      'WA', '8b', 'Mar 25', 'Nov 10');
+    range(98900, 98999, 'Yakima',            'WA', '6b', 'May 1',  'Oct 5');
+    range(99200, 99299, 'Spokane',           'WA', '6b', 'May 5',  'Oct 5');
+
+    // ── ALASKA & HAWAII ──────────────────────────────────────────
+    range(99500, 99999, 'Alaska',            'AK', '3b', 'May 20', 'Sep 5');
+    range(99500, 99599, 'Anchorage',         'AK', '4b', 'May 15', 'Sep 15');
+    range(99700, 99799, 'Fairbanks',         'AK', '2b', 'May 20', 'Aug 30');
+    range(99800, 99899, 'Juneau',            'AK', '6a', 'May 10', 'Sep 25');
+    range(96700, 96899, 'Hawaii',            'HI','11a', 'Jan 1',  'Dec 31');
+
     return db;
   })();
 
